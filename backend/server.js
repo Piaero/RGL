@@ -15,8 +15,8 @@ MongoClient.connect(process.env.MONGODB_URI, {
   useUnifiedTopology: true
 })
   .then(client => {
-    const db = client.db('your_database_name')
-    const countersCollection = db.collection('your_collection_name')
+    const db = client.db('RGL')
+    const countersCollection = db.collection('site')
     console.log('Connected to Database')
   })
 
