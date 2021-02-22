@@ -1,0 +1,20 @@
+.logo header {
+  float:left;
+}
+
+.header-container{
+  justify-content: center;
+  display: flex;
+}
+
+.social {
+  max-width: 50px;
+  margin: 5px;
+}
+
+.socials-container {
+  text-align: center;
+}
+
+
+
