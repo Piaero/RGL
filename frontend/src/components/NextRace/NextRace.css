@@ -1,0 +1,26 @@
+.nextrace-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.nextrace {
+  margin-left: 10px;
+}
+
+.nextrace-division {
+  align-items: center;
+  display: flex;
+}
+
+.nextrace-division-logo {
+  float: left;
+  width: 50px;
+  margin-right: 5px;
+}
+
+.nextrace-social {
+  width: 100px;
+  margin-left: 10px;
+}

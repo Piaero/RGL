@@ -1,20 +1,23 @@
-.logo header {
-  float:left;
-}
 
-.header-container{
+.header-container {
   justify-content: center;
   display: flex;
+  margin-top: 20px;
+}
+
+.logo header {
+  float: left;
+}
+
+.title-and-socials {
+  margin-left: 10px;
 }
 
 .social {
-  max-width: 50px;
+  width: 50px;
   margin: 5px;
 }
 
 .socials-container {
   text-align: center;
 }
-
-
-
