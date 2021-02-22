@@ -9,8 +9,6 @@ ul {
   padding: 0;
   overflow: hidden;
   background-color: #333;
-  /* Width should be based on the size of children elements */
-  width: 906px;
 }
 
 li {
