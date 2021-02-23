@@ -4,25 +4,70 @@ nav {
 }
 
 ul {
-  list-style-type: none;
-  margin: 0;
+  list-style: none; 
   padding: 0;
-  overflow: hidden;
-  background-color: #333;
+  margin: 0;
 }
 
-li {
-  float: left;
-}
-
-li a {
+ul li {
   display: block;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
+  position: relative;
+  float: left;
+  background: #333;
+}
+/* This hides the dropdowns */
+li ul {
+  display: none;
 }
 
-li a:hover {
-  background-color: #111;
+ul li a {
+  display: block;
+  padding: 1em;
+  text-decoration: none;
+  white-space: nowrap;
+  color: #fff;
+}
+
+ul li a:hover {
+  background: #2c3e50;
+}
+
+/* Display the dropdown */
+li:hover > ul {
+  display: block; 
+  position: absolute;
+}
+
+/* Remove float from dropdown lists */
+li:hover li {
+    float: none;
+}
+
+li:hover a {
+  background: rgb(63, 61, 61);
+}
+
+li:hover li a:hover {
+  background: #2c3e50;
+}
+
+.main-navigation li ul li {
+  border-top: 0;
+}
+
+/* Displays second level dropdowns to the right of the first level dropdown */
+ul ul ul {
+  left: 100%;
+  top: 0; 
+}
+
+/* Simple clearfix */
+ul:before,
+ul:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+ul:after {
+    clear: both;
 }
