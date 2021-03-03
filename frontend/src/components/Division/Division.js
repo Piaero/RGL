@@ -1,8 +1,45 @@
 import React from 'react';
+
+import { Menu } from '../../components/Menu/Menu.js';
+
+
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useParams,
+  useRouteMatch,
+  Redirect,
+} from "react-router-dom";
+
 import './Division.css';
+
 
 import f12020 from '../../assets/logo/f1-2020.png'
 import acc from '../../assets/logo/acc.png'
+
+const F12020 = () => (
+  <div>
+    <h2>F12020</h2>
+  </div>
+);
+
+const F22020 = () => (
+  <div>
+    <h2>F22020</h2>
+  </div>
+);
+
+const ACC = () => (
+  <div>
+    <h2>ACC</h2>
+  </div>
+);
+
+
+
+
 
 export class Division extends React.Component {
   state = {
@@ -27,7 +64,6 @@ export class Division extends React.Component {
     this.setState({
       selectedDivision: newDivision,
     });
-    console.log(this.state.selectedDivision)
   }
 
   render() {
@@ -37,14 +73,20 @@ export class Division extends React.Component {
 
         {Object.keys(this.state.divisions).map((division, index) => {
           return (
-            <div className="division" key={index} onClick={() => this.setSelectedDivision(division)}>
+            <Link to={division}><div className="division" key={index} onClick={() => this.setSelectedDivision(division)}>
               <img src={this.state.divisions[division].imageURL} alt={division} className="division-logo" />
               <div>{division}</div>
             </div>
+            </Link>
           )
         })}
 
+
+
       </section>
+
+
+
     )
   };
 }
