@@ -33,7 +33,7 @@ export const Menu = () => {
   return (
     <section>
       <nav>
-        <ul class="dropdown">
+        <ul className="dropdown">
           <li>
             <Link to={`${match.url}/news`}>Newsy</Link>
           </li>
@@ -58,14 +58,14 @@ export const Menu = () => {
           <li>
             <Link to={`${match.url}/archived-seasons`}>Sezony archiwalne</Link>
             <ul>
-              {archivedSeasons.seasons.map((season) => {
+              {archivedSeasons.seasons.map((season, index) => {
                 return (
-                  <li>
+                  <li key={index}>
                     <a href="">{season}</a>
                     <ul>
-                      {archivedSeasons.options.map((option) => {
+                      {archivedSeasons.options.map((option, index) => {
                         return (
-                          <li>
+                          <li key={index}>
                             <a href="">{option}</a>
                           </li>
                         );

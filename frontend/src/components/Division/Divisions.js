@@ -49,10 +49,9 @@ export class Divisions extends React.Component {
 
         {Object.keys(this.state.divisions).map((division, index) => {
           return (
-            <Link to={division}>
+            <Link to={division} key={index}>
               <div
                 className="division"
-                key={index}
                 onClick={() => this.setDivision(division)}
               >
                 <img
