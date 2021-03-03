@@ -1,7 +1,5 @@
 import React from "react";
 
-import { Menu } from "../Menu/Menu.js";
-
 import {
   BrowserRouter as Router,
   Switch,
@@ -19,20 +17,23 @@ import acc from "../../assets/logo/acc.png";
 
 export class Divisions extends React.Component {
   state = {
-    divisions: {
-      "F1-2020": {
+    divisions: [
+      {
+        path: "F2-2020",
         fullName: "Formuła 1",
         imageURL: f12020,
       },
-      "F2-2020": {
+      {
+        path: "F2-2020",
         fullName: "Formuła 2",
         imageURL: f12020,
       },
-      "GT3-ACC": {
+      {
+        path: "GT3-ACC",
         fullName: "GT3 Asetto Corsa",
         imageURL: acc,
       },
-    },
+    ],
     selectedDivision: null,
   };
 
@@ -47,19 +48,19 @@ export class Divisions extends React.Component {
       <section className="divisions-container">
         <h1 className="title">Dywizje: </h1>
 
-        {Object.keys(this.state.divisions).map((division, index) => {
+        {this.state.divisions.map((division, index) => {
           return (
-            <Link to={division} key={index}>
+            <Link to={division.path} key={index}>
               <div
                 className="division"
                 onClick={() => this.setDivision(division)}
               >
                 <img
-                  src={this.state.divisions[division].imageURL}
-                  alt={division}
+                  src={division.imageURL}
+                  alt={division.fullName}
                   className="division-logo"
                 />
-                <div>{division}</div>
+                <div>{division.path}</div>
               </div>
             </Link>
           );
