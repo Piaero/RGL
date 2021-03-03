@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-
+import React, { Component } from "react";
 
 import {
   BrowserRouter as Router,
@@ -9,77 +8,29 @@ import {
   useParams,
   useRouteMatch,
   useLocation,
-  Redirect
+  Redirect,
 } from "react-router-dom";
 
+import "./App.css";
 
-
-import './App.css';
-
-import { Header } from './components/Header/Header.js';
-import { Division } from './components/Division/Division.js';
-import { NextRace } from './components/NextRace/NextRace.js';
-import { Menu } from './components/Menu/Menu.js';
-
-
-const Home = () => (
-  <div>
-    <h2>Home</h2>
-  </div>
-);
-
-const Category = () => (
-  <div>
-    <h2>Category</h2>
-  </div>
-);
-
-const Products = () => (
-  <div>
-    <h2>Products</h2>
-  </div>
-);
-
-
-const F12020 = () => (
-  <div>
-    <h2>F12020</h2>
-  </div>
-);
-
-const F22020 = () => (
-  <div>
-    <h2>F22020</h2>
-  </div>
-);
-
-const ACC = () => (
-  <div>
-    <h2>ACC</h2>
-  </div>
-);
-
-
-
+import { Header } from "./components/Header/Header.js";
+import { Divisions } from "./components/Division/Divisions.js";
+import { NextRace } from "./components/NextRace/NextRace.js";
+import { Menu } from "./components/Menu/Menu.js";
 
 class App extends Component {
   state = {
-    response: '',
-    post: '',
-    responseToPost: '',
+    response: "",
+    post: "",
+    responseToPost: "",
   };
-
 
   render() {
     return (
       <div className="App">
         <Router>
-
-
-
-
           <Header />
-          <Division />
+          <Divisions />
           <NextRace />
           {/* <Menu /> */}
 
@@ -97,7 +48,6 @@ class App extends Component {
               <Redirect to="/F1-2020" />
             </Route>
           </Switch>
-
         </Router>
       </div>
     );
