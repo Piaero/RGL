@@ -19,17 +19,17 @@ export class Divisions extends React.Component {
   state = {
     divisions: [
       {
-        path: "F2-2020",
+        path: "/F2-2020",
         fullName: "Formuła 1",
         imageURL: f12020,
       },
       {
-        path: "F2-2020",
+        path: "/F2-2020",
         fullName: "Formuła 2",
         imageURL: f12020,
       },
       {
-        path: "GT3-ACC",
+        path: "/GT3-ACC",
         fullName: "GT3 Asetto Corsa",
         imageURL: acc,
       },
@@ -60,7 +60,7 @@ export class Divisions extends React.Component {
                   alt={division.fullName}
                   className="division-logo"
                 />
-                <div>{division.path}</div>
+                <div> {division.path.slice(1)}</div>
               </div>
             </Link>
           );

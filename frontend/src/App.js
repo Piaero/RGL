@@ -32,7 +32,6 @@ class App extends Component {
           <Header />
           <Divisions />
           <NextRace />
-          {/* <Menu /> */}
 
           <Switch>
             <Route path="/F1-2020">
