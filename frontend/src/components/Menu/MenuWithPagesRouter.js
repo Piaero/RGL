@@ -1,14 +1,6 @@
 import React from "react";
 
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useParams,
-  useRouteMatch,
-  useLocation,
-} from "react-router-dom";
+import { Switch, Route, Link, useRouteMatch } from "react-router-dom";
 
 import { News } from "../Pages/News";
 import { Announcements } from "../Pages/Announcements";
@@ -61,12 +53,12 @@ export const MenuWithPagesRouter = () => {
               {archivedSeasons.seasons.map((season, index) => {
                 return (
                   <li key={index}>
-                    <a href="">{season}</a>
+                    <a href="#">{season}</a>
                     <ul>
                       {archivedSeasons.options.map((option, index) => {
                         return (
                           <li key={index}>
-                            <a href="">{option}</a>
+                            <a href="#">{option}</a>
                           </li>
                         );
                       })}

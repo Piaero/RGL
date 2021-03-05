@@ -4,10 +4,6 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
-  useParams,
-  useRouteMatch,
-  useLocation,
   Redirect,
 } from "react-router-dom";
 

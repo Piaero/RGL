@@ -1,14 +1,6 @@
 import React from "react";
 
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useParams,
-  useRouteMatch,
-  Redirect,
-} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import "./Divisions.css";
 
