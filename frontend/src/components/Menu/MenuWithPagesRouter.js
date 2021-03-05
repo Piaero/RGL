@@ -22,7 +22,7 @@ import { Profile } from "../Pages/Profile";
 
 import "./Menu.css";
 
-export const Menu = () => {
+export const MenuWithPagesRouter = () => {
   let match = useRouteMatch();
 
   let archivedSeasons = {

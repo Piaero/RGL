@@ -16,7 +16,7 @@ import "./App.css";
 import { Header } from "./components/Header/Header.js";
 import { Divisions } from "./components/Division/Divisions.js";
 import { NextRace } from "./components/NextRace/NextRace.js";
-import { Menu } from "./components/Menu/Menu.js";
+import { MenuWithPagesRouter } from "./components/Menu/MenuWithPagesRouter.js";
 
 class App extends Component {
   state = {
@@ -35,13 +35,13 @@ class App extends Component {
 
           <Switch>
             <Route path="/F1-2020">
-              <Menu />
+              <MenuWithPagesRouter />
             </Route>
             <Route path="/F2-2020">
-              <Menu />
+              <MenuWithPagesRouter />
             </Route>
             <Route path="/GT3-ACC">
-              <Menu />
+              <MenuWithPagesRouter />
             </Route>
             <Route exact path="/">
               <Redirect to="/F1-2020" />
