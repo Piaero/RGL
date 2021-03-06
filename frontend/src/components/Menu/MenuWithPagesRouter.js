@@ -11,6 +11,7 @@ import { Regulations } from "../Pages/Regulations";
 import { Join } from "../Pages/Join";
 import { ArchivedSeasons } from "../Pages/ArchivedSeasons";
 import { Profile } from "../Pages/Profile";
+import { NotFound } from "../Pages/NotFound";
 
 import "./MenuWithPagesRouter.css";
 
@@ -76,34 +77,34 @@ export const MenuWithPagesRouter = () => {
 
       <content>
         <Switch>
-          <Route path={`${match.path}/news`}>
+          <Route exact path={`${match.path}/news`}>
             <News />
           </Route>
-          <Route path={`${match.path}/announcements`}>
+          <Route exact path={`${match.path}/announcements`}>
             <Announcements />
           </Route>
-          <Route path={`${match.path}/races`}>
+          <Route exact path={`${match.path}/races`}>
             <Races />
           </Route>
-          <Route path={`${match.path}/standings`}>
+          <Route exact path={`${match.path}/standings`}>
             <Standings />
           </Route>
-          <Route path={`${match.path}/calendar`}>
+          <Route exact path={`${match.path}/calendar`}>
             <Calendar />
           </Route>
-          <Route path={`${match.path}/regulations`}>
+          <Route exact path={`${match.path}/regulations`}>
             <Regulations />
           </Route>
-          <Route path={`${match.path}/join`}>
+          <Route exact path={`${match.path}/join`}>
             <Join />
           </Route>
-          <Route path={`${match.path}/archived-seasons`}>
+          <Route exact path={`${match.path}/archived-seasons`}>
             <ArchivedSeasons />
           </Route>
-          <Route path={`${match.path}/profile`}>
+          <Route exact path={`${match.path}/profile`}>
             <Profile />
           </Route>
-          <Route path={match.path}>
+          <Route exact path={match.path}>
             <News />
           </Route>
           <Route component={NotFound} />
