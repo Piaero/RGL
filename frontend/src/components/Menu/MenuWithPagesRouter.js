@@ -106,6 +106,7 @@ export const MenuWithPagesRouter = () => {
           <Route path={match.path}>
             <News />
           </Route>
+          <Route component={NotFound} />
         </Switch>
       </content>
     </section>
