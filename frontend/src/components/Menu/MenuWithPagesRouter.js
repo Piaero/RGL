@@ -12,7 +12,7 @@ import { Join } from "../Pages/Join";
 import { ArchivedSeasons } from "../Pages/ArchivedSeasons";
 import { Profile } from "../Pages/Profile";
 
-import "./Menu.css";
+import "./MenuWithPagesRouter.css";
 
 export const MenuWithPagesRouter = () => {
   let match = useRouteMatch();
