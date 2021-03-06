@@ -1,27 +1,51 @@
-import React, { Component } from 'react';
-import './App.css';
+import React, { Component } from "react";
 
-import { Header } from './components/Header/Header.js';
-import { Division } from './components/Division/Division.js';
-import { NextRace } from './components/NextRace/NextRace.js';
-import { Menu } from './components/Menu/Menu.js';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 
+import "./App.css";
+
+import { Header } from "./components/Header/Header.js";
+import { Divisions } from "./components/Divisions/Divisions.js";
+import { NextRace } from "./components/NextRace/NextRace.js";
+import { MenuWithPagesRouter } from "./components/Menu/MenuWithPagesRouter.js";
+import { NotFound } from "./components/Pages/NotFound";
 
 class App extends Component {
   state = {
-    response: '',
-    post: '',
-    responseToPost: '',
+    response: "",
+    post: "",
+    responseToPost: "",
   };
-
 
   render() {
     return (
       <div className="App">
-        <Header />
-        <Division />
-        <NextRace />
-        <Menu />
+        <Router>
+          <Header />
+          <Divisions />
+          <NextRace />
+
+          <Switch>
+            <Route path="/F1-2020">
+              <MenuWithPagesRouter />
+            </Route>
+            <Route path="/F2-2020">
+              <MenuWithPagesRouter />
+            </Route>
+            <Route path="/GT3-ACC">
+              <MenuWithPagesRouter />
+            </Route>
+            <Route exact path="/">
+              <Redirect to="/F1-2020" />
+            </Route>
+            <Route component={NotFound} />
+          </Switch>
+        </Router>
       </div>
     );
   }
