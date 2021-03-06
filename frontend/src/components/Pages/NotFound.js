@@ -1,7 +1,6 @@
 import React from "react";
 import { useRouteMatch } from "react-router-dom";
 import NotFoundImage from "../../assets/image/NotFound.jpg";
-import { MenuWithPagesRouter } from "../Menu/MenuWithPagesRouter";
 
 export const NotFound = () => {
   let match = useRouteMatch();
