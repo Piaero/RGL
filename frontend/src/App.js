@@ -10,7 +10,7 @@ import {
 import "./App.css";
 
 import { Header } from "./components/Header/Header.js";
-import { Divisions } from "./components/Division/Divisions.js";
+import { Divisions } from "./components/Divisions/Divisions.js";
 import { NextRace } from "./components/NextRace/NextRace.js";
 import { MenuWithPagesRouter } from "./components/Menu/MenuWithPagesRouter.js";
 import { NotFound } from "./components/Pages/NotFound";

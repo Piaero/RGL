@@ -1,29 +1,26 @@
 import React from "react";
-
 import { Link } from "react-router-dom";
-
 import "./Divisions.css";
-
-import f12020 from "../../assets/logo/f1-2020.png";
-import acc from "../../assets/logo/acc.png";
+import f12020Logo from "../../assets/logo/f1-2020.png";
+import accLogo from "../../assets/logo/acc.png";
 
 export class Divisions extends React.Component {
   state = {
     divisions: [
       {
         path: "/F1-2020",
-        fullName: "Formuła 1",
-        imageURL: f12020,
+        fullName: "F1",
+        imageURL: f12020Logo,
       },
       {
         path: "/F2-2020",
-        fullName: "Formuła 2",
-        imageURL: f12020,
+        fullName: "F2",
+        imageURL: f12020Logo,
       },
       {
         path: "/GT3-ACC",
-        fullName: "GT3 Asetto Corsa",
-        imageURL: acc,
+        fullName: "GT3 ACC",
+        imageURL: accLogo,
       },
     ],
     selectedDivision: null,
@@ -52,7 +49,7 @@ export class Divisions extends React.Component {
                   alt={division.fullName}
                   className="division-logo"
                 />
-                <div> {division.path.slice(1)}</div>
+                <div>{division.fullName}</div>
               </div>
             </Link>
           );
