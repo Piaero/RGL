@@ -13,7 +13,7 @@ import { Header } from "./components/Header/Header.js";
 import { Divisions } from "./components/Divisions/Divisions.js";
 import { NextRace } from "./components/NextRace/NextRace.js";
 import { MenuWithPagesRouter } from "./components/Menu/MenuWithPagesRouter.js";
-import { NotFound } from "./components/Pages/NotFound";
+import { NotFound } from "./components/Pages/NotFound/NotFound";
 
 class App extends Component {
   state = {

@@ -2,16 +2,16 @@ import React from "react";
 
 import { Switch, Route, Link, useRouteMatch } from "react-router-dom";
 
-import { News } from "../Pages/News";
-import { Announcements } from "../Pages/Announcements";
-import { Races } from "../Pages/Races";
-import { Standings } from "../Pages/Standings";
-import { Calendar } from "../Pages/Calendar";
-import { Regulations } from "../Pages/Regulations";
-import { Join } from "../Pages/Join";
-import { ArchivedSeasons } from "../Pages/ArchivedSeasons";
-import { Profile } from "../Pages/Profile";
-import { NotFound } from "../Pages/NotFound";
+import { News } from "../Pages/News/News";
+import { Announcements } from "../Pages/Announcements/Announcements";
+import { Races } from "../Pages/Races/Races";
+import { Standings } from "../Pages/Standings/Standings";
+import { Calendar } from "../Pages/Calendar/Calendar";
+import { Regulations } from "../Pages/Regulations/Regulations";
+import { Join } from "../Pages/Join/Join";
+import { ArchivedSeasons } from "../Pages/ArchivedSeasons/ArchivedSeasons";
+import { Profile } from "../Pages/Profile/Profile";
+import { NotFound } from "../Pages/NotFound/NotFound";
 
 import "./MenuWithPagesRouter.css";
 
