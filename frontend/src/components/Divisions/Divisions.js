@@ -9,7 +9,7 @@ export class Divisions extends React.Component {
   };
 
   componentDidMount() {
-    this.getDivisions();
+    this.fetchDivisions();
   }
 
   setCurrentDivision(newDivision) {
@@ -18,7 +18,7 @@ export class Divisions extends React.Component {
     });
   }
 
-  getDivisions = () => {
+  fetchDivisions = () => {
     fetch("/divisions")
       .then((res) => res.json())
       .then((divisions) => this.setState({ divisions: divisions }));
