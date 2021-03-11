@@ -1,30 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./Divisions.css";
-import f12020Logo from "../../assets/logo/f1-2020.png";
-import accLogo from "../../assets/logo/acc.png";
 
 export class Divisions extends React.Component {
   state = {
-    divisions: [
-      {
-        path: "/F1",
-        fullName: "F1",
-        imageURL: f12020Logo,
-      },
-      {
-        path: "/F2",
-        fullName: "F2",
-        imageURL: f12020Logo,
-      },
-      {
-        path: "/GT3-ACC",
-        fullName: "GT3 ACC",
-        imageURL: accLogo,
-      },
-    ],
+    divisions: [],
     selectedDivision: null,
   };
+
+  componentDidMount() {
+    this.getDivisions();
+  }
 
   setDivision(newDivision) {
     this.setState({
@@ -32,29 +18,39 @@ export class Divisions extends React.Component {
     });
   }
 
-  render() {
-    return (
-      <section className="divisions-container">
-        <h1 className="title">Dywizje: </h1>
+  getDivisions = () => {
+    fetch("/divisions")
+      .then((res) => res.json())
+      .then((divisions) => this.setState({ divisions: divisions }));
+  };
 
-        {this.state.divisions.map((division, index) => {
-          return (
-            <Link to={division.path} key={index}>
-              <div
-                className="division"
-                onClick={() => this.setDivision(division)}
-              >
-                <img
-                  src={division.imageURL}
-                  alt={division.fullName}
-                  className="division-logo"
-                />
-                <div>{division.fullName}</div>
-              </div>
-            </Link>
-          );
-        })}
-      </section>
-    );
+  render() {
+    if (!this.state.divisions.length) {
+      return <section className="divisions-container">Ładowanie...</section>;
+    } else {
+      return (
+        <section className="divisions-container">
+          <h1 className="title">Dywizje: </h1>
+
+          {this.state.divisions.map((division, index) => {
+            return (
+              <Link to={division.path} key={index}>
+                <div
+                  className="division"
+                  onClick={() => this.setDivision(division)}
+                >
+                  <img
+                    src={require(`../../assets/logo/${division.gameLogo}`)}
+                    alt={division.division}
+                    className="division-logo"
+                  />
+                  <div>{division.division}</div>
+                </div>
+              </Link>
+            );
+          })}
+        </section>
+      );
+    }
   }
 }
