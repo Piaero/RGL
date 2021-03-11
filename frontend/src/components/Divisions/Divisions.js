@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./Divisions.css";
+import { DivisionsAPI } from "./DivisionsAPI.js";
 
 export class Divisions extends React.Component {
   state = {
@@ -9,7 +10,9 @@ export class Divisions extends React.Component {
   };
 
   componentDidMount() {
-    this.fetchDivisions();
+    DivisionsAPI.fetchDivisions().then((divisions) => {
+      this.setState({ divisions: divisions });
+    });
   }
 
   setCurrentDivision(newDivision) {
@@ -17,12 +20,6 @@ export class Divisions extends React.Component {
       selectedDivision: newDivision,
     });
   }
-
-  fetchDivisions = () => {
-    fetch("/divisions")
-      .then((res) => res.json())
-      .then((divisions) => this.setState({ divisions: divisions }));
-  };
 
   render() {
     if (!this.state.divisions.length) {
