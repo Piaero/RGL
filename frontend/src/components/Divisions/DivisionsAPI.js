@@ -1,5 +1,5 @@
 export const DivisionsAPI = {
-  fetchDivisions: () => {
+  getDivisions: () => {
     return fetch("/divisions")
       .then((res) => res.json())
       .catch(function (error) {

@@ -24,7 +24,7 @@ class App extends Component {
   };
 
   componentDidMount() {
-    DivisionsAPI.fetchDivisions().then((divisions) => {
+    DivisionsAPI.getDivisions().then((divisions) => {
       this.setState({ divisions: divisions });
     });
   }
@@ -49,7 +49,7 @@ class App extends Component {
               );
             })}
             <Route exact path="/">
-              <Redirect to="/F1" />
+              <Redirect to={this.state.divisions[0].path} />
             </Route>
             <Route component={NotFound} />
           </Switch>
