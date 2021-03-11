@@ -41,7 +41,7 @@ class App extends Component {
               <MenuWithPagesRouter />
             </Route>
             <Route exact path="/">
-              <Redirect to="/F1-2020" />
+              <Redirect to="/F1" />
             </Route>
             <Route component={NotFound} />
           </Switch>
