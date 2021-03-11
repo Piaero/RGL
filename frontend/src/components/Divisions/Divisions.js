@@ -12,7 +12,7 @@ export class Divisions extends React.Component {
     this.getDivisions();
   }
 
-  setDivision(newDivision) {
+  setCurrentDivision(newDivision) {
     this.setState({
       selectedDivision: newDivision,
     });
@@ -37,7 +37,7 @@ export class Divisions extends React.Component {
               <Link to={division.path} key={index}>
                 <div
                   className="division"
-                  onClick={() => this.setDivision(division)}
+                  onClick={() => this.setCurrentDivision(division)}
                 >
                   <img
                     src={require(`../../assets/logo/${division.gameLogo}`)}
