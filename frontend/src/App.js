@@ -31,10 +31,10 @@ class App extends Component {
           <NextRace />
 
           <Switch>
-            <Route path="/F1-2020">
+            <Route path="/F1">
               <MenuWithPagesRouter />
             </Route>
-            <Route path="/F2-2020">
+            <Route path="/F2">
               <MenuWithPagesRouter />
             </Route>
             <Route path="/GT3-ACC">

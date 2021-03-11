@@ -8,12 +8,12 @@ export class Divisions extends React.Component {
   state = {
     divisions: [
       {
-        path: "/F1-2020",
+        path: "/F1",
         fullName: "F1",
         imageURL: f12020Logo,
       },
       {
-        path: "/F2-2020",
+        path: "/F2",
         fullName: "F2",
         imageURL: f12020Logo,
       },
