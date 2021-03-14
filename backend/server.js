@@ -5,6 +5,7 @@ const MongoClient = require("mongodb").MongoClient;
 require("dotenv").config();
 
 const divisions = require("./Controllers/divisions.js");
+const news = require("./Controllers/news.js");
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -13,6 +14,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/divisions", divisions);
+app.get("/news", news);
 
 // Heroku deployment compatibility:
 if (process.env.NODE_ENV === "production") {
