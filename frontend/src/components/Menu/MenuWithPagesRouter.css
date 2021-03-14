@@ -1,14 +1,15 @@
-content {
+.content {
   display: flex;
   justify-content: center;
 }
+
 nav {
   display: flex;
   justify-content: center;
 }
 
 ul {
-  list-style: none; 
+  list-style: none;
   padding: 0;
   margin: 0;
 }
@@ -38,13 +39,13 @@ ul li a:hover {
 
 /* Display the dropdown */
 li:hover > ul {
-  display: block; 
+  display: block;
   position: absolute;
 }
 
 /* Remove float from dropdown lists */
 li:hover li {
-    float: none;
+  float: none;
 }
 
 li:hover a {
@@ -62,16 +63,16 @@ li:hover li a:hover {
 /* Displays second level dropdowns to the right of the first level dropdown */
 ul ul ul {
   left: 100%;
-  top: 0; 
+  top: 0;
 }
 
 /* Simple clearfix */
 ul:before,
 ul:after {
-    content: " "; /* 1 */
-    display: table; /* 2 */
+  content: " "; /* 1 */
+  display: table; /* 2 */
 }
 
 ul:after {
-    clear: both;
+  clear: both;
 }

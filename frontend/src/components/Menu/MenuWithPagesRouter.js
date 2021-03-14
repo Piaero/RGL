@@ -75,7 +75,7 @@ export const MenuWithPagesRouter = () => {
         </ul>
       </nav>
 
-      <content>
+      <section className="content">
         <Switch>
           <Route exact path={`${match.path}/news`}>
             <News />
@@ -109,7 +109,7 @@ export const MenuWithPagesRouter = () => {
           </Route>
           <Route component={NotFound} />
         </Switch>
-      </content>
+      </section>
     </section>
   );
 };
