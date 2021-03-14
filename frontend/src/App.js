@@ -41,9 +41,9 @@ class App extends Component {
           <NextRace />
 
           <Switch>
-            {this.state.divisions.map((division) => {
+            {this.state.divisions.map((division, index) => {
               return (
-                <Route path={division.path}>
+                <Route path={division.path} key={index}>
                   <MenuWithPagesRouter />
                 </Route>
               );
