@@ -1,0 +1,21 @@
+.new-comment-container {
+  width: 40%;
+}
+
+.comment__avatar {
+  /* float: left; */
+  max-width: 50px;
+}
+
+.comment__author {
+  /* float: left; */
+}
+
+.comment__date {
+  /* float: right; */
+}
+
+.comment__input {
+  resize: none;
+  width: 100%;
+}

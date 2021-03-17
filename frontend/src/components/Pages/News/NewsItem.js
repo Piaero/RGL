@@ -1,8 +1,11 @@
-import React from "react";
+import React from 'react';
+import { Link, useRouteMatch } from 'react-router-dom';
 
 export const NewsItem = ({ news }) => {
+  let match = useRouteMatch();
+
   return (
-    <section>
+    <section className='news-item'>
       <br />
       Date: {news.date}
       <br />
@@ -11,8 +14,9 @@ export const NewsItem = ({ news }) => {
       Title: {news.title}
       <br />
       Content: {news.content} <br />
-      Comments section -----
+      like
       <br />
+      <Link to={`${match.url}/${news._id}`}>Odpowiedz</Link>
     </section>
   );
 };

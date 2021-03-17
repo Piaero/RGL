@@ -24,7 +24,7 @@ export class Divisions extends React.Component {
 
           {this.state.divisions.map((division, index) => {
             return (
-              <Link to={division.path} key={index}>
+              <Link to={`${division.path}/news`} key={index}>
                 <div
                   className="division"
                   onClick={() => this.setCurrentDivision(division)}
