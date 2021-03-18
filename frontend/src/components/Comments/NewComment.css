@@ -1,21 +1,27 @@
 .new-comment-container {
   width: 40%;
+  display: flex;
+  align-items: center;
 }
 
 .comment__avatar {
-  /* float: left; */
   max-width: 50px;
+  margin: 10px;
 }
 
 .comment__author {
-  /* float: left; */
+  float: left;
 }
 
 .comment__date {
-  /* float: right; */
+  float: right;
 }
 
 .comment__input {
   resize: none;
   width: 100%;
+}
+
+.comment_author-and-input {
+  margin: 5px;
 }

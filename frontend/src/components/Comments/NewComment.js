@@ -8,12 +8,13 @@ export const NewComment = () => {
       <div>
         <img
           className='comment__avatar'
+          alt='Avatar'
           src='https://www.w3schools.com/howto/img_avatar.png'
         />
       </div>
-      <div>
+      <div className='comment_author-and-input'>
         <p className='comment__author'>SteamNickname, alias</p>
-        <p className='comment__date'>Date: </p> <br />
+        <p className='comment__date'>Date: </p>
         <textarea
           className='comment__input'
           name='new-comment'
