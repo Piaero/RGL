@@ -6,6 +6,7 @@ require('dotenv').config();
 
 const divisions = require('./Controllers/divisions.js');
 const news = require('./Controllers/news.js');
+const comments = require('./Controllers/comments.js');
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -29,6 +30,7 @@ client.connect((err) => {
 app.get('/divisions', divisions);
 app.get('/news', news);
 app.post('/news/article', news);
+app.put('/submit-comment', comments);
 
 // Heroku deployment compatibility:
 if (process.env.NODE_ENV === 'production') {

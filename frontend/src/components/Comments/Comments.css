@@ -1,7 +1,10 @@
+.comments-section {
+}
+
 .new-comment-container {
-  width: 40%;
   display: flex;
   align-items: center;
+  min-height: 90px;
 }
 
 .comment__avatar {
@@ -17,11 +20,21 @@
   float: right;
 }
 
+.comment_content,
 .comment__input {
   resize: none;
+  /* width: 100%; */
+}
+
+.comment__author-and-input {
+  margin: 5px;
+  width: 50%;
+}
+
+.textarea-wrapper {
   width: 100%;
 }
 
-.comment_author-and-input {
-  margin: 5px;
+.textarea-wrapper > textarea {
+  width: inherit;
 }

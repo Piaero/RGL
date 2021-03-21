@@ -13,18 +13,22 @@ export const News = () => {
       .then((news) => setNews(news));
   }, []);
 
-  return (
-    <section>
-      <h2> News</h2>
-      <h3>News Component</h3>
-      Match Url is: {match.url}
-      <br />
-      Match path is: {match.path}
-      <br />
-      NEWS: ------------------- <br />
-      {news.map((news, index) => {
-        return <NewsItem news={news} key={index} />;
-      })}
-    </section>
-  );
+  if (!news.length) {
+    return <section>Ładowanie newsów...</section>;
+  } else {
+    return (
+      <section>
+        <h2> News</h2>
+        <h3>News Component</h3>
+        Match Url is: {match.url}
+        <br />
+        Match path is: {match.path}
+        <br />
+        NEWS: ------------------- <br />
+        {news.map((news, index) => {
+          return <NewsItem news={news} key={index} />;
+        })}
+      </section>
+    );
+  }
 };

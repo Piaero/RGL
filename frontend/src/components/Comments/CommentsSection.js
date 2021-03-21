@@ -1,13 +1,17 @@
 import React from 'react';
-import { NewComment } from './NewComment.js';
+import { CommentItem } from './CommentItem.js';
 
 // import "./CommentsSection.css";
 
-export const CommentsSection = () => {
+export const CommentsSection = ({ comments }) => {
   return (
     <section>
       CommentsSection Component
-      <NewComment />
+      <br />
+      <br />
+      {comments.map((comment, index) => {
+        return <CommentItem comment={comment} key={index} />;
+      })}
     </section>
   );
 };

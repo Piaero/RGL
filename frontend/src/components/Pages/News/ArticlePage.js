@@ -1,6 +1,8 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
+
 import { CommentsSection } from '../../Comments/CommentsSection.js';
+import { NewComment } from '../../Comments/NewComment.js';
 
 export const ArticlePage = () => {
   let { topicId } = useParams();
@@ -22,22 +24,31 @@ export const ArticlePage = () => {
       .then((article) => setArticle(article));
   }, []);
 
-  return (
-    <section>
-      <br />
-      Topic:id {topicId}
-      <br />
-      test:
-      {JSON.stringify(article)}
-      Date: {article.date}
-      <br />
-      Author: {article.author}
-      <br />
-      Title: {article.title}
-      <br />
-      Content: {article.content} <br />
-      <br />
-      <CommentsSection />
-    </section>
-  );
+  console.log(article.length);
+  if (article.length === 0) {
+    return <section>Ładowanie artykułu...</section>;
+  } else {
+    console.log(article.length);
+
+    return (
+      <section className='comments-section'>
+        <br />
+        Topic:id {topicId}
+        <br />
+        test:
+        {JSON.stringify(article.comments[0].author)}
+        <br />
+        Date: {article.date}
+        <br />
+        Author: {article.author}
+        <br />
+        Title: {article.title}
+        <br />
+        Content: {article.content} <br />
+        <br />
+        <NewComment />
+        <CommentsSection comments={article.comments} />
+      </section>
+    );
+  }
 };
