@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 
 import './Comments.css';
 
-export const NewComment = () => {
+export const NewComment = ({ articleID }) => {
   const formRef = useRef(null);
 
   useEffect(() => {
@@ -24,7 +24,7 @@ export const NewComment = () => {
       author: 'ID? autor',
       date: new Date(),
       content: formRef.current.value,
-      topicId: '604e4517f6b3970d9c2c85a2',
+      articleID: articleID,
       responseToCommentID: 0,
     };
 

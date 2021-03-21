@@ -35,6 +35,8 @@ export const ArticlePage = () => {
         <br />
         Topic:id {topicId}
         <br />
+        Article ID from DB: {article._id}
+        <br />
         test:
         {JSON.stringify(article.comments[0].author)}
         <br />
@@ -46,7 +48,8 @@ export const ArticlePage = () => {
         <br />
         Content: {article.content} <br />
         <br />
-        <NewComment />
+        <br />
+        <NewComment articleID={article._id} />
         <CommentsSection comments={article.comments} />
       </section>
     );
