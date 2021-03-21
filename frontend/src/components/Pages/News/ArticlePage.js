@@ -24,12 +24,9 @@ export const ArticlePage = () => {
       .then((article) => setArticle(article));
   }, []);
 
-  console.log(article.length);
   if (article.length === 0) {
     return <section>Ładowanie artykułu...</section>;
   } else {
-    console.log(article.length);
-
     return (
       <section className='comments-section'>
         <br />

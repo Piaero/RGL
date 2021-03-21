@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import './Comments.css';
 
@@ -8,7 +8,6 @@ export const NewComment = ({ articleID }) => {
   useEffect(() => {
     const listener = (event) => {
       if (event.keyCode === 13 && !event.shiftKey) {
-        console.log(`only enter`);
         alert(formRef.current.value);
         submitComment();
       }

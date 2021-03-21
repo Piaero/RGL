@@ -37,7 +37,6 @@ router.post('/news/article', async (req, res) => {
     .find({ _id: ObjectId(req.body.topicId) })
     .toArray()
     .then((results) => {
-      console.log(results[0]);
       results[0].comments
         ? results[0].comments.sort((a, b) => {
             return new Date(b.date) - new Date(a.date);
