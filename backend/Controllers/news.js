@@ -37,9 +37,22 @@ router.post('/news/article', async (req, res) => {
     .find({ _id: ObjectId(req.body.topicId) })
     .toArray()
     .then((results) => {
-      results[0].comments.sort((a, b) => {
-        return new Date(b.date) - new Date(a.date);
-      });
+      console.log(results[0]);
+      results[0].comments
+        ? results[0].comments.sort((a, b) => {
+            return new Date(b.date) - new Date(a.date);
+          })
+        : null;
+
+      results[0].comments
+        ? results[0].comments.forEach((comment) => {
+            comment.subcomments
+              ? comment.subcomments.sort((a, b) => {
+                  return new Date(a.date) - new Date(b.date);
+                })
+              : null;
+          })
+        : null;
       res.json(results[0]);
     })
     .catch((error) => console.error(error));

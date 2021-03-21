@@ -37,9 +37,6 @@ export const ArticlePage = () => {
         <br />
         Article ID from DB: {article._id}
         <br />
-        test:
-        {JSON.stringify(article.comments[0].author)}
-        <br />
         Date: {article.date}
         <br />
         Author: {article.author}

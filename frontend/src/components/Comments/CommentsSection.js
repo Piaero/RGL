@@ -9,9 +9,11 @@ export const CommentsSection = ({ comments }) => {
       CommentsSection Component
       <br />
       <br />
-      {comments.map((comment, index) => {
-        return <CommentItem comment={comment} key={index} />;
-      })}
+      {comments
+        ? comments.map((comment, index) => {
+            return <CommentItem comment={comment} key={index} />;
+          })
+        : null}
     </section>
   );
 };
