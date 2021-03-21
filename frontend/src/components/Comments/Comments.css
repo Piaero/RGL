@@ -1,12 +1,14 @@
-.comments-section {
-}
-
-.new-comment-container {
+.commentItem-container,
+.new-comment-container,
+.subcomment-container {
   display: flex;
   align-items: center;
   min-height: 90px;
 }
-
+.subcomment-container {
+  padding-left: 50px;
+  padding-right: 50px;
+}
 .comment__avatar {
   max-width: 50px;
   margin: 10px;
@@ -20,10 +22,8 @@
   float: right;
 }
 
-.comment_content,
 .comment__input {
   resize: none;
-  /* width: 100%; */
 }
 
 .comment__author-and-input {

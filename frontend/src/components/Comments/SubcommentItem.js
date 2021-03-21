@@ -3,7 +3,7 @@ import React from 'react';
 export const SubcommentItem = ({ subcomment }) => {
   return (
     <div>
-      <div className='new-comment-container'>
+      <div className='subcomment-container'>
         <div>
           <img
             className='comment__avatar'

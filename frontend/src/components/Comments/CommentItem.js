@@ -4,7 +4,7 @@ import { SubcommentItem } from './SubcommentItem.js';
 export const CommentItem = ({ comment }) => {
   return (
     <div>
-      <div className='new-comment-container'>
+      <div className='commentItem-container'>
         <div>
           <img
             className='comment__avatar'
