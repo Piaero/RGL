@@ -22,7 +22,6 @@ export const NewComment = ({ articleID }) => {
   const submitComment = () => {
     let commentToSubmit = {
       author: 'ID? autor',
-      date: new Date(),
       content: formRef.current.value,
       articleID: articleID,
       responseToCommentID: 0,

@@ -18,7 +18,7 @@ client.connect((err) => {
 router.put('/submit-comment', async (req, res) => {
   const commentTuPush = {
     id: '',
-    date: req.body.commentToSubmit.date,
+    date: new Date(),
     author: req.body.commentToSubmit.author,
     content: req.body.commentToSubmit.content,
     likes: [],
