@@ -1,5 +1,5 @@
 import React from 'react';
-import { NewComment } from './NewComment.js';
+import { SubcommentItem } from './SubcommentItem.js';
 
 export const CommentItem = ({ comment }) => {
   return (
@@ -19,6 +19,12 @@ export const CommentItem = ({ comment }) => {
           <p className='comment__input'>{comment.content}</p>
         </div>
       </div>
+
+      {comment.subcomments?.length
+        ? comment.subcomments.map((subcomment, index) => {
+            return <SubcommentItem subcomment={subcomment} key={index} />;
+          })
+        : null}
     </div>
   );
 };
