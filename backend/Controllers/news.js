@@ -22,7 +22,7 @@ router.get('/news', (req, res) => {
     .find()
     .toArray()
     .then((results) => {
-      results.sort(function (a, b) {
+      results.sort((a, b) => {
         return new Date(b.date) - new Date(a.date);
       });
       res.json(results);
@@ -37,6 +37,9 @@ router.post('/news/article', async (req, res) => {
     .find({ _id: ObjectId(req.body.topicId) })
     .toArray()
     .then((results) => {
+      results[0].comments.sort((a, b) => {
+        return new Date(b.date) - new Date(a.date);
+      });
       res.json(results[0]);
     })
     .catch((error) => console.error(error));
