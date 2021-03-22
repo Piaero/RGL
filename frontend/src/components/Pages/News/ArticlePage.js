@@ -43,8 +43,8 @@ export const ArticlePage = () => {
         Content: {article.content} <br />
         <br />
         <br />
-        <NewComment articleID={article._id} />
-        <CommentsSection comments={article.comments} />
+        <NewComment articleID={article._id} commentID={false} />
+        <CommentsSection articleID={article._id} comments={article.comments} />
       </section>
     );
   }

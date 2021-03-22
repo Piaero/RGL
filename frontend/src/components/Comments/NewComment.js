@@ -2,12 +2,12 @@ import React, { useEffect, useRef } from 'react';
 
 import './Comments.css';
 
-export const NewComment = ({ articleID }) => {
+export const NewComment = ({ articleID, commentID }) => {
   const formRef = useRef(null);
 
   useEffect(() => {
     const listener = (event) => {
-      if (event.keyCode === 13 && !event.shiftKey) {
+      if (event.keyCode === 13 && !event.shiftKey && !event.ctrlKey) {
         alert(formRef.current.value);
         submitComment();
       }
@@ -23,7 +23,7 @@ export const NewComment = ({ articleID }) => {
       author: 'ID? autor',
       content: formRef.current.value,
       articleID: articleID,
-      responseToCommentID: 0,
+      responseToCommentID: commentID,
     };
 
     const requestOptions = {
@@ -32,15 +32,16 @@ export const NewComment = ({ articleID }) => {
       body: JSON.stringify({ commentToSubmit }),
     };
 
-    fetch('/submit-comment', requestOptions)
-      .then((response) => response.json())
-      .then((data) => {
-        this.setState({ suggestions: data });
-      });
+    fetch('/submit-comment', requestOptions).then((response) =>
+      response.json()
+    );
+    // .then((data) => {
+    //   this.setState({ suggestions: data });
+    // });
   };
 
   return (
-    <div className='new-comment-container'>
+    <div className='new-comment-container newComment-invisible'>
       <div>
         <img
           className='comment__avatar'
