@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 
+import { CommentsAPI } from './CommentsAPI.js';
+
 import './Comments.css';
 
 export const NewComment = ({ articleID, commentID }) => {
@@ -14,9 +16,7 @@ export const NewComment = ({ articleID, commentID }) => {
         !event.ctrlKey &&
         formRef.current === document.activeElement
       ) {
-        console.log(formRef);
-        alert(formRef.current.value);
-        submitComment();
+        CommentsAPI.submitComment(formRef, articleID, commentID);
       }
     };
     document.addEventListener('keydown', listener);
@@ -24,25 +24,6 @@ export const NewComment = ({ articleID, commentID }) => {
       document.removeEventListener('keydown', listener);
     };
   }, []);
-
-  const submitComment = () => {
-    let commentToSubmit = {
-      author: 'ID? autor',
-      content: formRef.current.value,
-      articleID: articleID,
-      responseToCommentID: commentID,
-    };
-
-    const requestOptions = {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ commentToSubmit }),
-    };
-
-    fetch('/submit-comment', requestOptions).then((response) =>
-      response.json()
-    );
-  };
 
   return (
     <div className='new-comment-container newComment-invisible'>
