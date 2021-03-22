@@ -7,7 +7,13 @@ export const NewComment = ({ articleID, commentID }) => {
 
   useEffect(() => {
     const listener = (event) => {
-      if (event.keyCode === 13 && !event.shiftKey && !event.ctrlKey) {
+      if (
+        event.keyCode === 13 &&
+        !event.shiftKey &&
+        !event.ctrlKey &&
+        formRef.current === document.activeElement
+      ) {
+        console.log(formRef);
         alert(formRef.current.value);
         submitComment();
       }
