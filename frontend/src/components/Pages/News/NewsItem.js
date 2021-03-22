@@ -14,9 +14,7 @@ export const NewsItem = ({ news }) => {
       Title: {news.title}
       <br />
       Content: {news.content} <br />
-      like
-      <br />
-      <Link to={`${match.url}/${news._id}`}>Odpowiedz</Link>
+      <Link to={`${match.url}/${news._id}`}>Więcej...</Link>
     </section>
   );
 };
