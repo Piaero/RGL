@@ -4,6 +4,7 @@ import './Comments.css';
 
 export const NewComment = ({ articleID, commentID }) => {
   const formRef = useRef(null);
+  const isAutoFocus = commentID ? true : false;
 
   useEffect(() => {
     const listener = (event) => {
@@ -58,6 +59,7 @@ export const NewComment = ({ articleID, commentID }) => {
 
         <div className='textarea-wrapper'>
           <textarea
+            autoFocus={isAutoFocus}
             ref={formRef}
             className='comment__input'
             name='new-comment'
