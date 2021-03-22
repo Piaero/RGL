@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { CommentsSection } from '../../Comments/CommentsSection.js';
@@ -6,11 +6,11 @@ import { NewComment } from '../../Comments/NewComment.js';
 
 export const ArticlePage = () => {
   let { topicId } = useParams();
-  const latestRequest = React.useRef(null);
+  const latestRequest = useRef(null);
 
-  const [article, setArticle] = React.useState([]);
+  const [article, setArticle] = useState([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     latestRequest.current = topicId;
 
     const requestOptions = {
@@ -22,7 +22,7 @@ export const ArticlePage = () => {
     fetch('/news/article', requestOptions)
       .then((res) => res.json())
       .then((article) => setArticle(article));
-  }, []);
+  }, [article]);
 
   if (article.length === 0) {
     return <section>Ładowanie artykułu...</section>;

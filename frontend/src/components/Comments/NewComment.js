@@ -17,6 +17,7 @@ export const NewComment = ({ articleID, commentID }) => {
         formRef.current === document.activeElement
       ) {
         CommentsAPI.submitComment(formRef, articleID, commentID);
+        formRef.current.value = '';
       }
     };
     document.addEventListener('keydown', listener);
