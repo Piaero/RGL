@@ -27,7 +27,9 @@ export const CommentItem = ({ comment, articleID }) => {
       articleID: {articleID} <br />
       Comment.id: {comment.id}
       {visible ? (
-        <NewComment articleID={articleID} commentID={comment.id} />
+        <div style={{ margin: '0px 50px' }}>
+          <NewComment articleID={articleID} commentID={comment.id} />
+        </div>
       ) : null}
       {comment.subcomments?.length
         ? comment.subcomments.map((subcomment, index) => {

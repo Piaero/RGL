@@ -6,8 +6,7 @@
   min-height: 90px;
 }
 .subcomment-container {
-  padding-left: 50px;
-  padding-right: 50px;
+  padding: 0px 50px;
 }
 .comment__avatar {
   max-width: 50px;
