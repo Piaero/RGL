@@ -7,7 +7,6 @@ export const CommentsSection = ({ comments, articleID }) => {
   return (
     <section>
       <br />
-      <br />
       {comments
         ? comments.map((comment, index) => {
             return (

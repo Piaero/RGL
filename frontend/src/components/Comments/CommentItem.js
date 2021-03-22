@@ -9,7 +9,7 @@ export const CommentItem = ({ comment, articleID }) => {
   };
 
   return (
-    <div>
+    <div className='comment-and-subcomments'>
       <div className='commentItem-container'>
         <div>
           <img
