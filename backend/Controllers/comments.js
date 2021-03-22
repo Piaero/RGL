@@ -82,7 +82,9 @@ router.put('/submit-comment', async (req, res) => {
       isCommentOrSubcomment === false
         ? pushComment(results)
         : pushSubcomment(results);
-    });
+    })
+    .then(res.json(`Comment sent to database`))
+    .catch((error) => console.error(error));
 });
 
 module.exports = router;

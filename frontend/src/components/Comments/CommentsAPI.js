@@ -13,8 +13,6 @@ export const CommentsAPI = {
       body: JSON.stringify({ commentToSubmit }),
     };
 
-    fetch('/submit-comment', requestOptions).then((response) =>
-      response.json()
-    );
+    fetch('/submit-comment', requestOptions);
   },
 };
