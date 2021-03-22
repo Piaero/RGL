@@ -18,23 +18,12 @@ client.connect((err) => {
 router.put('/submit-comment', async (req, res) => {
   const query = { _id: ObjectId(req.body.commentToSubmit.articleID) };
   const isCommentOrSubcomment = req.body.commentToSubmit.responseToCommentID;
-
-  console.log(`--------------------------------`);
-  console.log(`is comment or subcomment value: ${isCommentOrSubcomment}`);
-  console.log(`true or false: ${isCommentOrSubcomment ? `true` : `false`}`);
-  console.log(`--------------------------------`);
-  console.log(`--------------------------------`);
-  console.log(`--------------------------------`);
-
-  console.log(JSON.stringify(req.body.commentToSubmit));
-
-  console.log(`--------------------------------`);
-  console.log(`--------------------------------`);
-  console.log(`--------------------------------`);
+  const queryForSubcomment = {
+    _id: ObjectId(req.body.commentToSubmit.articleID),
+    'comments.id': isCommentOrSubcomment,
+  };
 
   const pushComment = (results) => {
-    console.log(`I am in main comments`);
-
     const commentTuPush = {
       id: '',
       date: new Date(),
@@ -43,11 +32,12 @@ router.put('/submit-comment', async (req, res) => {
       likes: [],
       subcomments: [],
     };
-    const update = { $push: { comments: commentTuPush } };
-    const options = { upsert: true };
 
     commentTuPush.id =
       results[0] && results[0].comments && results[0].comments.length + 1;
+
+    const update = { $push: { comments: commentTuPush } };
+    const options = { upsert: true };
 
     client
       .db('RGL')
@@ -57,8 +47,6 @@ router.put('/submit-comment', async (req, res) => {
   };
 
   const pushSubcomment = (results) => {
-    console.log(`I am in subcomment`);
-
     const subcommentTuPush = {
       id: '',
       date: new Date(),
@@ -67,28 +55,6 @@ router.put('/submit-comment', async (req, res) => {
       likes: [],
     };
 
-    var queryForPushSubcomment = `comments.subcomments.&`;
-
-    const update = { $push: { 'comments.$.subcomments': subcommentTuPush } };
-
-    // const update = {
-    //   $push: {
-    //     $arrayElemAt: [comments, 0],
-    //   },
-    // };
-
-    const options = { upsert: false };
-
-    // subcommentTuPush.id =
-    //   results[0] &&
-    //   results[0].comments &&
-    //   results[0].comments.subcomments &&
-    //   results[0].comments.subcomments.length + 1;
-
-    // comments[responseToCommentID].subcomments.length + 1
-
-    // console.log(results[0].comments[isCommentOrSubcomment - 1]);
-
     givenCommentID =
       results[0] &&
       results[0].comments &&
@@ -96,31 +62,15 @@ router.put('/submit-comment', async (req, res) => {
       results[0].comments[isCommentOrSubcomment].subcomments &&
       results[0].comments[isCommentOrSubcomment].subcomments.length + 1;
 
-    console.log(givenCommentID);
-
-    const querytwo = {
-      _id: ObjectId(req.body.commentToSubmit.articleID),
-      'comments.id': isCommentOrSubcomment,
-    };
+    const update = { $push: { 'comments.$.subcomments': subcommentTuPush } };
+    const options = { upsert: false };
 
     client
       .db('RGL')
       .collection('news')
-      .updateOne(querytwo, update, options)
+      .updateOne(queryForSubcomment, update, options)
       .catch((error) => console.error(error));
   };
-
-  // const commentTuPush = {
-  //   id: '',
-  //   date: new Date(),
-  //   author: req.body.commentToSubmit.author,
-  //   content: req.body.commentToSubmit.content,
-  //   likes: [],
-  //   subcomments: [],
-  // };
-  // const query = { _id: ObjectId(req.body.commentToSubmit.articleID) };
-  // const update = { $push: { comments: commentTuPush } };
-  // const options = { upsert: true };
 
   await client
     .db('RGL')
