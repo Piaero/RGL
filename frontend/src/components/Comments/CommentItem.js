@@ -4,7 +4,9 @@ import { NewComment } from './NewComment.js';
 
 export const CommentItem = ({ comment, articleID }) => {
   const [visible, setShowResults] = useState(false);
-  const showNewComment = () => setShowResults(true);
+  const showNewComment = () => {
+    visible ? setShowResults(false) : setShowResults(true);
+  };
 
   return (
     <div>
@@ -24,8 +26,6 @@ export const CommentItem = ({ comment, articleID }) => {
         </div>
       </div>
       <div onClick={showNewComment}>Odpowiedz</div>
-      articleID: {articleID} <br />
-      Comment.id: {comment.id}
       {visible ? (
         <div style={{ margin: '0px 50px' }}>
           <NewComment articleID={articleID} commentID={comment.id} />

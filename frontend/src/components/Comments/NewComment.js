@@ -41,9 +41,6 @@ export const NewComment = ({ articleID, commentID }) => {
     fetch('/submit-comment', requestOptions).then((response) =>
       response.json()
     );
-    // .then((data) => {
-    //   this.setState({ suggestions: data });
-    // });
   };
 
   return (

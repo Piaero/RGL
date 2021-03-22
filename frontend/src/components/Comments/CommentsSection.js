@@ -6,7 +6,6 @@ import { CommentItem } from './CommentItem.js';
 export const CommentsSection = ({ comments, articleID }) => {
   return (
     <section>
-      CommentsSection Component
       <br />
       <br />
       {comments
