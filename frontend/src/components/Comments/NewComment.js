@@ -6,7 +6,7 @@ import './Comments.css';
 
 export const NewComment = ({ articleID, commentID }) => {
   const formRef = useRef(null);
-  const isAutoFocus = commentID ? true : false;
+  var isAutoFocus = commentID ? true : false;
 
   useEffect(() => {
     const listener = (event) => {
@@ -17,6 +17,7 @@ export const NewComment = ({ articleID, commentID }) => {
         formRef.current === document.activeElement
       ) {
         CommentsAPI.submitComment(formRef, articleID, commentID);
+        formRef.current.blur();
         formRef.current.value = '';
       }
     };
