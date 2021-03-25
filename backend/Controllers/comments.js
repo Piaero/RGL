@@ -16,10 +16,11 @@ client.connect((err) => {
 });
 
 router.put('/submit-comment', async (req, res) => {
-  const query = { _id: ObjectId(req.body.commentToSubmit.articleID) };
-  const isCommentOrSubcomment = req.body.commentToSubmit.responseToCommentID;
+  const query = { _id: ObjectId(req.body.commentData.parameters.articleID) };
+  const isCommentOrSubcomment =
+    req.body.commentData.parameters.responseToCommentID;
   const queryForSubcomment = {
-    _id: ObjectId(req.body.commentToSubmit.articleID),
+    _id: ObjectId(req.body.commentData.parameters.articleID),
     'comments.id': isCommentOrSubcomment,
   };
 
@@ -27,8 +28,8 @@ router.put('/submit-comment', async (req, res) => {
     const commentTuPush = {
       id: '',
       date: new Date(),
-      author: req.body.commentToSubmit.author,
-      content: req.body.commentToSubmit.content,
+      author: req.body.commentData.comment.author,
+      content: req.body.commentData.comment.content,
       likes: [],
       subcomments: [],
     };
@@ -50,17 +51,17 @@ router.put('/submit-comment', async (req, res) => {
     const subcommentTuPush = {
       id: '',
       date: new Date(),
-      author: req.body.commentToSubmit.author,
-      content: req.body.commentToSubmit.content,
+      author: req.body.commentData.comment.author,
+      content: req.body.commentData.comment.content,
       likes: [],
     };
 
-    givenCommentID =
+    subcommentTuPush.id =
       results[0] &&
       results[0].comments &&
-      results[0].comments[isCommentOrSubcomment] &&
-      results[0].comments[isCommentOrSubcomment].subcomments &&
-      results[0].comments[isCommentOrSubcomment].subcomments.length + 1;
+      results[0].comments[isCommentOrSubcomment - 1] &&
+      results[0].comments[isCommentOrSubcomment - 1].subcomments &&
+      results[0].comments[isCommentOrSubcomment - 1].subcomments.length + 1;
 
     const update = { $push: { 'comments.$.subcomments': subcommentTuPush } };
     const options = { upsert: false };

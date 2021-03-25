@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import { CommentsSection } from '../../Comments/CommentsSection.js';
 import { NewComment } from '../../Comments/NewComment.js';
+import { formatDate } from '../../../wrappers/formatDate.js';
 
 export const ArticlePage = () => {
   let { topicId } = useParams();
@@ -22,7 +23,7 @@ export const ArticlePage = () => {
     fetch('/news/article', requestOptions)
       .then((res) => res.json())
       .then((article) => setArticle(article));
-  }, [article]);
+  }, []);
 
   if (article.length === 0) {
     return <section>Ładowanie artykułu...</section>;
@@ -34,7 +35,7 @@ export const ArticlePage = () => {
         <br />
         Article ID from DB: {article._id}
         <br />
-        Date: {article.date}
+        Date: {formatDate(article.date)}
         <br />
         Author: {article.author}
         <br />
@@ -43,8 +44,16 @@ export const ArticlePage = () => {
         Content: {article.content} <br />
         <br />
         <br />
-        <NewComment articleID={article._id} commentID={false} />
-        <CommentsSection articleID={article._id} comments={article.comments} />
+        <NewComment
+          article={article}
+          commentID={false}
+          setArticle={setArticle}
+        />
+        <CommentsSection
+          article={article}
+          comments={article.comments}
+          setArticle={setArticle}
+        />
       </section>
     );
   }

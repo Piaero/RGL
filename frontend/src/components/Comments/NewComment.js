@@ -4,11 +4,47 @@ import { CommentsAPI } from './CommentsAPI.js';
 
 import './Comments.css';
 
-export const NewComment = ({ articleID, commentID }) => {
+export const NewComment = ({ commentID, article, setArticle }) => {
   const formRef = useRef(null);
   var isAutoFocus = commentID ? true : false;
 
+  const updateCommentState = (commentData) => {
+    if (commentID === false) {
+      var articleWithNewComment = { ...article };
+      articleWithNewComment.comments.push(commentData.comment);
+    } else {
+      var articleWithNewComment = { ...article };
+      articleWithNewComment.comments[commentID - 1].subcomments.push(
+        commentData.comment
+      );
+    }
+
+    formRef.current.blur();
+    formRef.current.value = '';
+    setArticle(articleWithNewComment);
+  };
+
   useEffect(() => {
+    let id =
+      commentID === false
+        ? article.comments.length + 1
+        : article.comments[commentID - 1].subcomments.length;
+
+    let commentData = {
+      comment: {
+        id: id,
+        date: new Date().toString(),
+        author: 'ID? autor',
+        content: formRef.current.value,
+        likes: [],
+        subcomments: [],
+      },
+      parameters: {
+        articleID: article._id,
+        responseToCommentID: commentID,
+      },
+    };
+
     const listener = (event) => {
       if (
         event.keyCode === 13 &&
@@ -16,9 +52,9 @@ export const NewComment = ({ articleID, commentID }) => {
         !event.ctrlKey &&
         formRef.current === document.activeElement
       ) {
-        CommentsAPI.submitComment(formRef, articleID, commentID);
-        formRef.current.blur();
-        formRef.current.value = '';
+        commentData.comment.content = formRef.current.value;
+        CommentsAPI.submitComment(commentData);
+        updateCommentState(commentData);
       }
     };
     document.addEventListener('keydown', listener);

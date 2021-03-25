@@ -39,7 +39,7 @@ router.post('/news/article', async (req, res) => {
     .then((results) => {
       results[0].comments
         ? results[0].comments.sort((a, b) => {
-            return new Date(b.date) - new Date(a.date);
+            return new Date(a.date) - new Date(b.date);
           })
         : null;
 

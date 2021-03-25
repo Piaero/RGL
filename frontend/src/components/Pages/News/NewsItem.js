@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
+import { formatDate } from '../../../wrappers/formatDate.js';
 
 export const NewsItem = ({ news }) => {
   let match = useRouteMatch();
@@ -7,7 +8,7 @@ export const NewsItem = ({ news }) => {
   return (
     <section className='news-item'>
       <br />
-      Date: {news.date}
+      Date: {formatDate(news.date)}
       <br />
       Author: {news.author}
       <br />

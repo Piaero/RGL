@@ -5,9 +5,12 @@
   align-items: center;
   min-height: 90px;
 }
-.subcomment-container {
-  padding: 0px 50px;
+
+.subcomment-container,
+.new-subcomment {
+  margin: 0px 50px;
 }
+
 .comment__avatar {
   max-width: 50px;
   margin: 10px;

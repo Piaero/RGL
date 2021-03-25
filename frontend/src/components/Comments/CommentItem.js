@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { SubcommentItem } from './SubcommentItem.js';
 import { NewComment } from './NewComment.js';
 
-export const CommentItem = ({ comment, articleID }) => {
+import { formatDate } from '../../wrappers/formatDate.js';
+
+export const CommentItem = ({ comment, article, setArticle }) => {
   const [visible, setShowResults] = useState(false);
   const showNewComment = () => {
     visible ? setShowResults(false) : setShowResults(true);
@@ -20,15 +22,19 @@ export const CommentItem = ({ comment, articleID }) => {
         </div>
         <div className='comment__author-and-input'>
           <p className='comment__author'>{comment.author}</p>
-          <p className='comment__date'>{comment.date}</p>
+          <p className='comment__date'>{formatDate(comment.date)}</p>
           <br />
           <p className='comment__input'>{comment.content}</p>
         </div>
       </div>
       <div onClick={showNewComment}>Odpowiedz</div>
       {visible ? (
-        <div style={{ margin: '0px 50px' }}>
-          <NewComment articleID={articleID} commentID={comment.id} />
+        <div className='new-subcomment'>
+          <NewComment
+            commentID={comment.id}
+            article={article}
+            setArticle={setArticle}
+          />
         </div>
       ) : null}
       {comment.subcomments?.length

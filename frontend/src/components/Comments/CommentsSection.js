@@ -3,7 +3,7 @@ import { CommentItem } from './CommentItem.js';
 
 // import "./CommentsSection.css";
 
-export const CommentsSection = ({ comments, articleID }) => {
+export const CommentsSection = ({ comments, article, setArticle }) => {
   return (
     <section>
       <br />
@@ -11,8 +11,9 @@ export const CommentsSection = ({ comments, articleID }) => {
         ? comments.map((comment, index) => {
             return (
               <CommentItem
-                articleID={articleID}
                 comment={comment}
+                article={article}
+                setArticle={setArticle}
                 key={index}
               />
             );
