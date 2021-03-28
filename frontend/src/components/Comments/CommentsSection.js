@@ -9,9 +9,9 @@ export const CommentsSection = ({ comments, article, setArticle }) => {
         ? comments.map((comment, index) => {
             return (
               <CommentItem
-                comment={comment}
                 article={article}
                 setArticle={setArticle}
+                comment={comment}
                 key={index}
               />
             );

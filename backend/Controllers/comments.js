@@ -16,12 +16,15 @@ client.connect((err) => {
 });
 
 router.put('/submit-comment', async (req, res) => {
-  const query = { _id: ObjectId(req.body.commentData.parameters.articleID) };
-  const isCommentOrSubcomment =
-    req.body.commentData.parameters.responseToCommentID;
+  const isSubcomment = req.body.commentData.parameters.isSubcomment;
+  const parentCommentId = req.body.commentData.parameters.parentCommentId;
+
+  const queryForComment = {
+    _id: ObjectId(req.body.commentData.parameters.articleID),
+  };
   const queryForSubcomment = {
     _id: ObjectId(req.body.commentData.parameters.articleID),
-    'comments.id': isCommentOrSubcomment,
+    'comments.id': parentCommentId,
   };
 
   const pushComment = (results) => {
@@ -43,7 +46,7 @@ router.put('/submit-comment', async (req, res) => {
     client
       .db('RGL')
       .collection('news')
-      .updateOne(query, update, options)
+      .updateOne(queryForComment, update, options)
       .catch((error) => console.error(error));
   };
 
@@ -59,9 +62,9 @@ router.put('/submit-comment', async (req, res) => {
     subcommentTuPush.id =
       results[0] &&
       results[0].comments &&
-      results[0].comments[isCommentOrSubcomment - 1] &&
-      results[0].comments[isCommentOrSubcomment - 1].subcomments &&
-      results[0].comments[isCommentOrSubcomment - 1].subcomments.length + 1;
+      results[0].comments[parentCommentId - 1] &&
+      results[0].comments[parentCommentId - 1].subcomments &&
+      results[0].comments[parentCommentId - 1].subcomments.length + 1;
 
     const update = { $push: { 'comments.$.subcomments': subcommentTuPush } };
     const options = { upsert: false };
@@ -76,13 +79,11 @@ router.put('/submit-comment', async (req, res) => {
   await client
     .db('RGL')
     .collection('news')
-    .find(query)
+    .find(queryForComment)
     .project({ comments: 1 })
     .toArray()
     .then((results) => {
-      isCommentOrSubcomment === false
-        ? pushComment(results)
-        : pushSubcomment(results);
+      isSubcomment ? pushSubcomment(results) : pushComment(results);
     })
     .then(res.json(`Comment sent to database`))
     .catch((error) => console.error(error));

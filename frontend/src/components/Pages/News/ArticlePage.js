@@ -46,13 +46,14 @@ export const ArticlePage = () => {
         <br />
         <NewComment
           article={article}
-          commentID={false}
           setArticle={setArticle}
+          isSubcomment={false}
+          parentCommentId={null}
         />
         <CommentsSection
           article={article}
-          comments={article.comments}
           setArticle={setArticle}
+          comments={article.comments}
         />
       </section>
     );

@@ -32,8 +32,9 @@ export const CommentItem = ({ comment, article, setArticle }) => {
         <div className='new-subcomment'>
           <NewComment
             article={article}
-            commentID={comment.id}
             setArticle={setArticle}
+            isSubcomment={true}
+            parentCommentId={comment.id}
           />
         </div>
       ) : null}

@@ -4,17 +4,22 @@ import { CommentsAPI } from './CommentsAPI.js';
 
 import './Comments.css';
 
-export const NewComment = ({ commentID, article, setArticle }) => {
+export const NewComment = ({
+  article,
+  setArticle,
+  isSubcomment,
+  parentCommentId,
+}) => {
   const formRef = useRef(null);
-  var isAutoFocus = commentID ? true : false;
+  var isAutoFocus = isSubcomment ? true : false;
 
   const updateCommentState = (commentData) => {
-    if (commentID === false) {
+    if (!isSubcomment) {
       var articleWithNewComment = { ...article };
       articleWithNewComment.comments.push(commentData.comment);
     } else {
       var articleWithNewComment = { ...article };
-      articleWithNewComment.comments[commentID - 1].subcomments.push(
+      articleWithNewComment.comments[parentCommentId - 1].subcomments.push(
         commentData.comment
       );
     }
@@ -25,10 +30,9 @@ export const NewComment = ({ commentID, article, setArticle }) => {
   };
 
   useEffect(() => {
-    let id =
-      commentID === false
-        ? article.comments.length + 1
-        : article.comments[commentID - 1].subcomments.length;
+    let id = !isSubcomment
+      ? article.comments.length + 1
+      : article.comments[parentCommentId - 1].subcomments.length;
 
     let commentData = {
       comment: {
@@ -41,7 +45,8 @@ export const NewComment = ({ commentID, article, setArticle }) => {
       },
       parameters: {
         articleID: article._id,
-        responseToCommentID: commentID,
+        isSubcomment: isSubcomment,
+        parentCommentId: parentCommentId,
       },
     };
 
