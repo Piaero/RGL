@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import { CommentsSection } from '../../Comments/CommentsSection.js';
 import { NewComment } from '../../Comments/NewComment.js';
-import { formatDate } from '../../../wrappers/formatDate.js';
+import { formatDate } from '../../../utilities/formatDate.js';
 
 export const ArticlePage = () => {
   let { topicId } = useParams();

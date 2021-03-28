@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { formatDate } from '../../wrappers/formatDate.js';
+import { formatDate } from '../../utilities/formatDate.js';
 
 export const SubcommentItem = ({ subcomment }) => {
   return (

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { SubcommentItem } from './SubcommentItem.js';
 import { NewComment } from './NewComment.js';
 
-import { formatDate } from '../../wrappers/formatDate.js';
+import { formatDate } from '../../utilities/formatDate.js';
 
 export const CommentItem = ({ comment, article, setArticle }) => {
   const [visible, toggleVisible] = useState(false);
