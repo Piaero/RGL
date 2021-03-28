@@ -31,8 +31,8 @@ export const CommentItem = ({ comment, article, setArticle }) => {
       {visible ? (
         <div className='new-subcomment'>
           <NewComment
-            commentID={comment.id}
             article={article}
+            commentID={comment.id}
             setArticle={setArticle}
           />
         </div>
