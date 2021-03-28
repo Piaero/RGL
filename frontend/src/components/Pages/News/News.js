@@ -18,7 +18,7 @@ export const News = () => {
   } else {
     return (
       <section>
-        <h2> News</h2>
+        <h2>News</h2>
         <h3>News Component</h3>
         Match Url is: {match.url}
         <br />
