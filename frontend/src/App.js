@@ -1,26 +1,26 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Redirect,
-} from "react-router-dom";
+} from 'react-router-dom';
 
-import "./App.css";
+import './App.css';
 
-import { Header } from "./components/Header/Header.js";
-import { Divisions } from "./components/Divisions/Divisions.js";
-import { NextRace } from "./components/NextRace/NextRace.js";
-import { MenuWithPagesRouter } from "./components/Menu/MenuWithPagesRouter.js";
-import { NotFound } from "./components/Pages/NotFound/NotFound";
-import { DivisionsAPI } from "./components/Divisions/DivisionsAPI.js";
+import { Header } from './components/Header/Header.js';
+import { Divisions } from './components/Divisions/Divisions.js';
+import { NextRace } from './components/NextRace/NextRace.js';
+import { MenuWithPagesRouter } from './components/Menu/MenuWithPagesRouter.js';
+import { NotFound } from './components/Pages/NotFound/NotFound';
+import { DivisionsAPI } from './components/Divisions/DivisionsAPI.js';
 
 class App extends Component {
   state = {
-    response: "",
-    post: "",
-    responseToPost: "",
+    response: '',
+    post: '',
+    responseToPost: '',
   };
 
   componentDidMount() {
@@ -31,10 +31,10 @@ class App extends Component {
 
   render() {
     if (!this.state.divisions) {
-      return <div className="App">Ładowanie...</div>;
+      return <div className='App'>Ładowanie...</div>;
     }
     return (
-      <div className="App">
+      <div className='App'>
         <Router>
           <Header />
           <Divisions divisions={this.state.divisions} />
@@ -48,8 +48,8 @@ class App extends Component {
                 </Route>
               );
             })}
-            <Route exact path="/">
-              <Redirect to={this.state.divisions[0].path} />
+            <Route exact path='/'>
+              <Redirect to={`${this.state.divisions[0].path}/news`} />
             </Route>
             <Route component={NotFound} />
           </Switch>

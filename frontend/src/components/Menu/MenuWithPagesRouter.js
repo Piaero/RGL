@@ -1,32 +1,32 @@
-import React from "react";
+import React from 'react';
 
-import { Switch, Route, Link, useRouteMatch } from "react-router-dom";
+import { Switch, Route, Link, useRouteMatch } from 'react-router-dom';
 
-import { News } from "../Pages/News/News";
-import { Announcements } from "../Pages/Announcements/Announcements";
-import { Races } from "../Pages/Races/Races";
-import { Standings } from "../Pages/Standings/Standings";
-import { Calendar } from "../Pages/Calendar/Calendar";
-import { Regulations } from "../Pages/Regulations/Regulations";
-import { Join } from "../Pages/Join/Join";
-import { ArchivedSeasons } from "../Pages/ArchivedSeasons/ArchivedSeasons";
-import { Profile } from "../Pages/Profile/Profile";
-import { NotFound } from "../Pages/NotFound/NotFound";
-
-import "./MenuWithPagesRouter.css";
+import { News } from '../Pages/News/News';
+import { Announcements } from '../Pages/Announcements/Announcements';
+import { Races } from '../Pages/Races/Races';
+import { Standings } from '../Pages/Standings/Standings';
+import { Calendar } from '../Pages/Calendar/Calendar';
+import { Regulations } from '../Pages/Regulations/Regulations';
+import { Join } from '../Pages/Join/Join';
+import { ArchivedSeasons } from '../Pages/ArchivedSeasons/ArchivedSeasons';
+import { Profile } from '../Pages/Profile/Profile';
+import { NotFound } from '../Pages/NotFound/NotFound';
+import { ArticlePage } from '../Pages/News/ArticlePage.js';
+import './MenuWithPagesRouter.css';
 
 export const MenuWithPagesRouter = () => {
   let match = useRouteMatch();
 
   let archivedSeasons = {
-    seasons: ["Sezon 1 F1 2018", "Sezon 2 F1 2019", "Sezon 3 F1 2019"],
-    options: ["Klasyfikacje", "Kalendarz"],
+    seasons: ['Sezon 1 F1 2018', 'Sezon 2 F1 2019', 'Sezon 3 F1 2019'],
+    options: ['Klasyfikacje', 'Kalendarz'],
   };
 
   return (
     <section>
       <nav>
-        <ul className="dropdown">
+        <ul className='dropdown'>
           <li>
             <Link to={`${match.url}/news`}>Newsy</Link>
           </li>
@@ -54,12 +54,12 @@ export const MenuWithPagesRouter = () => {
               {archivedSeasons.seasons.map((season, index) => {
                 return (
                   <li key={index}>
-                    <a href="#">{season}</a>
+                    <a href='#'>{season}</a>
                     <ul>
                       {archivedSeasons.options.map((option, index) => {
                         return (
                           <li key={index}>
-                            <a href="#">{option}</a>
+                            <a href='#'>{option}</a>
                           </li>
                         );
                       })}
@@ -75,10 +75,13 @@ export const MenuWithPagesRouter = () => {
         </ul>
       </nav>
 
-      <section className="content">
+      <section className='content'>
         <Switch>
           <Route exact path={`${match.path}/news`}>
             <News />
+          </Route>
+          <Route path={`${match.path}/news/:topicId`}>
+            <ArticlePage />
           </Route>
           <Route exact path={`${match.path}/announcements`}>
             <Announcements />
