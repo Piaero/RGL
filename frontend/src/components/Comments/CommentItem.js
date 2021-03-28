@@ -5,9 +5,9 @@ import { NewComment } from './NewComment.js';
 import { formatDate } from '../../wrappers/formatDate.js';
 
 export const CommentItem = ({ comment, article, setArticle }) => {
-  const [visible, setShowResults] = useState(false);
+  const [visible, toggleVisible] = useState(false);
   const showNewComment = () => {
-    visible ? setShowResults(false) : setShowResults(true);
+    visible ? toggleVisible(false) : toggleVisible(true);
   };
 
   return (
