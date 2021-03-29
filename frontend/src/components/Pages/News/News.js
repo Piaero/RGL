@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouteMatch } from 'react-router-dom';
 import { NewsItem } from './NewsItem.js';
 
 export const News = () => {
   let match = useRouteMatch();
 
-  const [news, setNews] = React.useState([]);
+  const [news, setNews] = useState([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetch('/news')
       .then((res) => res.json())
       .then((news) => setNews(news));

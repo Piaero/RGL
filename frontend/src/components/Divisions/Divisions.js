@@ -1,6 +1,6 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import "./Divisions.css";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import './Divisions.css';
 
 export class Divisions extends React.Component {
   state = {
@@ -16,23 +16,23 @@ export class Divisions extends React.Component {
 
   render() {
     if (!this.state.divisions.length) {
-      return <section className="divisions-container">Ładowanie...</section>;
+      return <section className='divisions-container'>Ładowanie...</section>;
     } else {
       return (
-        <section className="divisions-container">
-          <h1 className="title">Dywizje: </h1>
+        <section className='divisions-container'>
+          <h1 className='title'>Dywizje: </h1>
 
           {this.state.divisions.map((division, index) => {
             return (
               <Link to={`${division.path}/news`} key={index}>
                 <div
-                  className="division"
+                  className='division'
                   onClick={() => this.setCurrentDivision(division)}
                 >
                   <img
                     src={require(`../../assets/logo/${division.gameLogo}`)}
                     alt={division.division}
-                    className="division-logo"
+                    className='division-logo'
                   />
                   <div>{division.division}</div>
                 </div>

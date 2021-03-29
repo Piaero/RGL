@@ -1,5 +1,5 @@
-import React from "react";
-import { useRouteMatch } from "react-router-dom";
+import React from 'react';
+import { useRouteMatch } from 'react-router-dom';
 
 export const Announcements = () => {
   let match = useRouteMatch();
