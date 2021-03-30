@@ -15,8 +15,6 @@ client.connect((err) => {
 });
 
 router.post('/calendar', (req, res) => {
-  console.log(`hello`);
-  console.log(req.body.division);
   client
     .db('RGL')
     .collection('divisions')
@@ -24,7 +22,8 @@ router.post('/calendar', (req, res) => {
     .project({ 'pages.calendar': 1, division: 1, game: 1, gameLogo: 1 })
     .toArray()
     .then((results) => {
-      res.json(results);
+      console.log(results[0]);
+      res.json(results[0]);
     })
     .catch((error) => console.error(error));
 });

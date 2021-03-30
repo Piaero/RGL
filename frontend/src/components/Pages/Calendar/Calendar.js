@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useRouteMatch } from 'react-router-dom';
 
+import { RaceMiniature } from './RaceMiniature.js';
+
 export const Calendar = () => {
   let match = useRouteMatch();
 
@@ -21,7 +23,7 @@ export const Calendar = () => {
       .then((calendar) => setCalendar(calendar));
   }, []);
 
-  if (!calendar.length) {
+  if (calendar.length === 0) {
     return <section>Ładowanie kalendarza...</section>;
   } else {
     return (
@@ -32,6 +34,10 @@ export const Calendar = () => {
         <br />
         Match path is: {match.path}
         <br />
+        {console.log(calendar)}
+        {calendar.pages.calendar.races.map((race, index) => {
+          return <RaceMiniature race={race} key={index} />;
+        })}
       </section>
     );
   }
