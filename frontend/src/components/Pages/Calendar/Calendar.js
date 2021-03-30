@@ -34,7 +34,7 @@ export const Calendar = () => {
         <br />
         Match path is: {match.path}
         <br />
-        {calendar.pages.calendar.races.map((race, index) => {
+        {calendar?.pages?.calendar?.races?.map((race, index) => {
           return <RaceMiniature race={race} key={index} />;
         })}
       </section>
