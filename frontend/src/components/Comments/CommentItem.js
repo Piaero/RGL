@@ -22,7 +22,7 @@ export const CommentItem = ({ comment, article, setArticle }) => {
         </div>
         <div className='comment__author-and-input'>
           <p className='comment__author'>{comment.author}</p>
-          <p className='comment__date'>{formatDate(comment.date)}</p>
+          <p className='comment__date'>{formatDate.dateHour(comment.date)}</p>
           <br />
           <p className='comment__input'>{comment.content}</p>
         </div>

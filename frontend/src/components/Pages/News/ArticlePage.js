@@ -35,7 +35,7 @@ export const ArticlePage = () => {
         <br />
         Article ID from DB: {article._id}
         <br />
-        Date: {formatDate(article.date)}
+        Date: {formatDate.dateHour(article.date)}
         <br />
         Author: {article.author}
         <br />
