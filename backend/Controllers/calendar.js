@@ -22,7 +22,6 @@ router.post('/calendar', (req, res) => {
     .project({ 'pages.calendar': 1, division: 1, game: 1, gameLogo: 1 })
     .toArray()
     .then((results) => {
-      console.log(results[0]);
       res.json(results[0]);
     })
     .catch((error) => console.error(error));

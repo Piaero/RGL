@@ -1,0 +1,12 @@
+.race__map {
+  max-width: 250px;
+}
+
+.race__miniature {
+  border: 2px solid black;
+  border-radius: 5px;
+}
+
+.race__country {
+  max-width: 50px;
+}
