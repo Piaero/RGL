@@ -1,9 +1,26 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import React from 'react';
 
 import './Calendar.css';
 
 import { formatDate } from '../../../utilities/formatDate.js';
+
+export const RaceMiniature = ({ race }) => {
+  return (
+    <section className='race__miniature'>
+      <p> Runda {race.id}</p>
+      <p>{formatDate.date(race.date)}</p>
+      <div className='race__venue-and-flag'>
+        <img
+          src={require(`../../../assets/flags_64/${race.countryCode}.png`)}
+          alt={race.venue}
+          className='race__flag'
+        />
+        <p className='race__venue'>{race.venue}</p>
+      </div>
+      {race.results ? <RaceWinners race={race} /> : <RaceMap race={race} />}
+    </section>
+  );
+};
 
 const RaceWinners = ({ race }) => {
   return (
@@ -34,23 +51,5 @@ const RaceMap = ({ race }) => {
         className='race__map'
       />
     </div>
-  );
-};
-
-export const RaceMiniature = ({ race }) => {
-  return (
-    <section className='race__miniature'>
-      <p> Runda {race.id}</p>
-      <p>{formatDate.date(race.date)}</p>
-      <div className='race__venue-and-flag'>
-        <img
-          src={require(`../../../assets/flags_64/${race.countryCode}.png`)}
-          alt={race.venue}
-          className='race__flag'
-        />
-        <p className='race__venue'>{race.venue}</p>
-      </div>
-      {race.results ? <RaceWinners race={race} /> : <RaceMap race={race} />}
-    </section>
   );
 };
