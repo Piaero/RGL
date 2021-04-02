@@ -1,6 +1,6 @@
-var express = require("express");
+var express = require('express');
 var router = express.Router();
-const MongoClient = require("mongodb").MongoClient;
+const MongoClient = require('mongodb').MongoClient;
 
 const uri = process.env.MONGODB_URI;
 const client = new MongoClient(uri, {
@@ -10,14 +10,14 @@ const client = new MongoClient(uri, {
 
 client.connect((err) => {
   if (err) throw err;
-  const db = client.db("RGL");
-  const countersCollection = db.collection("divisions");
+  const db = client.db('RGL');
+  const countersCollection = db.collection('divisions');
 });
 
-router.get("/divisions", (req, res) => {
+router.get('/divisions', (req, res) => {
   client
-    .db("RGL")
-    .collection("divisions")
+    .db('RGL')
+    .collection('divisions')
     .find()
     .project({ division: 1, path: 1, gameLogo: 1 })
     .toArray()
