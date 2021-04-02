@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
 
-import { RaceMiniatureHover } from './RaceMiniatureHover.js';
+import { RaceMiniatureMenu } from './RaceMiniatureMenu.js';
 
 import { formatDate } from '../../../utilities/formatDate.js';
 import './Calendar.css';
@@ -22,7 +21,7 @@ export const RaceMiniature = ({ race, routerPath }) => {
   };
 
   return (
-    <section
+    <div
       className='race__miniature'
       onMouseEnter={(e) => showHoverMenu(e)}
       onMouseLeave={(e) => hideHoverMenu(e)}
@@ -38,11 +37,10 @@ export const RaceMiniature = ({ race, routerPath }) => {
         <p className='race__venue'>{race.venue}</p>
       </div>
       {race.results ? <RaceWinners race={race} /> : <RaceMap race={race} />}
-      <RaceMiniatureHover
-        display={display}
-        completeRouterPath={completeRouterPath}
-      />
-    </section>
+      <div className={display}>
+        <RaceMiniatureMenu completeRouterPath={completeRouterPath} />
+      </div>
+    </div>
   );
 };
 

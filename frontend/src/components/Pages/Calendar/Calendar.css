@@ -3,14 +3,31 @@
 }
 
 .race__miniature {
-  display: table-cell;
-  justify-content: center;
-  align-items: center;
+  position: relative;
   border: 2px solid black;
   border-radius: 5px;
   margin: 10px;
   width: 290px;
   height: 220px;
+}
+
+.race-miniature-menu {
+  position: absolute;
+  top: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  height: 100%;
+  width: 100%;
+  margin: auto;
+  align-items: center;
+  justify-items: center;
+  background-color: rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(3px);
+}
+
+.race-miniature-menu__element button {
+  cursor: pointer;
 }
 
 .race__flag {

@@ -3,6 +3,8 @@ import { useRouteMatch } from 'react-router-dom';
 
 import { RaceMiniature } from './RaceMiniature.js';
 
+import { RaceMiniatureMenu } from './RaceMiniatureMenu.js';
+
 export const Calendar = () => {
   let match = useRouteMatch();
 
