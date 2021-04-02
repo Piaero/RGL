@@ -5,28 +5,36 @@ import './Calendar.css';
 
 import { formatDate } from '../../../utilities/formatDate.js';
 
-const WinnersOrMap = ({ race }) => {
-  if (race.results) {
-    return (
-      <div>
-        <ul>
-          <li>{race.results.race[2].name}</li>
-          <li>{race.results.race[1].name}</li>
-          <li>{race.results.race[3].name}</li>
-        </ul>
+const RaceWinners = ({ race }) => {
+  return (
+    <div className='race__winners-or-map race__podium-container'>
+      <div className='podium__result position-2'>
+        <div className='podium__background'></div>
+        <p className='podium__name'>{race.results.race[2].name}</p>
       </div>
-    );
-  } else {
-    return (
-      <div>
-        <img
-          src={require(`../../../assets/circuit-maps/${race.map}`)}
-          alt={race.venue}
-          className='race__map'
-        />
+      <div className='podium__result position-1'>
+        <div className='podium__background'></div>
+
+        <p className='podium__name'>{race.results.race[1].name}</p>
       </div>
-    );
-  }
+      <div className='podium__result position-3'>
+        <div className='podium__background'></div>
+        <p className='podium__name'>{race.results.race[3].name}</p>
+      </div>
+    </div>
+  );
+};
+
+const RaceMap = ({ race }) => {
+  return (
+    <div className='race__winners-or-map'>
+      <img
+        src={require(`../../../assets/circuit-maps/simple/${race.map}`)}
+        alt={race.venue}
+        className='race__map'
+      />
+    </div>
+  );
 };
 
 export const RaceMiniature = ({ race }) => {
@@ -34,16 +42,15 @@ export const RaceMiniature = ({ race }) => {
     <section className='race__miniature'>
       <p> Runda {race.id}</p>
       <p>{formatDate.date(race.date)}</p>
-      <p>
-        {race.country}
+      <div className='race__venue-and-flag'>
         <img
           src={require(`../../../assets/flags_64/${race.countryCode}.png`)}
           alt={race.venue}
-          className='race__country'
+          className='race__flag'
         />
-      </p>
-      <p> {race.venue}</p>
-      <WinnersOrMap race={race} />
+        <p className='race__venue'>{race.venue}</p>
+      </div>
+      {race.results ? <RaceWinners race={race} /> : <RaceMap race={race} />}
     </section>
   );
 };

@@ -27,13 +27,7 @@ export const Calendar = () => {
     return <section>Ładowanie kalendarza...</section>;
   } else {
     return (
-      <section>
-        <h2> Calendar</h2>
-        <h3>Calendar Component</h3>
-        Match Url is: {match.url}
-        <br />
-        Match path is: {match.path}
-        <br />
+      <section className='calendar-container'>
         {calendar?.pages?.calendar?.races?.map((race, index) => {
           return <RaceMiniature race={race} key={index} />;
         })}

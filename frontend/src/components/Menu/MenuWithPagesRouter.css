@@ -1,3 +1,7 @@
+.menu {
+  margin-bottom: 20px;
+}
+
 .content {
   display: flex;
   justify-content: center;
@@ -69,7 +73,7 @@ ul ul ul {
 /* Simple clearfix */
 ul:before,
 ul:after {
-  content: " "; /* 1 */
+  content: ' '; /* 1 */
   display: table; /* 2 */
 }
 

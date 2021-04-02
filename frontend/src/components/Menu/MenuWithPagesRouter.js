@@ -25,7 +25,7 @@ export const MenuWithPagesRouter = () => {
 
   return (
     <section>
-      <nav>
+      <nav className='menu'>
         <ul className='dropdown'>
           <li>
             <Link to={`${match.url}/news`}>Newsy</Link>
