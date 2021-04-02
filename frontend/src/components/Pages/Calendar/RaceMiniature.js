@@ -1,12 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 
-import './Calendar.css';
+import { RaceMiniatureHover } from './RaceMiniatureHover.js';
 
 import { formatDate } from '../../../utilities/formatDate.js';
+import './Calendar.css';
 
-export const RaceMiniature = ({ race }) => {
+export const RaceMiniature = ({ race, routerPath }) => {
+  const [display, setDisplay] = useState('notdisplayed');
+  const completeRouterPath =
+    routerPath + '/' + race.country.toLowerCase().replace(' ', '-');
+
+  const showHoverMenu = (e) => {
+    e.preventDefault();
+    setDisplay('displayed');
+  };
+
+  const hideHoverMenu = (e) => {
+    e.preventDefault();
+    setDisplay('notdisplayed');
+  };
+
   return (
-    <section className='race__miniature'>
+    <section
+      className='race__miniature'
+      onMouseEnter={(e) => showHoverMenu(e)}
+      onMouseLeave={(e) => hideHoverMenu(e)}
+    >
       <p> Runda {race.id}</p>
       <p>{formatDate.date(race.date)}</p>
       <div className='race__venue-and-flag'>
@@ -18,6 +38,10 @@ export const RaceMiniature = ({ race }) => {
         <p className='race__venue'>{race.venue}</p>
       </div>
       {race.results ? <RaceWinners race={race} /> : <RaceMap race={race} />}
+      <RaceMiniatureHover
+        display={display}
+        completeRouterPath={completeRouterPath}
+      />
     </section>
   );
 };
