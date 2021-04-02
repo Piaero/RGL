@@ -95,6 +95,7 @@
 
 .podium__name {
   text-align: center;
+  word-break: break-all;
 }
 
 .notdisplayed {
