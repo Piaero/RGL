@@ -3,15 +3,12 @@ import { useRouteMatch } from 'react-router-dom';
 
 import { RaceMiniature } from './RaceMiniature.js';
 
-import { RaceMiniatureMenu } from './RaceMiniatureMenu.js';
-
 export const Calendar = () => {
   let match = useRouteMatch();
-
-  const [calendar, setCalendar] = useState([]);
-
   let division = match.url.match(/[^/]+/);
   let divisionString = division[0];
+
+  const [calendar, setCalendar] = useState([]);
 
   useEffect(() => {
     const requestOptions = {

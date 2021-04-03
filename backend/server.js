@@ -7,6 +7,7 @@ require('dotenv').config();
 const divisions = require('./Controllers/divisions.js');
 const news = require('./Controllers/news.js');
 const calendar = require('./Controllers/calendar.js');
+const raceResults = require('./Controllers/raceResults.js');
 
 const comments = require('./Controllers/comments.js');
 
@@ -34,6 +35,7 @@ app.get('/news', news);
 app.post('/news/article', news);
 app.put('/submit-comment', comments);
 app.post('/calendar', calendar);
+app.post('/race-results', raceResults);
 
 // Heroku deployment compatibility:
 if (process.env.NODE_ENV === 'production') {
