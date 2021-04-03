@@ -1,3 +1,7 @@
+.menu {
+  margin-bottom: 20px;
+}
+
 .content {
   display: flex;
   justify-content: center;

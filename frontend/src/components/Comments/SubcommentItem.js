@@ -15,7 +15,9 @@ export const SubcommentItem = ({ subcomment }) => {
         </div>
         <div className='comment__author-and-input'>
           <p className='comment__author'>{subcomment.author}</p>
-          <p className='comment__date'>{formatDate(subcomment.date)}</p>
+          <p className='comment__date'>
+            {formatDate.dateHour(subcomment.date)}
+          </p>
           <br />
           <p className='comment__input'>{subcomment.content}</p>
         </div>

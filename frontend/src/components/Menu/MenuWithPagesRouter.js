@@ -12,7 +12,15 @@ import { Join } from '../Pages/Join/Join';
 import { ArchivedSeasons } from '../Pages/ArchivedSeasons/ArchivedSeasons';
 import { Profile } from '../Pages/Profile/Profile';
 import { NotFound } from '../Pages/NotFound/NotFound';
+
 import { ArticlePage } from '../Pages/News/ArticlePage.js';
+import { Results } from '../Pages/Calendar/RaceSubPages/Results.js';
+import { Reports } from '../Pages/Calendar/RaceSubPages/Reports.js';
+import { Discussion } from '../Pages/Calendar/RaceSubPages/Discussion.js';
+import { Dotd } from '../Pages/Calendar/RaceSubPages/Dotd.js';
+import { Transmissions } from '../Pages/Calendar/RaceSubPages/Transmissions.js';
+import { Replays } from '../Pages/Calendar/RaceSubPages/Replays.js';
+
 import './MenuWithPagesRouter.css';
 
 export const MenuWithPagesRouter = () => {
@@ -25,7 +33,7 @@ export const MenuWithPagesRouter = () => {
 
   return (
     <section>
-      <nav>
+      <nav className='menu'>
         <ul className='dropdown'>
           <li>
             <Link to={`${match.url}/news`}>Newsy</Link>
@@ -94,6 +102,24 @@ export const MenuWithPagesRouter = () => {
           </Route>
           <Route exact path={`${match.path}/calendar`}>
             <Calendar />
+          </Route>
+          <Route path={`${match.path}/calendar/:raceId/results`}>
+            <Results />
+          </Route>
+          <Route path={`${match.path}/calendar/:raceId/reports`}>
+            <Reports />
+          </Route>
+          <Route path={`${match.path}/calendar/:raceId/discussion`}>
+            <Discussion />
+          </Route>
+          <Route path={`${match.path}/calendar/:raceId/dotd`}>
+            <Dotd />
+          </Route>
+          <Route path={`${match.path}/calendar/:raceId/transmissions`}>
+            <Transmissions />
+          </Route>
+          <Route path={`${match.path}/calendar/:raceId/replays`}>
+            <Replays />
           </Route>
           <Route exact path={`${match.path}/regulations`}>
             <Regulations />

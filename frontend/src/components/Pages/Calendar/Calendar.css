@@ -1,0 +1,109 @@
+.calendar-container {
+  display: flex;
+}
+
+.race__miniature {
+  position: relative;
+  border: 2px solid black;
+  border-radius: 5px;
+  margin: 10px;
+  width: 290px;
+  height: 220px;
+}
+
+.race-miniature-menu {
+  position: absolute;
+  top: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  height: 100%;
+  width: 100%;
+  margin: auto;
+  align-items: center;
+  justify-items: center;
+  background-color: rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(3px);
+}
+
+.race-miniature-menu__element button {
+  cursor: pointer;
+}
+
+.race__flag {
+  max-width: 25px;
+}
+
+.race__venue-and-flag {
+  display: flex;
+  align-items: center;
+}
+
+.race__venue {
+  margin-left: 5px;
+}
+
+.race__winners-or-map {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 150px;
+}
+
+.race__map {
+  max-width: 250px;
+  height: 120px;
+}
+
+.race__podium-container {
+  align-items: baseline;
+}
+
+.podium__result {
+  margin: 25px 10px 5px;
+}
+
+.podium__background {
+  height: 80px;
+  width: 70px;
+  position: relative;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  background-image: repeating-linear-gradient(
+    45deg,
+    #33343b,
+    #33343b 5px,
+    #272830 5px,
+    #272830 10px
+  );
+}
+
+.position-1 .podium__background {
+  height: 80px;
+  width: 85px;
+}
+
+.position-2 .podium__background {
+  height: 65px;
+  width: 75px;
+}
+
+.position-3 .podium__background {
+  height: 50px;
+  width: 70px;
+}
+
+.podium__name {
+  text-align: center;
+  word-break: break-all;
+}
+
+.notdisplayed {
+  display: none;
+}
+
+.displayed {
+  display: flex;
+  height: 20px;
+  margin: auto;
+}

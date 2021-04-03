@@ -8,7 +8,7 @@ export const NewsItem = ({ news }) => {
   return (
     <section className='news-item'>
       <br />
-      Date: {formatDate(news.date)}
+      Date: {formatDate.dateHour(news.date)}
       <br />
       Author: {news.author}
       <br />
