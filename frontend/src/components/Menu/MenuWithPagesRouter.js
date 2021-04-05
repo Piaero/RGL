@@ -14,7 +14,7 @@ import { Profile } from '../Pages/Profile/Profile';
 import { NotFound } from '../Pages/NotFound/NotFound';
 
 import { ArticlePage } from '../Pages/News/ArticlePage.js';
-import { Results } from '../Pages/Calendar/RaceSubPages/Results.js';
+import { ResultsPage } from '../Pages/Calendar/RaceSubPages/ResultsPage.js';
 import { Reports } from '../Pages/Calendar/RaceSubPages/Reports.js';
 import { Discussion } from '../Pages/Calendar/RaceSubPages/Discussion.js';
 import { Dotd } from '../Pages/Calendar/RaceSubPages/Dotd.js';
@@ -104,7 +104,7 @@ export const MenuWithPagesRouter = () => {
             <Calendar />
           </Route>
           <Route path={`${match.path}/calendar/:raceId/results`}>
-            <Results />
+            <ResultsPage />
           </Route>
           <Route path={`${match.path}/calendar/:raceId/reports`}>
             <Reports />
