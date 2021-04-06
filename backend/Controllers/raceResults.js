@@ -17,10 +17,6 @@ client.connect((err) => {
 });
 
 router.post('/race-results', (req, res) => {
-  const convertIntervalsToEventTime = (winnersTime, usersTime) => {
-    return;
-  };
-
   const adjustPenalties = (originalTime, penaltySeconds) => {
     originalTime.setSeconds(originalTime.getSeconds() + penaltySeconds);
     return originalTime;
@@ -96,11 +92,7 @@ router.post('/race-results', (req, res) => {
         );
       }
 
-      return results;
-    })
-    .then((d) => {
-      // console.log(d);
-      res.json(d[0]);
+      res.json(results[0]);
     })
     .catch((error) => console.error(error));
 });
