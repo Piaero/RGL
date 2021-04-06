@@ -52,6 +52,9 @@ export const ResultsPage = () => {
                 results={
                   results.pages.calendar.races[0].adjustedResults[raceSession]
                 }
+                pointsSystem={
+                  results.pages.calendar.raceFormat[raceSession].pointsSystem
+                }
                 key={index}
               />
             );
