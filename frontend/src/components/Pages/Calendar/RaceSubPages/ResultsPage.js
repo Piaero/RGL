@@ -5,7 +5,7 @@ import { RaceResults } from './RaceResults.js';
 
 import './RaceSubPages.css';
 
-export const ResultsPage = ({}) => {
+export const ResultsPage = () => {
   let match = useRouteMatch();
   let division = match.url.match(/[^/]+/);
   let resultsDetails = {
@@ -45,21 +45,18 @@ export const ResultsPage = ({}) => {
         {Object.keys(results.pages.calendar.raceFormat).map(
           (raceSession, index) => {
             return (
-              <div>
-                <p>{results.pages.calendar.raceFormat[raceSession].name}</p>
-                <p>
-                  {JSON.stringify(
-                    results.pages.calendar.races[0].adjustedResults[raceSession]
-                  )}
-                </p>
-              </div>
+              <RaceResults
+                raceSession={
+                  results.pages.calendar.raceFormat[raceSession].name
+                }
+                results={
+                  results.pages.calendar.races[0].adjustedResults[raceSession]
+                }
+                key={index}
+              />
             );
           }
         )}
-        {/* {JSON.stringify(results.pages.calendar.races[0].adjustedResults)} */}
-        {/* <p>Results are {JSON.stringify(results)}</p> */}
-        {/* 
-        Wywołanie Race Results, ze wskazaniem sesji np. Race, qualyfing Race */}
       </section>
     );
   }
