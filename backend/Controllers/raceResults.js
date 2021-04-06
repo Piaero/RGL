@@ -91,7 +91,11 @@ router.post('/race-results', (req, res) => {
         qualifyingResultsTimesAdjusted.push(qualifyingResultsToSort[driver]);
       }
 
-      console.log(qualifyingResultsTimesAdjusted);
+      qualifyingResultsTimesAdjusted.sort((a, b) => {
+        return new Date(a.adjustedEventTime) - new Date(b.adjustedEventTime);
+      });
+
+      results[0].adjustedResults = qualifyingResultsTimesAdjusted;
       return results;
     })
     .then((d) => {
