@@ -47,55 +47,55 @@ router.post('/race-results', (req, res) => {
     })
     .toArray()
     .then((results) => {
-      // jeżeli czas już jest formatem date (bo np. został wprowadzony z frontendu), to nie trzeba przerabiać stringa na datę
+      let raceFormats = Object.keys(results[0].pages.calendar.raceFormat);
+      results[0].pages.calendar.races[0].adjustedResults = {};
 
-      // console.log(
-      //   timeConvert.sumTwoTimeStrings('20:13.282', '5.856').toString()
-      // );
+      for (const raceSession of raceFormats) {
+        let sessionResultsToSort =
+          results[0].pages.calendar.races[0].results[raceSession];
 
-      let resultsToSort = results[0].pages.calendar.races[0].results;
-      let raceFormat = results[0].pages.calendar.raceFormat;
+        results[0].pages.calendar.races[0].adjustedResults[raceSession] = [];
 
-      let qualifyingResultsToSort =
-        results[0].pages.calendar.races[0].results.qualifyingSprint;
+        let referenceTimeString = sessionResultsToSort[1].eventTime;
 
-      let qualifyingResultsTimesAdjusted = [];
-
-      let referenceTimeString = qualifyingResultsToSort[1].eventTime;
-
-      for (const driver in qualifyingResultsToSort) {
-        let gapToReferenceTime = qualifyingResultsToSort[driver].eventTime;
-        let calculatedEventTimeObject = timeConvert.sumTwoTimeStrings(
-          gapToReferenceTime,
-          referenceTimeString
-        );
-
-        if (driver == 1) {
-          qualifyingResultsToSort[
-            driver
-          ].eventTime = timeConvert.raceTimeFromString(referenceTimeString);
-
-          qualifyingResultsToSort[driver].adjustedEventTime = adjustPenalties(
-            timeConvert.raceTimeFromString(referenceTimeString),
-            qualifyingResultsToSort[driver].juryPenalties
+        for (const driver in sessionResultsToSort) {
+          let gapToReferenceTime = sessionResultsToSort[driver].eventTime;
+          let calculatedEventTimeObject = timeConvert.sumTwoTimeStrings(
+            gapToReferenceTime,
+            referenceTimeString
           );
-        } else {
-          qualifyingResultsToSort[driver].eventTime = calculatedEventTimeObject;
 
-          qualifyingResultsToSort[driver].adjustedEventTime = adjustPenalties(
-            new Date(qualifyingResultsToSort[driver].eventTime),
-            qualifyingResultsToSort[driver].juryPenalties
+          if (driver == 1) {
+            sessionResultsToSort[
+              driver
+            ].eventTime = timeConvert.raceTimeFromString(referenceTimeString);
+
+            sessionResultsToSort[driver].adjustedEventTime = adjustPenalties(
+              timeConvert.raceTimeFromString(referenceTimeString),
+              sessionResultsToSort[driver].juryPenalties
+            );
+          } else {
+            sessionResultsToSort[driver].eventTime = calculatedEventTimeObject;
+
+            sessionResultsToSort[driver].adjustedEventTime = adjustPenalties(
+              new Date(sessionResultsToSort[driver].eventTime),
+              sessionResultsToSort[driver].juryPenalties
+            );
+          }
+          results[0].pages.calendar.races[0].adjustedResults[raceSession].push(
+            sessionResultsToSort[driver]
           );
         }
 
-        qualifyingResultsTimesAdjusted.push(qualifyingResultsToSort[driver]);
+        results[0].pages.calendar.races[0].adjustedResults[raceSession].sort(
+          (a, b) => {
+            return (
+              new Date(a.adjustedEventTime) - new Date(b.adjustedEventTime)
+            );
+          }
+        );
       }
 
-      qualifyingResultsTimesAdjusted.sort((a, b) => {
-        return new Date(a.adjustedEventTime) - new Date(b.adjustedEventTime);
-      });
-
-      results[0].adjustedResults = qualifyingResultsTimesAdjusted;
       return results;
     })
     .then((d) => {

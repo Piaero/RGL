@@ -37,7 +37,27 @@ export const ResultsPage = ({}) => {
         <h2>RaceId: {match.params.raceId}</h2>
         <h2>Division: {resultsDetails.division}</h2>
         Results Match Url is: {JSON.stringify(match)}
-        <p>Results are {JSON.stringify(results)}</p>
+        <p>------------------</p>
+        <p>{JSON.stringify(results.pages.calendar.raceFormat)}</p>
+        <p>------------------</p>
+        <p>{Object.keys(results.pages.calendar.raceFormat)}</p>
+        <p>------------------</p>
+        {Object.keys(results.pages.calendar.raceFormat).map(
+          (raceSession, index) => {
+            return (
+              <div>
+                <p>{results.pages.calendar.raceFormat[raceSession].name}</p>
+                <p>
+                  {JSON.stringify(
+                    results.pages.calendar.races[0].adjustedResults[raceSession]
+                  )}
+                </p>
+              </div>
+            );
+          }
+        )}
+        {/* {JSON.stringify(results.pages.calendar.races[0].adjustedResults)} */}
+        {/* <p>Results are {JSON.stringify(results)}</p> */}
         {/* 
         Wywołanie Race Results, ze wskazaniem sesji np. Race, qualyfing Race */}
       </section>
