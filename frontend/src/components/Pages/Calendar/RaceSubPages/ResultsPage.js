@@ -29,7 +29,7 @@ export const ResultsPage = () => {
 
   if (results.length === 0) {
     return <section>Ładowanie wyników...</section>;
-  } else if (results.pages.calendar.races[0].results === null) {
+  } else if (results.calendar.races[0].results === null) {
     return <section>Wyniki nie są jeszcze dostępne</section>;
   } else {
     return (
@@ -38,28 +38,22 @@ export const ResultsPage = () => {
         <h2>Division: {resultsDetails.division}</h2>
         Results Match Url is: {JSON.stringify(match)}
         <p>------------------</p>
-        <p>{JSON.stringify(results.pages.calendar.raceFormat)}</p>
+        <p>{JSON.stringify(results.calendar.raceFormat)}</p>
         <p>------------------</p>
-        <p>{Object.keys(results.pages.calendar.raceFormat)}</p>
+        <p>{Object.keys(results.calendar.raceFormat)}</p>
         <p>------------------</p>
-        {Object.keys(results.pages.calendar.raceFormat).map(
-          (raceSession, index) => {
-            return (
-              <RaceResults
-                raceSession={
-                  results.pages.calendar.raceFormat[raceSession].name
-                }
-                results={
-                  results.pages.calendar.races[0].adjustedResults[raceSession]
-                }
-                pointsSystem={
-                  results.pages.calendar.raceFormat[raceSession].pointsSystem
-                }
-                key={index}
-              />
-            );
-          }
-        )}
+        {Object.keys(results.calendar.raceFormat).map((raceSession, index) => {
+          return (
+            <RaceResults
+              raceSession={results.calendar.raceFormat[raceSession].name}
+              results={results.calendar.races[0].adjustedResults[raceSession]}
+              pointsSystem={
+                results.calendar.raceFormat[raceSession].pointsSystem
+              }
+              key={index}
+            />
+          );
+        })}
       </section>
     );
   }

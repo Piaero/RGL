@@ -26,31 +26,31 @@ router.post('/race-results', (req, res) => {
     .db('RGL')
     .collection('divisions')
     .find({
-      'pages.calendar.races.country': req.body.resultsDetails.country,
+      'calendar.races.country': req.body.resultsDetails.country,
       division: req.body.resultsDetails.division,
     })
     .collation({ locale: 'en', strength: 1 })
     .project({
-      'pages.calendar.seasonName': 1,
-      'pages.calendar.raceFormat': 1,
-      'pages.calendar.races.venue': 1,
-      'pages.calendar.races.date': 1,
-      'pages.calendar.races.date': 1,
-      'pages.calendar.races.results.$': 1,
+      'calendar.seasonName': 1,
+      'calendar.raceFormat': 1,
+      'calendar.races.venue': 1,
+      'calendar.races.date': 1,
+      'calendar.races.date': 1,
+      'calendar.races.results.$': 1,
       division: 1,
       game: 1,
       gameLogo: 1,
     })
     .toArray()
     .then((results) => {
-      let raceFormats = Object.keys(results[0].pages.calendar.raceFormat);
-      results[0].pages.calendar.races[0].adjustedResults = {};
+      let raceFormats = Object.keys(results[0].calendar.raceFormat);
+      results[0].calendar.races[0].adjustedResults = {};
 
       for (const raceSession of raceFormats) {
         let sessionResultsToSort =
-          results[0].pages.calendar.races[0].results[raceSession];
+          results[0].calendar.races[0].results[raceSession];
 
-        results[0].pages.calendar.races[0].adjustedResults[raceSession] = [];
+        results[0].calendar.races[0].adjustedResults[raceSession] = [];
 
         let referenceTimeString = sessionResultsToSort[1].eventTime;
 
@@ -78,12 +78,12 @@ router.post('/race-results', (req, res) => {
               sessionResultsToSort[driver].juryPenalties
             );
           }
-          results[0].pages.calendar.races[0].adjustedResults[raceSession].push(
+          results[0].calendar.races[0].adjustedResults[raceSession].push(
             sessionResultsToSort[driver]
           );
         }
 
-        results[0].pages.calendar.races[0].adjustedResults[raceSession].sort(
+        results[0].calendar.races[0].adjustedResults[raceSession].sort(
           (a, b) => {
             return (
               new Date(a.adjustedEventTime) - new Date(b.adjustedEventTime)

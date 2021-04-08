@@ -27,7 +27,7 @@ export const Calendar = () => {
   } else {
     return (
       <section className='calendar-container'>
-        {calendar?.pages?.calendar?.races?.map((race, index) => {
+        {calendar?.calendar?.races?.map((race, index) => {
           return (
             <RaceMiniature race={race} key={index} routerPath={match.url} />
           );
