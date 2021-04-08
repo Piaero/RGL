@@ -36,12 +36,12 @@ export const RaceResults = ({ raceSession, results, pointsSystem }) => {
                 <td>team API</td>
                 <td>teamlogo API</td>
                 <td>{driver.bestTime}</td>
-                <td>{driver.eventTime}</td>
+                <td>{driver.adjustedEventTime}</td>
                 <td>{driver.startingPosition}</td>
                 <td>{driver.startingPosition - index - 1}</td>
                 <td>{driver.stops}</td>
                 <td>
-                  {driver.juryPenalties == 0 ? null : driver.juryPenalties}
+                  {driver.juryPenalties === 0 ? null : driver.juryPenalties}
                 </td>
                 <td>{pointsSystem[index + 1]}</td>
               </tr>

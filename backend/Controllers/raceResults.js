@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 const MongoClient = require('mongodb').MongoClient;
 
-var timeConvert = require('../utilities/raceTimeFromString.js');
+var timeConvert = require('../utilities/timeConvert.js');
 
 const uri = process.env.MONGODB_URI;
 const client = new MongoClient(uri, {
@@ -20,6 +20,16 @@ router.post('/race-results', (req, res) => {
   const adjustPenalties = (originalTime, penaltySeconds) => {
     originalTime.setSeconds(originalTime.getSeconds() + penaltySeconds);
     return originalTime;
+  };
+
+  const formatRaceTime = (index, firstDriverTime, driverTime) => {
+    if (index == 0) {
+      return timeConvert.timeStringFromDateObject(firstDriverTime);
+    } else {
+      return timeConvert.timeStringFromDateObject(
+        new Date(Date.parse(firstDriverTime) - Date.parse(driverTime))
+      );
+    }
   };
 
   client
@@ -64,10 +74,12 @@ router.post('/race-results', (req, res) => {
           if (driver == 1) {
             sessionResultsToSort[
               driver
-            ].eventTime = timeConvert.raceTimeFromString(referenceTimeString);
+            ].eventTime = timeConvert.raceTimeObjectFromString(
+              referenceTimeString
+            );
 
             sessionResultsToSort[driver].adjustedEventTime = adjustPenalties(
-              timeConvert.raceTimeFromString(referenceTimeString),
+              timeConvert.raceTimeObjectFromString(referenceTimeString),
               sessionResultsToSort[driver].juryPenalties
             );
           } else {
@@ -92,7 +104,41 @@ router.post('/race-results', (req, res) => {
         );
       }
 
-      res.json(results[0]);
+      return results[0];
+    })
+    .then((results) => {
+      let raceFormats = Object.keys(results.calendar.raceFormat);
+      // results[0].calendar.races[0].adjustedResults = {};
+
+      for (const raceSession of raceFormats) {
+        let firstDriverTime =
+          results.calendar.races[0].adjustedResults[raceSession][0]
+            .adjustedEventTime;
+
+        for (
+          let i = 0;
+          i < results.calendar.races[0].adjustedResults[raceSession].length;
+          i++
+        ) {
+          let driver =
+            results.calendar.races[0].adjustedResults[raceSession][i];
+
+          driver.adjustedEventTime = formatRaceTime(
+            i,
+            firstDriverTime,
+            driver.adjustedEventTime
+          );
+        }
+
+        // for (const [index, driver] of [
+        //   results.calendar.races[0].adjustedResults[raceSession],
+        // ].entries()) {
+        //   // console.log(driver.adjustedEventTime.getHours());
+        //   // driver.adjustedEventTime = driver.adjustedEventTime.getHours();
+        // }
+      }
+      // console.log(JSON.stringify(results, null, 2));
+      res.json(results);
     })
     .catch((error) => console.error(error));
 });
