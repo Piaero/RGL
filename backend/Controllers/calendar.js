@@ -19,7 +19,7 @@ router.post('/calendar', (req, res) => {
     .db('RGL')
     .collection('divisions')
     .find({ division: req.body.divisionString })
-    .project({ seasons: 1, division: 1, game: 1, gameLogo: 1 })
+    .project({ 'pages.calendar': 1, division: 1, game: 1, gameLogo: 1 })
     .toArray()
     .then((results) => {
       res.json(results[0]);
