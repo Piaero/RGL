@@ -17,12 +17,20 @@ client.connect((err) => {
 });
 
 router.post('/race-results', (req, res) => {
+  const regExp = /lap/gi;
+
   const adjustPenalties = (originalTime, penaltySeconds) => {
-    return originalTime + penaltySeconds * 1000;
+    if (regExp.test(originalTime)) {
+      return originalTime;
+    } else {
+      return originalTime + penaltySeconds * 1000;
+    }
   };
 
   const formatRaceTime = (index, firstDriverTime, driverTime) => {
-    if (index == 0) {
+    if (regExp.test(driverTime)) {
+      return driverTime;
+    } else if (index == 0) {
       return timeConvert.timeStringFromMilliseconds(firstDriverTime);
     } else {
       return (
@@ -95,7 +103,12 @@ router.post('/race-results', (req, res) => {
 
         results[0].calendar.races[0].adjustedResults[raceSession].sort(
           (a, b) => {
-            return a.adjustedEventTime - b.adjustedEventTime;
+            return (
+              regExp.test(a.adjustedEventTime) -
+                regExp.test(b.adjustedEventTime) ||
+              +(a.adjustedEventTime > b.adjustedEventTime) ||
+              -(a.adjustedEventTime < b.adjustedEventTime)
+            );
           }
         );
       }
