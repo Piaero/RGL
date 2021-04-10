@@ -1,7 +1,5 @@
 module.exports = {
   timeStringFromMilliseconds: (time) => {
-    console.log(time);
-
     let milliseconds = time % 1000;
     time = (time - milliseconds) / 1000;
     let seconds = time % 60;
@@ -68,7 +66,7 @@ module.exports = {
     return timeInMilliseconds;
   },
   sumTwoTimeStrings: (driverGapString, referenceTimeString) => {
-    const regExp = /lap/gi;
+    const regExp = /[a-z]/gi;
 
     if (regExp.test(driverGapString)) {
       return driverGapString;

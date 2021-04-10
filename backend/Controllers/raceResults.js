@@ -17,7 +17,7 @@ client.connect((err) => {
 });
 
 router.post('/race-results', (req, res) => {
-  const regExp = /lap/gi;
+  const regExp = /[a-z]/gi;
 
   const adjustPenalties = (originalTime, penaltySeconds) => {
     if (regExp.test(originalTime)) {
@@ -27,7 +27,11 @@ router.post('/race-results', (req, res) => {
     }
   };
 
-  const formatRaceTime = (index, firstDriverTime, driverTime) => {
+  const formatRaceTimeFromMilliseconds = (
+    index,
+    firstDriverTime,
+    driverTime
+  ) => {
     if (regExp.test(driverTime)) {
       return driverTime;
     } else if (index == 0) {
@@ -130,7 +134,7 @@ router.post('/race-results', (req, res) => {
           let driver =
             results.calendar.races[0].adjustedResults[raceSession][i];
 
-          driver.adjustedEventTime = formatRaceTime(
+          driver.adjustedEventTime = formatRaceTimeFromMilliseconds(
             i,
             firstDriverTime,
             driver.adjustedEventTime
