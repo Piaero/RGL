@@ -44,6 +44,40 @@ router.post('/race-results', (req, res) => {
     }
   };
 
+  const formatAllTimesToTimeString = (results) => {
+    let raceFormats = Object.keys(results.calendar.raceFormat);
+
+    for (const raceSession of raceFormats) {
+      let firstDriverTime =
+        results.calendar.races[0].adjustedResults[raceSession][0]
+          .adjustedEventTime;
+
+      for (
+        let i = 0;
+        i < results.calendar.races[0].adjustedResults[raceSession].length;
+        i++
+      ) {
+        let driver = results.calendar.races[0].adjustedResults[raceSession][i];
+
+        driver.adjustedEventTime = formatRaceTimeFromMilliseconds(
+          i,
+          firstDriverTime,
+          driver.adjustedEventTime
+        );
+      }
+    }
+  };
+
+  const sortDriversByEventTime = (raceSession) => {
+    raceSession.sort((a, b) => {
+      return (
+        regExp.test(a.adjustedEventTime) - regExp.test(b.adjustedEventTime) ||
+        +(a.adjustedEventTime > b.adjustedEventTime) ||
+        -(a.adjustedEventTime < b.adjustedEventTime)
+      );
+    });
+  };
+
   client
     .db('RGL')
     .collection('divisions')
@@ -105,44 +139,14 @@ router.post('/race-results', (req, res) => {
           );
         }
 
-        results[0].calendar.races[0].adjustedResults[raceSession].sort(
-          (a, b) => {
-            return (
-              regExp.test(a.adjustedEventTime) -
-                regExp.test(b.adjustedEventTime) ||
-              +(a.adjustedEventTime > b.adjustedEventTime) ||
-              -(a.adjustedEventTime < b.adjustedEventTime)
-            );
-          }
+        sortDriversByEventTime(
+          results[0].calendar.races[0].adjustedResults[raceSession]
         );
       }
-      return results[0];
-    })
-    .then((results) => {
-      let raceFormats = Object.keys(results.calendar.raceFormat);
 
-      for (const raceSession of raceFormats) {
-        let firstDriverTime =
-          results.calendar.races[0].adjustedResults[raceSession][0]
-            .adjustedEventTime;
+      formatAllTimesToTimeString(results[0]);
 
-        for (
-          let i = 0;
-          i < results.calendar.races[0].adjustedResults[raceSession].length;
-          i++
-        ) {
-          let driver =
-            results.calendar.races[0].adjustedResults[raceSession][i];
-
-          driver.adjustedEventTime = formatRaceTimeFromMilliseconds(
-            i,
-            firstDriverTime,
-            driver.adjustedEventTime
-          );
-        }
-      }
-
-      res.json(results);
+      res.json(results[0]);
     })
     .catch((error) => console.error(error));
 });
