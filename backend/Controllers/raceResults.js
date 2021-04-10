@@ -64,9 +64,6 @@ router.post('/race-results', (req, res) => {
 
         let absoluteTimeString = sessionResultsToSort[1].eventTime;
 
-        // //TO DELETE
-        // absoluteTimeString = '2:05:29.282';
-
         for (const driver in sessionResultsToSort) {
           let gapToWinnersTime = sessionResultsToSort[driver].eventTime;
           let driversAbsoluteTime = timeConvert.sumTwoTimeStrings(
@@ -86,14 +83,6 @@ router.post('/race-results', (req, res) => {
               sessionResultsToSort[driver].juryPenalties
             );
           } else {
-            //   driversTimeInMilliseconds = driversAbsoluteTime;
-
-            //   sessionResultsToSort[driver].adjustedEventTime = adjustPenalties(
-            //     driversTimeInMilliseconds,
-            //     sessionResultsToSort[driver].juryPenalties
-            //   );
-            // }
-
             sessionResultsToSort[driver].adjustedEventTime = adjustPenalties(
               driversAbsoluteTime,
               sessionResultsToSort[driver].juryPenalties
