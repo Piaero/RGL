@@ -18,16 +18,16 @@ client.connect((err) => {
 
 router.post('/race-results', (req, res) => {
   const adjustPenalties = (originalTime, penaltySeconds) => {
-    originalTime.setSeconds(originalTime.getSeconds() + penaltySeconds);
-    return originalTime;
+    return originalTime + penaltySeconds * 1000;
   };
 
   const formatRaceTime = (index, firstDriverTime, driverTime) => {
     if (index == 0) {
-      return timeConvert.timeStringFromDateObject(firstDriverTime);
+      return timeConvert.timeStringFromMilliseconds(firstDriverTime);
     } else {
-      return timeConvert.timeStringFromDateObject(
-        new Date(Date.parse(firstDriverTime) - Date.parse(driverTime))
+      return (
+        '+' +
+        timeConvert.timeStringFromMilliseconds(driverTime - firstDriverTime)
       );
     }
   };
@@ -62,31 +62,40 @@ router.post('/race-results', (req, res) => {
 
         results[0].calendar.races[0].adjustedResults[raceSession] = [];
 
-        let referenceTimeString = sessionResultsToSort[1].eventTime;
+        let absoluteTimeString = sessionResultsToSort[1].eventTime;
+
+        // //TO DELETE
+        // absoluteTimeString = '2:05:29.282';
 
         for (const driver in sessionResultsToSort) {
-          let gapToReferenceTime = sessionResultsToSort[driver].eventTime;
-          let calculatedEventTimeObject = timeConvert.sumTwoTimeStrings(
-            gapToReferenceTime,
-            referenceTimeString
+          let gapToWinnersTime = sessionResultsToSort[driver].eventTime;
+          let driversAbsoluteTime = timeConvert.sumTwoTimeStrings(
+            gapToWinnersTime,
+            absoluteTimeString
           );
+          let driversTimeInMilliseconds =
+            sessionResultsToSort[driver].eventTimeInMilliseconds;
 
           if (driver == 1) {
-            sessionResultsToSort[
-              driver
-            ].eventTime = timeConvert.raceTimeObjectFromString(
-              referenceTimeString
+            driversTimeInMilliseconds = timeConvert.raceTimeFromString(
+              absoluteTimeString
             );
 
             sessionResultsToSort[driver].adjustedEventTime = adjustPenalties(
-              timeConvert.raceTimeObjectFromString(referenceTimeString),
+              driversTimeInMilliseconds,
               sessionResultsToSort[driver].juryPenalties
             );
           } else {
-            sessionResultsToSort[driver].eventTime = calculatedEventTimeObject;
+            //   driversTimeInMilliseconds = driversAbsoluteTime;
+
+            //   sessionResultsToSort[driver].adjustedEventTime = adjustPenalties(
+            //     driversTimeInMilliseconds,
+            //     sessionResultsToSort[driver].juryPenalties
+            //   );
+            // }
 
             sessionResultsToSort[driver].adjustedEventTime = adjustPenalties(
-              new Date(sessionResultsToSort[driver].eventTime),
+              driversAbsoluteTime,
               sessionResultsToSort[driver].juryPenalties
             );
           }
@@ -97,18 +106,14 @@ router.post('/race-results', (req, res) => {
 
         results[0].calendar.races[0].adjustedResults[raceSession].sort(
           (a, b) => {
-            return (
-              new Date(a.adjustedEventTime) - new Date(b.adjustedEventTime)
-            );
+            return a.adjustedEventTime - b.adjustedEventTime;
           }
         );
       }
-
       return results[0];
     })
     .then((results) => {
       let raceFormats = Object.keys(results.calendar.raceFormat);
-      // results[0].calendar.races[0].adjustedResults = {};
 
       for (const raceSession of raceFormats) {
         let firstDriverTime =
@@ -129,15 +134,8 @@ router.post('/race-results', (req, res) => {
             driver.adjustedEventTime
           );
         }
-
-        // for (const [index, driver] of [
-        //   results.calendar.races[0].adjustedResults[raceSession],
-        // ].entries()) {
-        //   // console.log(driver.adjustedEventTime.getHours());
-        //   // driver.adjustedEventTime = driver.adjustedEventTime.getHours();
-        // }
       }
-      // console.log(JSON.stringify(results, null, 2));
+
       res.json(results);
     })
     .catch((error) => console.error(error));
