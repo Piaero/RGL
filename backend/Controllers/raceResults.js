@@ -146,7 +146,10 @@ router.post('/race-results', (req, res) => {
 
       formatAllTimesToTimeString(results[0]);
 
-      res.json(results[0]);
+      return results[0];
+    })
+    .then((results) => {
+      res.json(results);
     })
     .catch((error) => console.error(error));
 });
