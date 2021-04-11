@@ -78,6 +78,47 @@ router.post('/race-results', (req, res) => {
     });
   };
 
+  const setRaceResults = (results) => {
+    let raceFormats = Object.keys(results.calendar.raceFormat);
+    let selectedRace = results.calendar.races[0];
+
+    selectedRace.adjustedResults = {};
+
+    for (const raceSession of raceFormats) {
+      let sessionResults = selectedRace.results[raceSession];
+
+      selectedRace.adjustedResults[raceSession] = [];
+
+      let absoluteTimeString = sessionResults[1].eventTime;
+
+      for (const driver in sessionResults) {
+        if (driver == 1) {
+          let driversTimeInMilliseconds = timeConvert.raceTimeFromString(
+            absoluteTimeString
+          );
+
+          sessionResults[driver].adjustedEventTime = adjustPenalties(
+            driversTimeInMilliseconds,
+            sessionResults[driver].juryPenalties
+          );
+        } else {
+          let driversAbsoluteTime = timeConvert.sumTwoTimeStrings(
+            sessionResults[driver].eventTime,
+            absoluteTimeString
+          );
+
+          sessionResults[driver].adjustedEventTime = adjustPenalties(
+            driversAbsoluteTime,
+            sessionResults[driver].juryPenalties
+          );
+        }
+        selectedRace.adjustedResults[raceSession].push(sessionResults[driver]);
+      }
+
+      sortDriversByEventTime(selectedRace.adjustedResults[raceSession]);
+    }
+  };
+
   client
     .db('RGL')
     .collection('divisions')
@@ -99,47 +140,7 @@ router.post('/race-results', (req, res) => {
     })
     .toArray()
     .then((results) => {
-      let raceFormats = Object.keys(results[0].calendar.raceFormat);
-      let selectedRace = results[0].calendar.races[0];
-      selectedRace.adjustedResults = {};
-
-      for (const raceSession of raceFormats) {
-        let sessionResults = selectedRace.results[raceSession];
-
-        selectedRace.adjustedResults[raceSession] = [];
-
-        let absoluteTimeString = sessionResults[1].eventTime;
-
-        for (const driver in sessionResults) {
-          if (driver == 1) {
-            let driversTimeInMilliseconds = timeConvert.raceTimeFromString(
-              absoluteTimeString
-            );
-
-            sessionResults[driver].adjustedEventTime = adjustPenalties(
-              driversTimeInMilliseconds,
-              sessionResults[driver].juryPenalties
-            );
-          } else {
-            let gapToWinnersTime = sessionResults[driver].eventTime;
-
-            let driversAbsoluteTime = timeConvert.sumTwoTimeStrings(
-              gapToWinnersTime,
-              absoluteTimeString
-            );
-
-            sessionResults[driver].adjustedEventTime = adjustPenalties(
-              driversAbsoluteTime,
-              sessionResults[driver].juryPenalties
-            );
-          }
-          selectedRace.adjustedResults[raceSession].push(
-            sessionResults[driver]
-          );
-        }
-
-        sortDriversByEventTime(selectedRace.adjustedResults[raceSession]);
-      }
+      setRaceResults(results[0]);
 
       formatAllTimesToTimeString(results[0]);
 
