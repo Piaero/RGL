@@ -100,48 +100,45 @@ router.post('/race-results', (req, res) => {
     .toArray()
     .then((results) => {
       let raceFormats = Object.keys(results[0].calendar.raceFormat);
-      results[0].calendar.races[0].adjustedResults = {};
+      let selectedRace = results[0].calendar.races[0];
+      selectedRace.adjustedResults = {};
 
       for (const raceSession of raceFormats) {
-        let sessionResultsToSort =
-          results[0].calendar.races[0].results[raceSession];
+        let sessionResults = selectedRace.results[raceSession];
 
-        results[0].calendar.races[0].adjustedResults[raceSession] = [];
+        selectedRace.adjustedResults[raceSession] = [];
 
-        let absoluteTimeString = sessionResultsToSort[1].eventTime;
+        let absoluteTimeString = sessionResults[1].eventTime;
 
-        for (const driver in sessionResultsToSort) {
-          let gapToWinnersTime = sessionResultsToSort[driver].eventTime;
-          let driversAbsoluteTime = timeConvert.sumTwoTimeStrings(
-            gapToWinnersTime,
-            absoluteTimeString
-          );
-          let driversTimeInMilliseconds =
-            sessionResultsToSort[driver].eventTimeInMilliseconds;
-
+        for (const driver in sessionResults) {
           if (driver == 1) {
-            driversTimeInMilliseconds = timeConvert.raceTimeFromString(
+            let driversTimeInMilliseconds = timeConvert.raceTimeFromString(
               absoluteTimeString
             );
 
-            sessionResultsToSort[driver].adjustedEventTime = adjustPenalties(
+            sessionResults[driver].adjustedEventTime = adjustPenalties(
               driversTimeInMilliseconds,
-              sessionResultsToSort[driver].juryPenalties
+              sessionResults[driver].juryPenalties
             );
           } else {
-            sessionResultsToSort[driver].adjustedEventTime = adjustPenalties(
+            let gapToWinnersTime = sessionResults[driver].eventTime;
+
+            let driversAbsoluteTime = timeConvert.sumTwoTimeStrings(
+              gapToWinnersTime,
+              absoluteTimeString
+            );
+
+            sessionResults[driver].adjustedEventTime = adjustPenalties(
               driversAbsoluteTime,
-              sessionResultsToSort[driver].juryPenalties
+              sessionResults[driver].juryPenalties
             );
           }
-          results[0].calendar.races[0].adjustedResults[raceSession].push(
-            sessionResultsToSort[driver]
+          selectedRace.adjustedResults[raceSession].push(
+            sessionResults[driver]
           );
         }
 
-        sortDriversByEventTime(
-          results[0].calendar.races[0].adjustedResults[raceSession]
-        );
+        sortDriversByEventTime(selectedRace.adjustedResults[raceSession]);
       }
 
       formatAllTimesToTimeString(results[0]);
