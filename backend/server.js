@@ -35,7 +35,7 @@ app.get('/news', news);
 app.post('/news/article', news);
 app.put('/submit-comment', comments);
 app.post('/calendar', calendar);
-app.post('/race-results', raceResults);
+app.get('/race-results', raceResults);
 
 // Heroku deployment compatibility:
 if (process.env.NODE_ENV === 'production') {

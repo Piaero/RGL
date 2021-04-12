@@ -8,21 +8,12 @@ import './RaceSubPages.css';
 export const ResultsPage = () => {
   let match = useRouteMatch();
   let division = match.url.match(/[^/]+/);
-  let resultsDetails = {
-    division: division[0],
-    country: match.params.raceId.replace('-', ' '),
-  };
+  let country = match.params.raceId.replace('-', ' ');
 
   const [results, setResults] = useState([]);
 
   useEffect(() => {
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ resultsDetails }),
-    };
-
-    fetch('/race-results', requestOptions)
+    fetch(`/race-results?division=${division[0]}&country=${country}`)
       .then((res) => res.json())
       .then((results) => setResults(results));
   }, []);
@@ -35,7 +26,7 @@ export const ResultsPage = () => {
     return (
       <section>
         <h2>RaceId: {match.params.raceId}</h2>
-        <h2>Division: {resultsDetails.division}</h2>
+        <h2>Division: {division[0]}</h2>
         Results Match Url is: {JSON.stringify(match)}
         <p>------------------</p>
         <p>{JSON.stringify(results.calendar.raceFormat)}</p>

@@ -16,7 +16,7 @@ client.connect((err) => {
   const countersCollection = db.collection('divisions');
 });
 
-router.post('/race-results', (req, res) => {
+router.get('/race-results', (req, res) => {
   const regExp = /[a-z]/gi;
 
   const adjustPenalties = (originalTime, penaltySeconds) => {
@@ -123,8 +123,8 @@ router.post('/race-results', (req, res) => {
     .db('RGL')
     .collection('divisions')
     .find({
-      'calendar.races.country': req.body.resultsDetails.country,
-      division: req.body.resultsDetails.division,
+      'calendar.races.country': req.query.country,
+      division: req.query.division,
     })
     .collation({ locale: 'en', strength: 1 })
     .project({
