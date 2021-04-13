@@ -119,6 +119,22 @@ router.get('/race-results', (req, res) => {
     }
   };
 
+  const getDrivers = async () => {
+    let drivers;
+    await client
+      .db('RGL')
+      .collection('divisions')
+      .find({
+        division: req.query.division,
+      })
+      .project({ 'calendar.drivers': 1 })
+      .toArray()
+      .then((results) => {
+        drivers = results;
+      });
+    return drivers[0];
+  };
+
   client
     .db('RGL')
     .collection('divisions')
@@ -150,6 +166,12 @@ router.get('/race-results', (req, res) => {
 
       return results[0];
     })
+    .then(async (results) => {
+      let drivers = await getDrivers();
+      console.log(JSON.stringify(drivers, null, 2));
+      return results;
+    })
+
     .then((results) => {
       res.json(results);
     })
