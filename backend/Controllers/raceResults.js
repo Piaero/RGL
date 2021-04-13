@@ -141,7 +141,7 @@ router.get('/race-results', (req, res) => {
     .toArray()
     .then((results) => {
       if (results[0].calendar.races[0].results === null) {
-        res.json(results[0]);
+        return results[0];
       }
 
       setRaceResults(results[0]);
