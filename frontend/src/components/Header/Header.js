@@ -1,4 +1,5 @@
 import React from 'react';
+import { Login } from '../Login/Login.js';
 import './Header.css';
 import RGLLogo from '../../assets/logo/rgl_logo.png';
 import facebookLogo from '../../assets/logo/facebook.png';
@@ -50,6 +51,7 @@ export class Header extends React.Component {
           </div>
           <h2 className='title'>Dywizja [[nazwa dywizji]] </h2>
         </div>
+        <Login></Login>
       </header>
     );
   }
