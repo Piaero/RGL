@@ -48,4 +48,9 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, '/views'));
+require('./config/steam')(app);
+app.use('/auth', require('./Controllers/auth'));
+
 app.listen(port, () => console.log(`Listening on port ${port}`));
