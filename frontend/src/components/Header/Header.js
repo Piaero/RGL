@@ -51,7 +51,7 @@ export class Header extends React.Component {
           </div>
           <h2 className='title'>Dywizja [[nazwa dywizji]] </h2>
         </div>
-        <Login></Login>
+        <Login />
       </header>
     );
   }
