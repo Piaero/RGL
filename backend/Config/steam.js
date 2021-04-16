@@ -1,6 +1,6 @@
 const passport = require('passport');
 const { Strategy } = require('passport-steam');
-const User = require('../models/user.model');
+const User = require('../Models/user.model');
 const MongoClient = require('mongodb').MongoClient;
 const ObjectId = require('mongodb').ObjectId;
 
