@@ -26,7 +26,6 @@ export const RaceResults = ({ raceSession, results, pointsSystem }) => {
         </thead>
 
         <tbody>
-          {console.log(results)}
           {results.map((driver, index) => {
             return (
               <tr key={index}>

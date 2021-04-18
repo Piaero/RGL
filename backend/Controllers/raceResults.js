@@ -135,6 +135,22 @@ router.get('/race-results', (req, res) => {
     return drivers;
   };
 
+  const getTeamsList = async () => {
+    let teams;
+    await client
+      .db('RGL')
+      .collection('divisions')
+      .find({
+        division: req.query.division,
+      })
+      .project({ 'calendar.teams': 1 })
+      .toArray()
+      .then((results) => {
+        teams = results[0].calendar.teams;
+      });
+    return teams;
+  };
+
   const setDriversDetails = async (results) => {
     let driversList = await getDriversList();
     let raceFormats = Object.keys(results.calendar.raceFormat);
@@ -158,6 +174,36 @@ router.get('/race-results', (req, res) => {
         selectedDriver.team = driversList.find(
           (driver) => driver.nick === selectedDriverNick
         ).team;
+      }
+    }
+
+    return results.calendar.races[0].adjustedResults;
+  };
+
+  const setTeamsDetails = async (results) => {
+    let teamsList = await getTeamsList();
+
+    let raceFormats = Object.keys(results.calendar.raceFormat);
+
+    for (const raceSession of raceFormats) {
+      let selectedSessionResults =
+        results.calendar.races[0].adjustedResults[raceSession];
+
+      for (const driver in selectedSessionResults) {
+        let selectedDriver = selectedSessionResults[driver];
+        let selectedDriverTeam = selectedSessionResults[driver].team;
+
+        selectedDriver.teamFullName = teamsList.find(
+          (team) => team.name === selectedDriverTeam
+        ).fullName;
+
+        selectedDriver.teamLogo = teamsList.find(
+          (team) => team.name === selectedDriverTeam
+        ).logo;
+
+        selectedDriver.teamColour = teamsList.find(
+          (team) => team.name === selectedDriverTeam
+        ).colour;
       }
     }
 
@@ -199,6 +245,11 @@ router.get('/race-results', (req, res) => {
       results.calendar.races[0].adjustedResults = await setDriversDetails(
         results
       );
+
+      results.calendar.races[0].adjustedResults = await setTeamsDetails(
+        results
+      );
+
       res.json(results);
     })
     .catch((error) => console.error(error));
