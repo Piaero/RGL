@@ -119,7 +119,7 @@ router.get('/race-results', (req, res) => {
     }
   };
 
-  const getDriversList = async () => {
+  const getDrivers = async () => {
     let drivers;
     await client
       .db('RGL')
@@ -130,38 +130,9 @@ router.get('/race-results', (req, res) => {
       .project({ 'calendar.drivers': 1 })
       .toArray()
       .then((results) => {
-        drivers = results[0].calendar.drivers;
+        drivers = results;
       });
-    return drivers;
-  };
-
-  const setDriversDetails = async (results) => {
-    let driversList = await getDriversList();
-    let raceFormats = Object.keys(results.calendar.raceFormat);
-
-    for (const raceSession of raceFormats) {
-      let selectedSessionResults =
-        results.calendar.races[0].adjustedResults[raceSession];
-
-      for (const driver in selectedSessionResults) {
-        let selectedDriver = selectedSessionResults[driver];
-        let selectedDriverNick = selectedSessionResults[driver].nick;
-
-        selectedDriver.fullName = driversList.find(
-          (driver) => driver.nick === selectedDriverNick
-        ).fullName;
-
-        selectedDriver.number = driversList.find(
-          (driver) => driver.nick === selectedDriverNick
-        ).number;
-
-        selectedDriver.team = driversList.find(
-          (driver) => driver.nick === selectedDriverNick
-        ).team;
-      }
-    }
-
-    return results.calendar.races[0].adjustedResults;
+    return drivers[0];
   };
 
   client
@@ -196,9 +167,12 @@ router.get('/race-results', (req, res) => {
       return results[0];
     })
     .then(async (results) => {
-      results.calendar.races[0].adjustedResults = await setDriversDetails(
-        results
-      );
+      let drivers = await getDrivers();
+      console.log(JSON.stringify(drivers, null, 2));
+      return results;
+    })
+
+    .then((results) => {
       res.json(results);
     })
     .catch((error) => console.error(error));
