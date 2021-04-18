@@ -182,7 +182,6 @@ router.get('/race-results', (req, res) => {
 
   const setTeamsDetails = async (results) => {
     let teamsList = await getTeamsList();
-
     let raceFormats = Object.keys(results.calendar.raceFormat);
 
     for (const raceSession of raceFormats) {
@@ -199,7 +198,7 @@ router.get('/race-results', (req, res) => {
 
         selectedDriver.teamLogo = teamsList.find(
           (team) => team.name === selectedDriverTeam
-        ).logo;
+        ).logoUrl;
 
         selectedDriver.teamColour = teamsList.find(
           (team) => team.name === selectedDriverTeam
