@@ -30,11 +30,17 @@ export const RaceResults = ({ raceSession, results, pointsSystem }) => {
             return (
               <tr key={index}>
                 <td>{index + 1}</td>
-                <td>nr API</td>
-                <td>nazwisko API API</td>
+                <td>{driver.number}</td>
+                <td>{driver.fullName}</td>
                 <td>{driver.name}</td>
-                <td>team API</td>
-                <td>teamlogo API</td>
+                <td>{driver.team}</td>
+                <td>
+                  <img
+                    src={require(`../../../../assets/teamLogo/${driver.teamLogo}.png`)}
+                    alt={driver.team}
+                    className='results__team-logo'
+                  />
+                </td>
                 <td>{driver.bestTime}</td>
                 <td>{driver.adjustedEventTime}</td>
                 <td>{driver.startingPosition}</td>
