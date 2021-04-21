@@ -32,7 +32,7 @@ export const RaceResults = ({ raceSession, results, pointsSystem }) => {
                 <td>{index + 1}</td>
                 <td>{driver.number}</td>
                 <td>{driver.fullName}</td>
-                <td>{driver.name}</td>
+                <td>{driver.nick}</td>
                 <td>{driver.team}</td>
                 <td>
                   <img
