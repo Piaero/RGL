@@ -38,10 +38,6 @@ export const ResultsPage = () => {
             <RaceResults
               raceSession={results.calendar.raceFormat[raceSession].name}
               results={results.calendar.races[0].adjustedResults[raceSession]}
-              // pointsSystem to be removed
-              pointsSystem={
-                results.calendar.raceFormat[raceSession].pointsSystem
-              }
               key={index}
             />
           );
