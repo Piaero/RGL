@@ -13,7 +13,6 @@ router.get(
   '/steam/return',
   passport.authenticate('steam', { session: false }),
   (req, res) => {
-    console.log('>>>>> LOGGED IN ', req.user);
     const token = jwt.sign({ user: req.user }, process.env.SECRET_KEY, {
       expiresIn: '2h',
     });

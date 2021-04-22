@@ -1,0 +1,13 @@
+.login-section {
+    margin-left: 30px;
+}
+
+.user-container {
+    display: flex;
+    align-items: center;
+}
+
+.user-container p {
+    margin-left: 5px;
+    font-weight: bold;
+}
