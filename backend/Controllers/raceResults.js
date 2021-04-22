@@ -101,6 +101,10 @@ router.get('/race-results', (req, res) => {
             driversTimeInMilliseconds,
             driver.juryPenalties
           );
+
+          driver.bestTimeInMilliseconds = timeConvert.raceTimeFromString(
+            driver.bestTime
+          );
         } else {
           let driversAbsoluteTime = timeConvert.sumTwoTimeStrings(
             driver.eventTime,
@@ -110,6 +114,10 @@ router.get('/race-results', (req, res) => {
           driver.adjustedEventTime = adjustPenalties(
             driversAbsoluteTime,
             driver.juryPenalties
+          );
+
+          driver.bestTimeInMilliseconds = timeConvert.raceTimeFromString(
+            driver.bestTime
           );
         }
         selectedRace.adjustedResults[raceSession].push(driver);
@@ -206,6 +214,34 @@ router.get('/race-results', (req, res) => {
     return results.calendar.races[0].adjustedResults;
   };
 
+  const setPoints = (results) => {
+    let raceFormats = Object.keys(results.calendar.raceFormat);
+
+    for (const raceSession of raceFormats) {
+      let selectedSessionResults =
+        results.calendar.races[0].adjustedResults[raceSession];
+      let pointsSystem = results.calendar.raceFormat[raceSession].pointsSystem;
+      let topDriversForFastestLap = pointsSystem.fastestLap?.pointsFromTop;
+      let pointsForFastestLap = pointsSystem.fastestLap?.points;
+
+      let fastestOfTheSession = selectedSessionResults
+        .slice(0, topDriversForFastestLap)
+        .sort((a, b) => {
+          return a.bestTimeInMilliseconds - b.bestTimeInMilliseconds;
+        })[0];
+
+      for (const [index, driver] of selectedSessionResults.entries()) {
+        driver.points = parseInt(pointsSystem[index + 1]);
+        if (pointsForFastestLap && driver.nick === fastestOfTheSession.nick) {
+          driver.points += pointsForFastestLap;
+          driver.fastestLap = true;
+        }
+      }
+    }
+
+    return results;
+  };
+
   client
     .db('RGL')
     .collection('divisions')
@@ -234,6 +270,8 @@ router.get('/race-results', (req, res) => {
       setRaceResults(results[0]);
 
       formatAllTimesToTimeString(results[0]);
+
+      setPoints(results[0]);
 
       return results[0];
     })

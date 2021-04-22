@@ -49,7 +49,7 @@ export const RaceResults = ({ raceSession, results, pointsSystem }) => {
                 <td>
                   {driver.juryPenalties === 0 ? null : driver.juryPenalties}
                 </td>
-                <td>{pointsSystem[index + 1]}</td>
+                <td>{driver.points}</td>
               </tr>
             );
           })}
