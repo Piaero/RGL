@@ -92,8 +92,6 @@ router.get('/race-results', (req, res) => {
       let absoluteTimeString = sessionResults[0].eventTime;
 
       for (const [index, driver] of sessionResults.entries()) {
-        console.log(driver);
-
         let penaltiesTime =
           driver.juryPenalties === null
             ? null
@@ -266,7 +264,7 @@ router.get('/race-results', (req, res) => {
       'calendar.raceFormat': 1,
       'calendar.races.venue': 1,
       'calendar.races.date': 1,
-      'calendar.races.date': 1,
+      'calendar.races.circuit': 1,
       'calendar.races.results.$': 1,
       division: 1,
       game: 1,
