@@ -92,6 +92,17 @@ router.get('/race-results', (req, res) => {
       let absoluteTimeString = sessionResults[0].eventTime;
 
       for (const [index, driver] of sessionResults.entries()) {
+        console.log(driver);
+
+        let penaltiesTime =
+          driver.juryPenalties === null
+            ? null
+            : driver.juryPenalties.reduce(
+                (previousValue, currentValue) =>
+                  previousValue + currentValue.seconds,
+                0
+              );
+
         if (index == 0) {
           let driversTimeInMilliseconds = timeConvert.raceTimeFromString(
             absoluteTimeString
@@ -99,7 +110,7 @@ router.get('/race-results', (req, res) => {
 
           driver.adjustedEventTime = adjustPenalties(
             driversTimeInMilliseconds,
-            driver.juryPenalties
+            penaltiesTime
           );
 
           driver.bestTimeInMilliseconds = timeConvert.raceTimeFromString(
@@ -113,7 +124,7 @@ router.get('/race-results', (req, res) => {
 
           driver.adjustedEventTime = adjustPenalties(
             driversAbsoluteTime,
-            driver.juryPenalties
+            penaltiesTime
           );
 
           driver.bestTimeInMilliseconds = timeConvert.raceTimeFromString(

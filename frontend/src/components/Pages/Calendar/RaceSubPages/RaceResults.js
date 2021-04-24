@@ -41,6 +41,10 @@ export const RaceResults = ({ raceSession, results }) => {
     }
   };
 
+  const penaltiesColour = (penaltyTime) => {
+    return penaltyTime > 0 ? 'red' : '#00ff00';
+  };
+
   return (
     <section className='results'>
       <h2>{raceSession}</h2>
@@ -65,6 +69,14 @@ export const RaceResults = ({ raceSession, results }) => {
 
         <tbody>
           {results.map((driver, index) => {
+            const penaltyTime = () => {
+              return driver.juryPenalties.reduce(
+                (previousValue, currentValue) =>
+                  previousValue + currentValue.seconds,
+                0
+              );
+            };
+
             return (
               <tr key={index}>
                 <td
@@ -108,7 +120,7 @@ export const RaceResults = ({ raceSession, results }) => {
                   {driver.bestTime}
                 </td>
                 <td className='results__event-time'>
-                  {driver.adjustedEventTime.toUpperCase()}
+                  {driver.adjustedEventTime}
                 </td>
                 <td className='results__starting-position-container'>
                   <span className='results__starting-position'>
@@ -124,10 +136,18 @@ export const RaceResults = ({ raceSession, results }) => {
                   </span>
                 </td>
                 <td className='results__stops'>{driver.stops}</td>
-                <td className='results__penalties'>
-                  {driver.juryPenalties === 0
+                <td
+                  className='results__penalties'
+                  style={{
+                    color:
+                      driver.juryPenalties === null || 0
+                        ? null
+                        : penaltiesColour(penaltyTime()),
+                  }}
+                >
+                  {driver.juryPenalties === null || 0
                     ? null
-                    : driver.juryPenalties + 's'}
+                    : penaltyTime() + 's'}
                 </td>
                 <td className='results__points'>{driver.points}</td>
               </tr>
