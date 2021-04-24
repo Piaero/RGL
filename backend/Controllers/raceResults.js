@@ -38,7 +38,7 @@ router.get('/race-results', (req, res) => {
       return timeConvert.timeStringFromMilliseconds(firstDriverTime);
     } else {
       return (
-        '+' +
+        '+ ' +
         timeConvert.timeStringFromMilliseconds(driverTime - firstDriverTime)
       );
     }
@@ -276,6 +276,11 @@ router.get('/race-results', (req, res) => {
       return results[0];
     })
     .then(async (results) => {
+      if (results.calendar.races[0].results === null) {
+        res.json(results);
+        return results;
+      }
+
       results.calendar.races[0].adjustedResults = await setDriversDetails(
         results
       );
