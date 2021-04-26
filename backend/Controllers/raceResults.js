@@ -17,7 +17,7 @@ client.connect((err) => {
 });
 
 router.get('/race-results', (req, res) => {
-  const regExp = /[a-z]/gi;
+  const regExp = /[a-z]/i;
 
   const adjustPenalties = (originalTime, penaltySeconds) => {
     if (regExp.test(originalTime)) {
