@@ -22,12 +22,10 @@ export const formatDate = {
     var date =
       today.getDate() +
       '.' +
-      (today.getMonth() + 1) +
+      `0${today.getMonth() + 1}`.slice(-2) +
       '.' +
       today.getFullYear();
 
-    var dateFormatted = date;
-
-    return dateFormatted;
+    return date;
   },
 };

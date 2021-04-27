@@ -1,0 +1,135 @@
+@font-face {
+  font-family: f1Font;
+  src: url('./../../../../assets/fonts/Formula1-Regular.ttf');
+}
+
+.results {
+  font-family: f1Font;
+  color: #ffffff;
+  margin-bottom: 20px;
+}
+
+.results h2 {
+  color: #000000;
+}
+
+.results table {
+  border-spacing: 0px;
+  padding: 10px;
+  background: #151515;
+  font-size: 14pt;
+  border-radius: 5px;
+}
+
+.results tr:nth-child(odd) {
+  background-color: #151515;
+}
+
+.results tr:nth-child(even) {
+  background-color: #202020;
+}
+
+.results td {
+  vertical-align: middle;
+  margin: 3px 0px;
+}
+
+.results__thead__stops {
+  padding: 0px 15px;
+}
+
+.results__thead__penalties {
+  padding: 0px 15px;
+}
+
+.results__thead__points {
+  padding: 0px 15px;
+}
+
+.results__position {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  background-color: #ffffff;
+  color: #000000;
+  border-radius: 5px;
+}
+
+.results__number {
+  font-style: italic;
+  text-align: center;
+  padding: 0px 7px;
+}
+
+.results__full-name {
+  padding-right: 30px;
+}
+
+.results__nick {
+  font-style: italic;
+  padding-right: 30px;
+  text-align: center;
+}
+
+.results__team-logo {
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+  max-height: 20px;
+  -webkit-filter: drop-shadow(0px 0px 0.5px rgba(0, 0, 0, 1));
+  filter: drop-shadow(0px 0px 0.5px rgba(0, 0, 0, 1));
+}
+
+.results__team-stripe {
+  width: 3px;
+  height: 18px;
+  margin: 0px 5px;
+}
+
+.results__team-name {
+  padding-right: 20px;
+}
+
+.results__best-time {
+  padding: 0px 15px;
+}
+
+.results__event-time {
+  text-align: end;
+  padding: 0px 15px;
+}
+
+.results__starting-position-container {
+  display: flex;
+  padding: 0px 15px;
+}
+
+.results__starting-position {
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 20%;
+  text-align: center;
+}
+
+.results__starting-position-change-and-icon {
+  text-align: center;
+}
+
+.results__position-change-image {
+  margin-left: 5px;
+  margin-right: 5px;
+  width: 15px;
+  height: 13px;
+}
+
+.results__stops {
+  text-align: center;
+}
+
+.results__penalties {
+  text-align: center;
+}
+
+.results__points {
+  text-align: center;
+}

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouteMatch } from 'react-router-dom';
 
 import { RaceResults } from './RaceResults.js';
+import { RaceDetails } from './RaceDetails.js';
 
 import './RaceSubPages.css';
 
@@ -11,6 +12,14 @@ export const ResultsPage = () => {
   let country = match.params.raceId.replace('-', ' ');
 
   const [results, setResults] = useState([]);
+
+  let raceDetails = {
+    venue: results?.calendar?.races[0]?.venue,
+    date: results?.calendar?.races[0]?.date,
+    circuit: results?.calendar?.races[0]?.circuit,
+    division: division[0],
+    seasonName: results?.calendar?.seasonName,
+  };
 
   useEffect(() => {
     fetch(`/race-results?division=${division[0]}&country=${country}`)
@@ -25,22 +34,12 @@ export const ResultsPage = () => {
   } else {
     return (
       <section>
-        <h2>RaceId: {match.params.raceId}</h2>
-        <h2>Division: {division[0]}</h2>
-        Results Match Url is: {JSON.stringify(match)}
-        <p>------------------</p>
-        <p>{JSON.stringify(results.calendar.raceFormat)}</p>
-        <p>------------------</p>
-        <p>{Object.keys(results.calendar.raceFormat)}</p>
-        <p>------------------</p>
+        <RaceDetails raceDetails={raceDetails} />
         {Object.keys(results.calendar.raceFormat).map((raceSession, index) => {
           return (
             <RaceResults
               raceSession={results.calendar.raceFormat[raceSession].name}
               results={results.calendar.races[0].adjustedResults[raceSession]}
-              pointsSystem={
-                results.calendar.raceFormat[raceSession].pointsSystem
-              }
               key={index}
             />
           );

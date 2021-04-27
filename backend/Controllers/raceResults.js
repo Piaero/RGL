@@ -17,7 +17,7 @@ client.connect((err) => {
 });
 
 router.get('/race-results', (req, res) => {
-  const regExp = /[a-z]/gi;
+  const regExp = /[a-z]/i;
 
   const adjustPenalties = (originalTime, penaltySeconds) => {
     if (regExp.test(originalTime)) {
@@ -38,7 +38,7 @@ router.get('/race-results', (req, res) => {
       return timeConvert.timeStringFromMilliseconds(firstDriverTime);
     } else {
       return (
-        '+' +
+        '+ ' +
         timeConvert.timeStringFromMilliseconds(driverTime - firstDriverTime)
       );
     }
@@ -47,17 +47,17 @@ router.get('/race-results', (req, res) => {
   const formatAllTimesToTimeString = (results) => {
     let raceFormats = Object.keys(results.calendar.raceFormat);
 
-    for (const raceSession of raceFormats) {
+    for (const raceFormat of raceFormats) {
       let firstDriverTime =
-        results.calendar.races[0].adjustedResults[raceSession][0]
+        results.calendar.races[0].adjustedResults[raceFormat][0]
           .adjustedEventTime;
 
       for (
         let i = 0;
-        i < results.calendar.races[0].adjustedResults[raceSession].length;
+        i < results.calendar.races[0].adjustedResults[raceFormat].length;
         i++
       ) {
-        let driver = results.calendar.races[0].adjustedResults[raceSession][i];
+        let driver = results.calendar.races[0].adjustedResults[raceFormat][i];
 
         driver.adjustedEventTime = formatRaceTimeFromMilliseconds(
           i,
@@ -89,37 +89,53 @@ router.get('/race-results', (req, res) => {
 
       selectedRace.adjustedResults[raceSession] = [];
 
-      let absoluteTimeString = sessionResults[1].eventTime;
+      let absoluteTimeString = sessionResults[0].eventTime;
 
-      for (const driver in sessionResults) {
-        if (driver == 1) {
+      for (const [index, driver] of sessionResults.entries()) {
+        let penaltiesTime =
+          driver.juryPenalties === null
+            ? null
+            : driver.juryPenalties.reduce(
+                (previousValue, currentValue) =>
+                  previousValue + currentValue.seconds,
+                0
+              );
+
+        if (index == 0) {
           let driversTimeInMilliseconds = timeConvert.raceTimeFromString(
             absoluteTimeString
           );
 
-          sessionResults[driver].adjustedEventTime = adjustPenalties(
+          driver.adjustedEventTime = adjustPenalties(
             driversTimeInMilliseconds,
-            sessionResults[driver].juryPenalties
+            penaltiesTime
+          );
+
+          driver.bestTimeInMilliseconds = timeConvert.raceTimeFromString(
+            driver.bestTime
           );
         } else {
           let driversAbsoluteTime = timeConvert.sumTwoTimeStrings(
-            sessionResults[driver].eventTime,
+            driver.eventTime,
             absoluteTimeString
           );
 
-          sessionResults[driver].adjustedEventTime = adjustPenalties(
+          driver.adjustedEventTime = adjustPenalties(
             driversAbsoluteTime,
-            sessionResults[driver].juryPenalties
+            penaltiesTime
+          );
+
+          driver.bestTimeInMilliseconds = timeConvert.raceTimeFromString(
+            driver.bestTime
           );
         }
-        selectedRace.adjustedResults[raceSession].push(sessionResults[driver]);
+        selectedRace.adjustedResults[raceSession].push(driver);
       }
-
       sortDriversByEventTime(selectedRace.adjustedResults[raceSession]);
     }
   };
 
-  const getDrivers = async () => {
+  const getDriversList = async () => {
     let drivers;
     await client
       .db('RGL')
@@ -130,9 +146,99 @@ router.get('/race-results', (req, res) => {
       .project({ 'calendar.drivers': 1 })
       .toArray()
       .then((results) => {
-        drivers = results;
+        drivers = results[0].calendar.drivers;
       });
-    return drivers[0];
+    return drivers;
+  };
+
+  const getTeamsList = async () => {
+    let teams;
+    await client
+      .db('RGL')
+      .collection('divisions')
+      .find({
+        division: req.query.division,
+      })
+      .project({ 'calendar.teams': 1 })
+      .toArray()
+      .then((results) => {
+        teams = results[0].calendar.teams;
+      });
+    return teams;
+  };
+
+  const setDriversDetails = async (results) => {
+    let driversList = await getDriversList();
+    let raceFormats = Object.keys(results.calendar.raceFormat);
+
+    for (const raceSession of raceFormats) {
+      let selectedSessionResults =
+        results.calendar.races[0].adjustedResults[raceSession];
+
+      for (const [index, driver] of selectedSessionResults.entries()) {
+        let selectedDriverNick = selectedSessionResults[index].nick;
+        selectedDriver = driversList.find(
+          (driver) => driver.nick === selectedDriverNick
+        );
+
+        driver.fullName = selectedDriver.fullName;
+        driver.number = selectedDriver.number;
+        driver.team = selectedDriver.team;
+      }
+    }
+
+    return results.calendar.races[0].adjustedResults;
+  };
+
+  const setTeamsDetails = async (results) => {
+    let teamsList = await getTeamsList();
+    let raceFormats = Object.keys(results.calendar.raceFormat);
+
+    for (const raceSession of raceFormats) {
+      let selectedSessionResults =
+        results.calendar.races[0].adjustedResults[raceSession];
+
+      for (const [index, driver] of selectedSessionResults.entries()) {
+        let selectedDriverTeam = selectedSessionResults[index].team;
+        let selectedTeam = teamsList.find(
+          (team) => team.name === selectedDriverTeam
+        );
+
+        driver.teamFullName = selectedTeam.fullName;
+        driver.teamLogo = selectedTeam.logoUrl;
+        driver.teamColour = selectedTeam.colour;
+      }
+    }
+
+    return results.calendar.races[0].adjustedResults;
+  };
+
+  const setPoints = (results) => {
+    let raceFormats = Object.keys(results.calendar.raceFormat);
+
+    for (const raceSession of raceFormats) {
+      let selectedSessionResults =
+        results.calendar.races[0].adjustedResults[raceSession];
+      let pointsSystem = results.calendar.raceFormat[raceSession].pointsSystem;
+      let topDriversForFastestLap = pointsSystem.fastestLap?.pointsFromTop;
+      let pointsForFastestLap = pointsSystem.fastestLap?.points;
+
+      let fastestInTheSession = selectedSessionResults
+        .slice(0, topDriversForFastestLap)
+        .sort((a, b) => {
+          return a.bestTimeInMilliseconds - b.bestTimeInMilliseconds;
+        })[0];
+
+      for (const [index, driver] of selectedSessionResults.entries()) {
+        driver.points = parseInt(pointsSystem[index + 1]);
+        if (pointsForFastestLap && driver.nick === fastestInTheSession.nick) {
+          driver.points += pointsForFastestLap;
+          driver.fastestLap = true;
+        }
+      }
+    }
+
+    return results;
   };
 
   client
@@ -148,7 +254,7 @@ router.get('/race-results', (req, res) => {
       'calendar.raceFormat': 1,
       'calendar.races.venue': 1,
       'calendar.races.date': 1,
-      'calendar.races.date': 1,
+      'calendar.races.circuit': 1,
       'calendar.races.results.$': 1,
       division: 1,
       game: 1,
@@ -164,15 +270,24 @@ router.get('/race-results', (req, res) => {
 
       formatAllTimesToTimeString(results[0]);
 
+      setPoints(results[0]);
+
       return results[0];
     })
     .then(async (results) => {
-      let drivers = await getDrivers();
-      console.log(JSON.stringify(drivers, null, 2));
-      return results;
-    })
+      if (results.calendar.races[0].results === null) {
+        res.json(results);
+        return results;
+      }
 
-    .then((results) => {
+      results.calendar.races[0].adjustedResults = await setDriversDetails(
+        results
+      );
+
+      results.calendar.races[0].adjustedResults = await setTeamsDetails(
+        results
+      );
+
       res.json(results);
     })
     .catch((error) => console.error(error));
