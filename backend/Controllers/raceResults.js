@@ -47,17 +47,17 @@ router.get('/race-results', (req, res) => {
   const formatAllTimesToTimeString = (results) => {
     let raceFormats = Object.keys(results.calendar.raceFormat);
 
-    for (const raceSession of raceFormats) {
+    for (const raceFormat of raceFormats) {
       let firstDriverTime =
-        results.calendar.races[0].adjustedResults[raceSession][0]
+        results.calendar.races[0].adjustedResults[raceFormat][0]
           .adjustedEventTime;
 
       for (
         let i = 0;
-        i < results.calendar.races[0].adjustedResults[raceSession].length;
+        i < results.calendar.races[0].adjustedResults[raceFormat].length;
         i++
       ) {
-        let driver = results.calendar.races[0].adjustedResults[raceSession][i];
+        let driver = results.calendar.races[0].adjustedResults[raceFormat][i];
 
         driver.adjustedEventTime = formatRaceTimeFromMilliseconds(
           i,
@@ -177,18 +177,13 @@ router.get('/race-results', (req, res) => {
 
       for (const [index, driver] of selectedSessionResults.entries()) {
         let selectedDriverNick = selectedSessionResults[index].nick;
-
-        driver.fullName = driversList.find(
+        selectedDriver = driversList.find(
           (driver) => driver.nick === selectedDriverNick
-        ).fullName;
+        );
 
-        driver.number = driversList.find(
-          (driver) => driver.nick === selectedDriverNick
-        ).number;
-
-        driver.team = driversList.find(
-          (driver) => driver.nick === selectedDriverNick
-        ).team;
+        driver.fullName = selectedDriver.fullName;
+        driver.number = selectedDriver.number;
+        driver.team = selectedDriver.team;
       }
     }
 
@@ -205,18 +200,13 @@ router.get('/race-results', (req, res) => {
 
       for (const [index, driver] of selectedSessionResults.entries()) {
         let selectedDriverTeam = selectedSessionResults[index].team;
-
-        driver.teamFullName = teamsList.find(
+        let selectedTeam = teamsList.find(
           (team) => team.name === selectedDriverTeam
-        ).fullName;
+        );
 
-        driver.teamLogo = teamsList.find(
-          (team) => team.name === selectedDriverTeam
-        ).logoUrl;
-
-        driver.teamColour = teamsList.find(
-          (team) => team.name === selectedDriverTeam
-        ).colour;
+        driver.teamFullName = selectedTeam.fullName;
+        driver.teamLogo = selectedTeam.logoUrl;
+        driver.teamColour = selectedTeam.colour;
       }
     }
 
@@ -233,7 +223,7 @@ router.get('/race-results', (req, res) => {
       let topDriversForFastestLap = pointsSystem.fastestLap?.pointsFromTop;
       let pointsForFastestLap = pointsSystem.fastestLap?.points;
 
-      let fastestOfTheSession = selectedSessionResults
+      let fastestInTheSession = selectedSessionResults
         .slice(0, topDriversForFastestLap)
         .sort((a, b) => {
           return a.bestTimeInMilliseconds - b.bestTimeInMilliseconds;
@@ -241,7 +231,7 @@ router.get('/race-results', (req, res) => {
 
       for (const [index, driver] of selectedSessionResults.entries()) {
         driver.points = parseInt(pointsSystem[index + 1]);
-        if (pointsForFastestLap && driver.nick === fastestOfTheSession.nick) {
+        if (pointsForFastestLap && driver.nick === fastestInTheSession.nick) {
           driver.points += pointsForFastestLap;
           driver.fastestLap = true;
         }
