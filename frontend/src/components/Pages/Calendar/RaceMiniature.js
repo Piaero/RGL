@@ -8,7 +8,14 @@ import './Calendar.css';
 export const RaceMiniature = ({ race, routerPath }) => {
   const [display, setDisplay] = useState('notdisplayed');
   const completeRouterPath =
-    routerPath + '/' + race.country.toLowerCase().replace(' ', '-');
+    routerPath +
+    '/' +
+    race.country
+      .toLowerCase()
+      .replace(' ', '-')
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/\u0142/g, 'l');
 
   const showHoverMenu = (e) => {
     e.preventDefault();
