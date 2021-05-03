@@ -3,9 +3,9 @@ export const formatDate = {
     var today = new Date(fullDate);
 
     var date =
-      today.getDate() +
+      `0${today.getDate()}`.slice(-2) +
       '.' +
-      (today.getMonth() + 1) +
+      `0${today.getMonth() + 1}`.slice(-2) +
       '.' +
       today.getFullYear();
 
@@ -20,7 +20,7 @@ export const formatDate = {
     var today = new Date(fullDate);
 
     var date =
-      today.getDate() +
+      `0${today.getDate()}`.slice(-2) +
       '.' +
       `0${today.getMonth() + 1}`.slice(-2) +
       '.' +
