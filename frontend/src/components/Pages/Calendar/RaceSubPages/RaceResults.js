@@ -101,7 +101,7 @@ export const RaceResults = ({ raceSession, results }) => {
                 <td className='results__nick'>{driver.nick}</td>
                 <td>
                   <img
-                    src={require(`../../../../assets/teamLogo/${driver.teamLogo}.png`)}
+                    src={require(`../../../../assets/teamLogo/${driver.teamLogo}`)}
                     alt={driver.team}
                     className='results__team-logo'
                   />
