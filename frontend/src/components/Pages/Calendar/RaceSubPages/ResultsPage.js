@@ -3,6 +3,7 @@ import { useRouteMatch } from 'react-router-dom';
 
 import { RaceResults } from './RaceResults.js';
 import { RaceDetails } from './RaceDetails.js';
+import { JuryPenalties } from './JuryPenalties.js';
 
 import './RaceSubPages.css';
 
@@ -44,6 +45,7 @@ export const ResultsPage = () => {
             />
           );
         })}
+        <JuryPenalties results={results} />
       </section>
     );
   }

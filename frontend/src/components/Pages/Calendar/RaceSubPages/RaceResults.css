@@ -9,8 +9,14 @@
   margin-bottom: 20px;
 }
 
-.results h2 {
+.results h2,
+.jury-penalties h2 {
   color: #000000;
+  margin-bottom: 10px;
+}
+
+.race-details {
+  margin-bottom: 15px;
 }
 
 .results table {
@@ -132,4 +138,18 @@
 
 .results__points {
   text-align: center;
+}
+
+.jury-penalties {
+  font-family: f1Font;
+  width: 800px;
+}
+
+.general-statement {
+  margin-bottom: 15px;
+}
+
+.penalized-driver {
+  margin-top: 15px;
+  line-height: 1.5;
 }
