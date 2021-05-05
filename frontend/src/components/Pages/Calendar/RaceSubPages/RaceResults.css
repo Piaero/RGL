@@ -140,16 +140,16 @@
   text-align: center;
 }
 
-.jury-penalties {
+.penalties__jury-penalties {
   font-family: f1Font;
   width: 800px;
 }
 
-.general-statement {
+.penalties__general-statement {
   margin-bottom: 15px;
 }
 
-.penalized-driver {
+.penalties__driver {
   margin-top: 15px;
   line-height: 1.5;
 }

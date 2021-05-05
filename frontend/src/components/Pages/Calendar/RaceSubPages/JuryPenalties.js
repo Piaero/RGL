@@ -3,7 +3,7 @@ import './RaceSubPages.css';
 
 const PenalizedDriver = ({ driver }) => {
   return (
-    <div className='penalized-driver'>
+    <div className='penalties__driver'>
       <h3>{driver.nick}</h3>
       <p>{driver.note}</p>
       {driver.seconds > 0 ? (
@@ -79,10 +79,12 @@ export const JuryPenalties = ({ results }) => {
     }
   }
 
+  sessionPenalties.sort((a, b) => a.nick.localeCompare(b.nick));
+
   return (
-    <section className='jury-penalties'>
+    <section className='penalties__jury-penalties'>
       <h2>Statement sędziowski</h2>
-      <p className='general-statement'>
+      <p className='penalties__general-statement'>
         {results.calendar.races[0].results.statement}
       </p>
       {sessionPenalties.map((penalty, index) => {
