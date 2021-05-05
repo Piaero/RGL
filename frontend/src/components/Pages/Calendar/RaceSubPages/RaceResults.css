@@ -140,6 +140,10 @@
   text-align: center;
 }
 
+.penalties__session {
+  margin: 15px 0px;
+}
+
 .penalties__jury-penalties {
   font-family: f1Font;
   width: 800px;

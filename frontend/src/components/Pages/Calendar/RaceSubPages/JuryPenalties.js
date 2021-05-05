@@ -4,7 +4,7 @@ import './RaceSubPages.css';
 const PenalizedDriver = ({ driver }) => {
   return (
     <div className='penalties__driver'>
-      <h3>{driver.nick}</h3>
+      <h4>{driver.nick}</h4>
       <p>{driver.note}</p>
       {driver.seconds > 0 ? (
         <p>
@@ -55,9 +55,16 @@ const penaltiesColour = (penaltyTime) => {
   return penaltyTime > 0 ? 'red' : '#00ff00';
 };
 
+const isPenalties = (penalties) => {
+  for (var session in penalties) {
+    if (penalties[session].length !== 0) return false;
+  }
+  return true;
+};
+
 export const JuryPenalties = ({ results }) => {
   let raceSessions = Object.keys(results.calendar.raceFormat);
-  let sessionPenalties = [];
+  let penalties = [];
 
   for (const raceSession of raceSessions) {
     let selectedSession =
@@ -73,23 +80,32 @@ export const JuryPenalties = ({ results }) => {
           penalizedDriver.points = driverPenalty.points;
           penalizedDriver.note = driverPenalty.note;
 
-          sessionPenalties.push(penalizedDriver);
+          penalties.push(penalizedDriver);
         }
       }
     }
   }
 
-  sessionPenalties.sort((a, b) => a.nick.localeCompare(b.nick));
-
-  return (
-    <section className='penalties__jury-penalties'>
-      <h2>Statement sędziowski</h2>
-      <p className='penalties__general-statement'>
-        {results.calendar.races[0].results.statement}
-      </p>
-      {sessionPenalties.map((penalty, index) => {
-        return <PenalizedDriver driver={penalty} key={index} />;
-      })}
-    </section>
-  );
+  if (!isPenalties(penalties)) {
+    return (
+      <section className='penalties__jury-penalties'>
+        <h2>Statement sędziowski</h2>
+        <p className='penalties__general-statement'>
+          {results.calendar.races[0].results.statement}
+        </p>
+        {penalties.map((penalty, index) => {
+          return <PenalizedDriver driver={penalty} key={index} />;
+        })}
+      </section>
+    );
+  } else {
+    return (
+      <section className='penalties__jury-penalties'>
+        <h2>Statement sędziowski</h2>
+        <p className='penalties__general-statement'>
+          Brak zgłoszonych incydentów.
+        </p>
+      </section>
+    );
+  }
 };
