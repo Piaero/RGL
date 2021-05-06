@@ -15,7 +15,7 @@ client.connect((err) => {
   const countersCollection = db.collection('news');
 });
 
-router.put('/submit-comment', async (req, res) => {
+router.post('/submit-comment', (req, res) => {
   const isSubcomment = req.body.commentData.parameters.isSubcomment;
   const parentCommentId = req.body.commentData.parameters.parentCommentId;
 
@@ -73,10 +73,11 @@ router.put('/submit-comment', async (req, res) => {
       .db('RGL')
       .collection('news')
       .updateOne(queryForSubcomment, update, options)
+      .then(res.json(`SubComment sent to database`))
       .catch((error) => console.error(error));
   };
 
-  await client
+  client
     .db('RGL')
     .collection('news')
     .find(queryForComment)
@@ -85,7 +86,6 @@ router.put('/submit-comment', async (req, res) => {
     .then((results) => {
       isSubcomment ? pushSubcomment(results) : pushComment(results);
     })
-    .then(res.json(`Comment sent to database`))
     .catch((error) => console.error(error));
 });
 

@@ -14,13 +14,13 @@ export const ArticlePage = () => {
   const getArticle = () => {
     latestRequest.current = topicId;
 
-    fetch(`/news/article?id=${topicId}`)
-      .then((res) => res.json())
-      .then((article) => setArticle(article));
+    return fetch(`/news/article?id=${topicId}`).then((response) =>
+      response.json()
+    );
   };
 
   useEffect(() => {
-    getArticle();
+    getArticle().then((article) => setArticle(article));
   }, []);
 
   if (article.length === 0) {
@@ -44,12 +44,14 @@ export const ArticlePage = () => {
         <br />
         <NewComment
           article={article}
+          getArticle={getArticle}
           setArticle={setArticle}
           isSubcomment={false}
           parentCommentId={null}
         />
         <CommentsSection
           article={article}
+          getArticle={getArticle}
           setArticle={setArticle}
           comments={article.comments}
         />

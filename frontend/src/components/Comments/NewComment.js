@@ -6,28 +6,13 @@ import './Comments.css';
 
 export const NewComment = ({
   article,
+  getArticle,
   setArticle,
   isSubcomment,
   parentCommentId,
 }) => {
   const formRef = useRef(null);
   var isAutoFocus = isSubcomment ? true : false;
-
-  const updateCommentState = (commentData) => {
-    if (!isSubcomment) {
-      var articleWithNewComment = { ...article };
-      articleWithNewComment.comments.push(commentData.comment);
-    } else {
-      var articleWithNewComment = { ...article };
-      articleWithNewComment.comments[parentCommentId - 1].subcomments.push(
-        commentData.comment
-      );
-    }
-
-    formRef.current.blur();
-    formRef.current.value = '';
-    setArticle(articleWithNewComment);
-  };
 
   useEffect(() => {
     let id = !isSubcomment
@@ -58,8 +43,17 @@ export const NewComment = ({
         formRef.current === document.activeElement
       ) {
         commentData.comment.content = formRef.current.value;
-        CommentsAPI.submitComment(commentData);
-        updateCommentState(commentData);
+
+        CommentsAPI.submitComment(commentData)
+          .then(() => {
+            return getArticle();
+          })
+          .then((result) => {
+            setArticle(result);
+          });
+
+        formRef.current.blur();
+        formRef.current.value = '';
       }
     };
     document.addEventListener('keydown', listener);

@@ -30,7 +30,7 @@ router.get('/news', (req, res) => {
     .catch((error) => console.error(error));
 });
 
-router.get('/news/article', async (req, res) => {
+router.get('/news/article', (req, res) => {
   client
     .db('RGL')
     .collection('news')

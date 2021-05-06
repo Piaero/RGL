@@ -1,7 +1,12 @@
 import React from 'react';
 import { CommentItem } from './CommentItem.js';
 
-export const CommentsSection = ({ comments, article, setArticle }) => {
+export const CommentsSection = ({
+  comments,
+  article,
+  getArticle,
+  setArticle,
+}) => {
   return (
     <section>
       <br />
@@ -10,6 +15,7 @@ export const CommentsSection = ({ comments, article, setArticle }) => {
             return (
               <CommentItem
                 article={article}
+                getArticle={getArticle}
                 setArticle={setArticle}
                 comment={comment}
                 key={index}

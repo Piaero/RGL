@@ -4,7 +4,7 @@ import { NewComment } from './NewComment.js';
 
 import { formatDate } from '../../utilities/formatDate.js';
 
-export const CommentItem = ({ comment, article, setArticle }) => {
+export const CommentItem = ({ comment, article, getArticle, setArticle }) => {
   const [visible, toggleVisible] = useState(false);
   const showNewComment = () => {
     visible ? toggleVisible(false) : toggleVisible(true);
@@ -32,6 +32,7 @@ export const CommentItem = ({ comment, article, setArticle }) => {
         <div className='new-subcomment'>
           <NewComment
             article={article}
+            getArticle={getArticle}
             setArticle={setArticle}
             isSubcomment={true}
             parentCommentId={comment.id}
