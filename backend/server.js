@@ -32,7 +32,7 @@ client.connect((err) => {
 
 app.get('/divisions', divisions);
 app.get('/news', news);
-app.post('/news/article', news);
+app.get('/news/article', news);
 app.put('/submit-comment', comments);
 app.post('/calendar', calendar);
 app.get('/race-results', raceResults);

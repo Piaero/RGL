@@ -11,18 +11,16 @@ export const ArticlePage = () => {
 
   const [article, setArticle] = useState([]);
 
-  useEffect(() => {
+  const getArticle = () => {
     latestRequest.current = topicId;
 
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ topicId }),
-    };
-
-    fetch('/news/article', requestOptions)
+    fetch(`/news/article?id=${topicId}`)
       .then((res) => res.json())
       .then((article) => setArticle(article));
+  };
+
+  useEffect(() => {
+    getArticle();
   }, []);
 
   if (article.length === 0) {
