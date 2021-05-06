@@ -14,11 +14,11 @@ client.connect((err) => {
   const countersCollection = db.collection('divisions');
 });
 
-router.post('/calendar', (req, res) => {
+router.get('/calendar', (req, res) => {
   client
     .db('RGL')
     .collection('divisions')
-    .find({ division: req.body.divisionString })
+    .find({ division: req.query.divisionString })
     .project({ calendar: 1, division: 1, game: 1, gameLogo: 1 })
     .toArray()
     .then((results) => {

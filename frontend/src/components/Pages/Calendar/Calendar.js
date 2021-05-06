@@ -11,13 +11,7 @@ export const Calendar = () => {
   const [calendar, setCalendar] = useState([]);
 
   useEffect(() => {
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ divisionString }),
-    };
-
-    fetch('/calendar', requestOptions)
+    fetch(`/calendar?divisionString=${divisionString}`)
       .then((res) => res.json())
       .then((calendar) => setCalendar(calendar));
   }, []);
