@@ -47,6 +47,7 @@ router.post('/submit-comment', (req, res) => {
       .db('RGL')
       .collection('news')
       .updateOne(queryForComment, update, options)
+      .then(res.json(`Comment sent to database`))
       .catch((error) => console.error(error));
   };
 
