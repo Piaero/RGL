@@ -18,7 +18,7 @@ router.get('/calendar', (req, res) => {
   client
     .db('RGL')
     .collection('divisions')
-    .find({ division: req.query.divisionString })
+    .find({ division: req.query.division })
     .project({ calendar: 1, division: 1, game: 1, gameLogo: 1 })
     .toArray()
     .then((results) => {

@@ -10,7 +10,7 @@ export const Calendar = () => {
   const [calendar, setCalendar] = useState([]);
 
   useEffect(() => {
-    fetch(`/calendar?divisionString=${division}`)
+    fetch(`/calendar?division=${division}`)
       .then((res) => res.json())
       .then((calendar) => setCalendar(calendar));
   }, []);
