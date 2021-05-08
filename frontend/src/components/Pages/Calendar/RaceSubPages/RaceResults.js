@@ -127,9 +127,9 @@ export const RaceResults = ({ raceSession, results }) => {
                     {driver.startingPosition}
                   </span>
                   <span className='results__starting-position-change-and-icon'>
-                    <span>
+                    <div className='results__position-change-image-container'>
                       {positionsGainedImage(driver.startingPosition, index + 1)}
-                    </span>
+                    </div>
                     <span className='results__position-change'>
                       {driver.startingPosition - index - 1}
                     </span>
