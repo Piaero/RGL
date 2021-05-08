@@ -5,13 +5,12 @@ import { RaceMiniature } from './RaceMiniature.js';
 
 export const Calendar = () => {
   let match = useRouteMatch();
-  let division = match.url.match(/[^/]+/);
-  let divisionString = division[0];
+  let division = match.url.match(/[^/]+/)[0];
 
   const [calendar, setCalendar] = useState([]);
 
   useEffect(() => {
-    fetch(`/calendar?divisionString=${divisionString}`)
+    fetch(`/calendar?divisionString=${division}`)
       .then((res) => res.json())
       .then((calendar) => setCalendar(calendar));
   }, []);
