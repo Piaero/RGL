@@ -26,8 +26,91 @@ router.get('/standings', (req, res) => {
         adjustedRaces.push(race);
       }
     }
-
     return adjustedRaces;
+  };
+
+  const calculateDriversPoints = (drivers, races, teams) => {
+    for (const driver of drivers) {
+      driver.points = 0;
+    }
+
+    for (const race of races) {
+      for (const raceSession in race.adjustedResults) {
+        for (const driver of race.adjustedResults[raceSession]) {
+          drivers.find((dr) => dr.nick === driver.nick).points += driver.points;
+        }
+      }
+    }
+
+    drivers = setTeamDetails(drivers, teams);
+
+    return drivers.sort((a, b) => {
+      return b.points - a.points;
+    });
+  };
+
+  const calculateDriversPenalties = (drivers, races, teams) => {
+    const driverTotalPenalties = (driver) => {
+      if (driver.juryPenalties) {
+        return driver.juryPenalties.reduce(
+          (previousValue, currentValue) => previousValue + currentValue.points,
+          0
+        );
+      } else {
+        return 0;
+      }
+    };
+
+    for (const driver of drivers) {
+      driver.penalties = 0;
+    }
+
+    for (const race of races) {
+      for (const raceSession in race.adjustedResults) {
+        for (const driver of race.adjustedResults[raceSession]) {
+          drivers.find(
+            (dr) => dr.nick === driver.nick
+          ).penalties += driverTotalPenalties(driver);
+        }
+      }
+    }
+
+    drivers = setTeamDetails(drivers, teams);
+
+    return drivers.sort((a, b) => {
+      return b.penalties - a.penalties;
+    });
+  };
+
+  const setTeamDetails = (drivers, teams) => {
+    for (const driver of drivers) {
+      let selectedTeam = teams.find((team) => team.name === driver.team);
+
+      driver.teamFullName = selectedTeam.fullName;
+      driver.teamLogo = selectedTeam.logoUrl;
+      driver.teamColour = selectedTeam.colour;
+    }
+
+    return drivers;
+  };
+
+  const calculateTeamsPoints = (races, drivers, teams) => {
+    for (const team of teams) {
+      team.points = 0;
+    }
+
+    for (const race of races) {
+      for (const raceSession in race.adjustedResults) {
+        for (var driver of race.adjustedResults[raceSession]) {
+          let driversTeam = drivers.find((dr) => dr.nick === driver.nick).team;
+          teams.find((team) => team.name === driversTeam).points +=
+            driver.points;
+        }
+      }
+    }
+    return teams.sort((a, b) => {
+      return b.points - a.points;
+    });
   };
 
   client
@@ -49,21 +132,15 @@ router.get('/standings', (req, res) => {
 
       const adjustedRaces = setRacesPoints(races, raceFormat);
 
-      //   console.log(JSON.stringify(results[0], null, 2));
-
-      // if (results[0].calendar.races[0].results === null) {
-      //   res.json(results[0]);
-      //   return results[0];
-      // }
-
-      // formatResults(results[0]);
-
-      // console.log(JSON.stringify(drivers, null, 2));
-
-      // console.log(JSON.stringify(teams, null, 2));
-
-      // console.log(JSON.stringify(adjustedRaces, null, 2));
-      res.json(results[0]);
+      const standings = {};
+      standings.drivers = calculateDriversPoints(drivers, adjustedRaces, teams);
+      standings.penalties = calculateDriversPenalties(
+        drivers,
+        adjustedRaces,
+        teams
+      );
+      standings.teams = calculateTeamsPoints(adjustedRaces, drivers, teams);
+      res.json(standings);
     })
     .catch((error) => console.error(error));
 });

@@ -87,7 +87,6 @@ router.get('/race-results', (req, res) => {
     .toArray()
     .then((results) => {
       let race = results[0].calendar.races[0];
-      console.log(race);
       let raceFormat = results[0].calendar.raceFormat;
 
       if (race.results === null) {

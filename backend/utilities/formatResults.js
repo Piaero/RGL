@@ -103,7 +103,9 @@ module.exports = {
           })[0];
 
         for (const [index, driver] of selectedSessionResults.entries()) {
-          driver.points = parseInt(sessionPointsSystem[index + 1]);
+          driver.points = parseInt(sessionPointsSystem[index + 1])
+            ? parseInt(sessionPointsSystem[index + 1])
+            : null;
           if (pointsForFastestLap && driver.nick === fastestInTheSession.nick) {
             driver.points += pointsForFastestLap;
             driver.fastestLap = true;
