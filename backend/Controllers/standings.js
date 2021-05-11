@@ -44,7 +44,9 @@ router.get('/standings', (req, res) => {
 
     drivers = setTeamDetails(drivers, teams);
 
-    return drivers.sort((a, b) => {
+    let copiedDrivers = JSON.parse(JSON.stringify(drivers));
+
+    return copiedDrivers.sort((a, b) => {
       return b.points - a.points;
     });
   };
@@ -68,9 +70,8 @@ router.get('/standings', (req, res) => {
     for (const race of races) {
       for (const raceSession in race.adjustedResults) {
         for (const driver of race.adjustedResults[raceSession]) {
-          drivers.find(
-            (dr) => dr.nick === driver.nick
-          ).penalties += driverTotalPenalties(driver);
+          drivers.find((dr) => dr.nick === driver.nick).penalties +=
+            driverTotalPenalties(driver);
         }
       }
     }
@@ -134,12 +135,15 @@ router.get('/standings', (req, res) => {
 
       const standings = {};
       standings.drivers = calculateDriversPoints(drivers, adjustedRaces, teams);
+      standings.teams = calculateTeamsPoints(adjustedRaces, drivers, teams);
       standings.penalties = calculateDriversPenalties(
         drivers,
         adjustedRaces,
         teams
       );
-      standings.teams = calculateTeamsPoints(adjustedRaces, drivers, teams);
+      standings.seasonName =
+        results[0].division + ' ' + results[0].calendar.seasonName;
+
       res.json(standings);
     })
     .catch((error) => console.error(error));

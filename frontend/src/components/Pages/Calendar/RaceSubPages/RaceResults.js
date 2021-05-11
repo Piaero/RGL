@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { stylingLogic } from '../../../../utilities/stylingLogic.js';
 import './RaceResults.css';
 
 export const RaceResults = ({ raceSession, results }) => {
@@ -28,16 +28,6 @@ export const RaceResults = ({ raceSession, results }) => {
           className='results__position-change-image'
         />
       );
-    }
-  };
-
-  const podiumColours = (position) => {
-    if (position === 1) {
-      return '#FFD700';
-    } else if (position === 2) {
-      return '#C0C0C0';
-    } else if (position === 3) {
-      return '#964B00';
     }
   };
 
@@ -82,7 +72,7 @@ export const RaceResults = ({ raceSession, results }) => {
                 <td
                   className='results__position'
                   style={{
-                    backgroundColor: podiumColours(index + 1),
+                    backgroundColor: stylingLogic.podiumColours(index + 1),
                   }}
                 >
                   {index + 1}
