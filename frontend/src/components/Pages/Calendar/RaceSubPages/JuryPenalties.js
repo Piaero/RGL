@@ -37,7 +37,7 @@ const PenalizedDriver = ({ driver }) => {
   return (
     <div className='penalties__driver'>
       <h4>{driver.nick}</h4>
-      <p>{driver.note}</p>
+      <p dangerouslySetInnerHTML={{ __html: driver.note }} />
       {penaltiesTextLogic(driver.seconds)}
       {driver.points ? (
         <p>
