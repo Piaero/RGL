@@ -135,7 +135,7 @@ export const RaceResults = ({ raceSession, results }) => {
                         : penaltiesColour(penaltyTime()),
                   }}
                 >
-                  {driver.juryPenalties === null || 0
+                  {driver.juryPenalties == null || 0 || '0'
                     ? null
                     : penaltyTime() + 's'}
                 </td>

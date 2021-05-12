@@ -1,40 +1,44 @@
 import React from 'react';
 import './RaceSubPages.css';
 
+const penaltiesTextLogic = (penalty) => {
+  if (penalty > 0) {
+    return (
+      <p>
+        Kara czasowa:{' '}
+        <span
+          style={{
+            color: penaltiesColour(penalty),
+          }}
+        >
+          {penalty}s
+        </span>
+      </p>
+    );
+  } else if (penalty < 0) {
+    return (
+      <p>
+        Anulowanie kary:{' '}
+        <span
+          style={{
+            color: penaltiesColour(penalty),
+          }}
+        >
+          {penalty}s
+        </span>
+      </p>
+    );
+  } else {
+    return null;
+  }
+};
+
 const PenalizedDriver = ({ driver }) => {
   return (
     <div className='penalties__driver'>
       <h4>{driver.nick}</h4>
       <p>{driver.note}</p>
-      {driver.seconds > 0 ? (
-        <p>
-          Kara czasowa:{' '}
-          <span
-            style={{
-              color:
-                driver.juryPenalties === null
-                  ? null
-                  : penaltiesColour(driver.seconds),
-            }}
-          >
-            {driver.seconds}s
-          </span>
-        </p>
-      ) : (
-        <p>
-          Anulowanie kary:{' '}
-          <span
-            style={{
-              color:
-                driver.juryPenalties === null
-                  ? null
-                  : penaltiesColour(driver.seconds),
-            }}
-          >
-            {driver.seconds}s
-          </span>
-        </p>
-      )}
+      {penaltiesTextLogic(driver.seconds)}
       {driver.points ? (
         <p>
           Punkty karne:{' '}
