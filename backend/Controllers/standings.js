@@ -29,22 +29,23 @@ router.get('/standings', (req, res) => {
     return adjustedRaces;
   };
 
-  const calculateDriversPoints = (drivers, races, teams) => {
-    for (const driver of drivers) {
+  const calculateDriversPoints = (driversList, races, teams) => {
+    for (const driver of driversList) {
       driver.points = 0;
     }
 
     for (const race of races) {
       for (const raceSession in race.adjustedResults) {
         for (const driver of race.adjustedResults[raceSession]) {
-          drivers.find((dr) => dr.nick === driver.nick).points += driver.points;
+          driversList.find((dr) => dr.nick === driver.nick).points +=
+            driver.points;
         }
       }
     }
 
-    drivers = setTeamDetails(drivers, teams);
+    driversList = setTeamDetailsForDivers(driversList, teams);
 
-    let copiedDrivers = JSON.parse(JSON.stringify(drivers));
+    let copiedDrivers = JSON.parse(JSON.stringify(driversList));
 
     return copiedDrivers.sort((a, b) => {
       return b.points - a.points;
@@ -76,14 +77,14 @@ router.get('/standings', (req, res) => {
       }
     }
 
-    drivers = setTeamDetails(drivers, teams);
+    drivers = setTeamDetailsForDivers(drivers, teams);
 
     return drivers.sort((a, b) => {
       return b.penalties - a.penalties;
     });
   };
 
-  const setTeamDetails = (drivers, teams) => {
+  const setTeamDetailsForDivers = (drivers, teams) => {
     for (const driver of drivers) {
       let selectedTeam = teams.find((team) => team.name === driver.team);
 
@@ -136,11 +137,7 @@ router.get('/standings', (req, res) => {
       const standings = {};
       standings.drivers = calculateDriversPoints(drivers, adjustedRaces, teams);
       standings.teams = calculateTeamsPoints(adjustedRaces, drivers, teams);
-      standings.penalties = calculateDriversPenalties(
-        drivers,
-        adjustedRaces,
-        teams
-      );
+      standings.penalties = calculateDriversPenalties(drivers, adjustedRaces, teams);
       standings.seasonName =
         results[0].division + ' ' + results[0].calendar.seasonName;
 

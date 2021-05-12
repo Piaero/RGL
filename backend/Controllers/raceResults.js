@@ -42,9 +42,9 @@ router.get('/race-results', (req, res) => {
 
   const setTeamsDetails = (results) => {
     let teamsList = results.calendar.teams;
-    let raceFormat = Object.keys(results.calendar.raceFormat);
+    let raceFormats = Object.keys(results.calendar.raceFormat);
 
-    for (const raceSession of raceFormat) {
+    for (const raceSession of raceFormats) {
       let selectedSessionResults =
         results.calendar.races[0].adjustedResults[raceSession];
 
