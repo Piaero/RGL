@@ -83,7 +83,7 @@ export const MenuWithPagesRouter = () => {
         </ul>
       </nav>
 
-      <section className='content'>
+      <section className='page-content'>
         <Switch>
           <Route exact path={`${match.path}/news`}>
             <News />

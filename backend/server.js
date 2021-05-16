@@ -9,6 +9,7 @@ const news = require('./Controllers/news.js');
 const calendar = require('./Controllers/calendar.js');
 const raceResults = require('./Controllers/raceResults.js');
 const standings = require('./Controllers/standings.js');
+const regulations = require('./Controllers/regulations.js');
 
 const comments = require('./Controllers/comments.js');
 
@@ -38,6 +39,7 @@ app.post('/submit-comment', comments);
 app.get('/calendar', calendar);
 app.get('/race-results', raceResults);
 app.get('/standings', standings);
+app.get('/regulations', regulations);
 
 // Heroku deployment compatibility:
 if (process.env.NODE_ENV === 'production') {

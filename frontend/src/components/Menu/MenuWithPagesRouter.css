@@ -1,8 +1,4 @@
-.menu {
-  margin-bottom: 20px;
-}
-
-.content {
+.page-content {
   display: flex;
   justify-content: center;
 }
@@ -12,24 +8,28 @@ nav {
   justify-content: center;
 }
 
-ul {
+nav .menu {
+  margin-bottom: 20px;
+}
+
+nav ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-ul li {
+nav ul li {
   display: block;
   position: relative;
   float: left;
   background: #333;
 }
 /* This hides the dropdowns */
-li ul {
+nav li ul {
   display: none;
 }
 
-ul li a {
+nav ul li a {
   display: block;
   padding: 1em;
   text-decoration: none;
@@ -37,46 +37,46 @@ ul li a {
   color: #fff;
 }
 
-ul li a:hover {
+nav ul li a:hover {
   background: #2c3e50;
 }
 
 /* Display the dropdown */
-li:hover > ul {
+nav li:hover > ul {
   display: block;
   position: absolute;
 }
 
 /* Remove float from dropdown lists */
-li:hover li {
+nav li:hover li {
   float: none;
 }
 
-li:hover a {
+nav li:hover a {
   background: rgb(63, 61, 61);
 }
 
-li:hover li a:hover {
+nav li:hover li a:hover {
   background: #2c3e50;
 }
 
-.main-navigation li ul li {
+nav .main-navigation li ul li {
   border-top: 0;
 }
 
 /* Displays second level dropdowns to the right of the first level dropdown */
-ul ul ul {
+nav ul ul ul {
   left: 100%;
   top: 0;
 }
 
 /* Simple clearfix */
-ul:before,
+nav ul:before,
 ul:after {
   content: ' '; /* 1 */
   display: table; /* 2 */
 }
 
-ul:after {
+nav ul:after {
   clear: both;
 }
