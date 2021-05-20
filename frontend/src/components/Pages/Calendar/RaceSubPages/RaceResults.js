@@ -60,11 +60,15 @@ export const RaceResults = ({ raceSession, results }) => {
         <tbody>
           {results.map((driver, index) => {
             const penaltyTime = () => {
-              return driver.juryPenalties.reduce(
-                (previousValue, currentValue) =>
-                  previousValue + currentValue.seconds,
-                0
-              );
+              if (!driver.juryPenalties) {
+                return null;
+              } else {
+                return driver.juryPenalties.reduce(
+                  (previousValue, currentValue) =>
+                    previousValue + currentValue.seconds,
+                  0
+                );
+              }
             };
 
             return (
@@ -135,7 +139,7 @@ export const RaceResults = ({ raceSession, results }) => {
                         : penaltiesColour(penaltyTime()),
                   }}
                 >
-                  {driver.juryPenalties == null || 0 || '0'
+                  {driver.juryPenalties === null || penaltyTime() === 0
                     ? null
                     : penaltyTime() + 's'}
                 </td>
