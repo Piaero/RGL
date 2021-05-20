@@ -18,6 +18,9 @@ export const Regulations = () => {
 
   if (regulations.length === 0) {
     return <section>Ładowanie regulaminu...</section>;
+  }
+  if (!regulations.content) {
+    return <section>Regulamin niedostępny</section>;
   } else {
     return (
       <section>
