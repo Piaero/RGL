@@ -115,11 +115,12 @@ export const JuryPenalties = ({ results }) => {
         <p className='penalties__general-statement'>
           {results.calendar.races[0].results.statement}
         </p>
-        {Object.keys(penalties).map((session) => {
+        {Object.keys(penalties).map((session, index) => {
           return (
             <SessionPenalties
               sessionName={results.calendar.raceFormat[session].name}
               penalties={penalties[session]}
+              key={index}
             />
           );
         })}
