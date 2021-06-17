@@ -39,7 +39,13 @@ module.exports = {
   },
 
   raceTimeFromString: (string) => {
-    let timeArray = string.split(/[\D,]+/);
+    let timeArray;
+
+    if (string === null) {
+      return null;
+    } else {
+      timeArray = string.split(/[\D,]+/);
+    }
 
     let timeObject = {
       milliseconds: parseInt(timeArray[timeArray.length - 1]),
