@@ -1,5 +1,9 @@
 module.exports = {
   timeStringFromMilliseconds: (time) => {
+    if (isNaN(time)) {
+      return null;
+    }
+
     let milliseconds = time % 1000;
     time = (time - milliseconds) / 1000;
     let seconds = time % 60;
