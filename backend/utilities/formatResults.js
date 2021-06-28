@@ -38,9 +38,8 @@ module.exports = {
                 );
 
           if (index == 0) {
-            let driversTimeInMilliseconds = timeConvert.raceTimeFromString(
-              absoluteTimeString
-            );
+            let driversTimeInMilliseconds =
+              timeConvert.raceTimeFromString(absoluteTimeString);
 
             driver.adjustedEventTime = adjustPenalties(
               driversTimeInMilliseconds,
@@ -149,11 +148,44 @@ module.exports = {
       });
     };
 
+    const setQualifyingGaps = (race, raceFormat) => {
+      for (const raceSession of Object.keys(raceFormat)) {
+        if (raceSession === 'qualifying') {
+          let qualifyingResults = race.results[raceSession];
+
+          for (let i = 0; i < qualifyingResults.length; i++) {
+            let selectedDriver = qualifyingResults[i];
+            let leaderTime = qualifyingResults[0].bestTime;
+
+            if (i === 0) {
+              selectedDriver.adjustedEventTime = '-';
+            } else {
+              if (regExp.test(selectedDriver.bestTime)) {
+                selectedDriver.adjustedEventTime = '-';
+              } else {
+                selectedDriver.adjustedEventTime =
+                  '+ ' +
+                  timeConvert.timeStringFromMilliseconds(
+                    timeConvert.raceTimeFromString(selectedDriver.bestTime) -
+                      timeConvert.raceTimeFromString(leaderTime)
+                  );
+              }
+            }
+          }
+        } else {
+          return null;
+        }
+      }
+    };
+
     setRaceResults(race, raceFormat);
 
     formatAllTimesToTimeString(race, raceFormat);
 
     setPoints(race, raceFormat);
+
+    setQualifyingGaps(race, raceFormat);
+
     return race;
   },
 };
