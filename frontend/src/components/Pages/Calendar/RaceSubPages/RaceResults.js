@@ -49,10 +49,14 @@ export const RaceResults = ({ raceSession, results }) => {
             <th className='team-stripe'></th>
             <th>Zespół</th>
             <th>Najsz. okr.</th>
-            <th>Czas</th>
-            <th>Poz. start.</th>
-            <th className='results__thead__stops'>Postoje</th>
-            <th className='results__thead__penalties'>Kary</th>
+            <th>Różnica</th>
+            {raceSession !== 'Kwalifikacje' ? <th>Poz. start.</th> : null}
+            {raceSession !== 'Kwalifikacje' ? (
+              <th className='results__thead__stops'>Postoje</th>
+            ) : null}
+            {raceSession !== 'Kwalifikacje' ? (
+              <th className='results__thead__penalties'>Kary</th>
+            ) : null}
             <th className='results__thead__points'>Pkt</th>
           </tr>
         </thead>
@@ -116,33 +120,42 @@ export const RaceResults = ({ raceSession, results }) => {
                 <td className='results__event-time'>
                   {driver.adjustedEventTime}
                 </td>
-                <td className='results__starting-position-container'>
-                  <span className='results__starting-position'>
-                    {driver.startingPosition}
-                  </span>
-                  <span className='results__starting-position-change-and-icon'>
-                    <div className='results__position-change-image-container'>
-                      {positionsGainedImage(driver.startingPosition, index + 1)}
-                    </div>
-                    <span className='results__position-change'>
-                      {driver.startingPosition - index - 1}
+                {raceSession !== 'Kwalifikacje' ? (
+                  <td className='results__starting-position-container'>
+                    <span className='results__starting-position'>
+                      {driver.startingPosition}
                     </span>
-                  </span>
-                </td>
-                <td className='results__stops'>{driver.stops}</td>
-                <td
-                  className='results__penalties'
-                  style={{
-                    color:
-                      driver.juryPenalties === null || 0
-                        ? null
-                        : penaltiesColour(penaltyTime()),
-                  }}
-                >
-                  {driver.juryPenalties === null || penaltyTime() === 0
-                    ? null
-                    : penaltyTime() + 's'}
-                </td>
+                    <span className='results__starting-position-change-and-icon'>
+                      <div className='results__position-change-image-container'>
+                        {positionsGainedImage(
+                          driver.startingPosition,
+                          index + 1
+                        )}
+                      </div>
+                      <span className='results__position-change'>
+                        {driver.startingPosition - index - 1}
+                      </span>
+                    </span>
+                  </td>
+                ) : null}
+                {raceSession !== 'Kwalifikacje' ? (
+                  <td className='results__stops'>{driver.stops}</td>
+                ) : null}
+                {raceSession !== 'Kwalifikacje' ? (
+                  <td
+                    className='results__penalties'
+                    style={{
+                      color:
+                        driver.juryPenalties === null || 0
+                          ? null
+                          : penaltiesColour(penaltyTime()),
+                    }}
+                  >
+                    {driver.juryPenalties === null || penaltyTime() === 0
+                      ? null
+                      : penaltyTime() + 's'}
+                  </td>
+                ) : null}
                 <td className='results__points'>{driver.points}</td>
               </tr>
             );
