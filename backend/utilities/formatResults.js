@@ -160,7 +160,10 @@ module.exports = {
             if (i === 0) {
               selectedDriver.adjustedEventTime = '-';
             } else {
-              if (regExp.test(selectedDriver.bestTime)) {
+              if (
+                regExp.test(selectedDriver.bestTime) ||
+                selectedDriver.bestTime === '-'
+              ) {
                 selectedDriver.adjustedEventTime = '-';
               } else {
                 selectedDriver.adjustedEventTime =
