@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { stylingLogic } from '../../../utilities/stylingLogic';
+import '../Calendar/RaceSubPages/RaceResults.css';
 
 export const DriversStandings = ({ driversStandings }) => {
   return (
@@ -15,6 +16,7 @@ export const DriversStandings = ({ driversStandings }) => {
             <th className='team-logo'></th>
             <th className='team-stripe'></th>
             <th>Zespół</th>
+            <th>Wyścigi</th>
             <th className='results__thead__points'>Pkt</th>
           </tr>
         </thead>
@@ -56,6 +58,7 @@ export const DriversStandings = ({ driversStandings }) => {
                   ></div>
                 </td>
                 <td className='results__team-name'>{driver.team}</td>
+                <td className='results__appearances'>{driver.appearances}</td>
                 <td className='results__points'>{driver.points}</td>
               </tr>
             );

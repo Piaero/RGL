@@ -138,15 +138,10 @@
   height: 13px;
 }
 
-.results__stops {
-  text-align: center;
-}
-
-.results__penalties {
-  text-align: center;
-}
-
-.results__points {
+.results__stops,
+.results__penalties,
+.results__points,
+.results__appearances {
   text-align: center;
 }
 
