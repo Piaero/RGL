@@ -16,7 +16,7 @@ export const DriversStandings = ({ driversStandings }) => {
             <th className='team-logo'></th>
             <th className='team-stripe'></th>
             <th>Zespół</th>
-            <th>Wyścigi</th>
+            <th>Starty</th>
             <th className='results__thead__points'>Pkt</th>
           </tr>
         </thead>

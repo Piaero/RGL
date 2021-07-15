@@ -33,6 +33,7 @@ router.get('/standings', (req, res) => {
     for (const driver of driversList) {
       driver.points = 0;
       driver.appearances = 0;
+      driver.bestPosition = Number.POSITIVE_INFINITY;
     }
 
     for (const race of races) {
@@ -43,6 +44,16 @@ router.get('/standings', (req, res) => {
 
           if (raceSession === 'race') {
             driversList.find((dr) => dr.nick === driver.nick).appearances += 1;
+
+            let positionInSession =
+              race.adjustedResults[raceSession].indexOf(driver) + 1;
+
+            positionInSession <
+            driversList.find((dr) => dr.nick === driver.nick).bestPosition
+              ? (driversList.find(
+                  (dr) => dr.nick === driver.nick
+                ).bestPosition = positionInSession)
+              : null;
           }
         }
       }
@@ -53,7 +64,11 @@ router.get('/standings', (req, res) => {
     let copiedDrivers = JSON.parse(JSON.stringify(driversList));
 
     return copiedDrivers.sort((a, b) => {
-      return b.points - a.points;
+      return (
+        (a.bestPosition === null) - (b.bestPosition === null) ||
+        b.points - a.points ||
+        a.bestPosition - b.bestPosition
+      );
     });
   };
 
