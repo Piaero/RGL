@@ -17,6 +17,26 @@ client.connect((err) => {
 });
 
 router.get('/standings', (req, res) => {
+  const whichDriverHasBetterPositions = (driver1, driver2) => {
+    let driversOnGrid = 50;
+
+    for (let i = 1; i <= driversOnGrid; i++) {
+      if (
+        driver1.allPositionsCount[i] > driver2.allPositionsCount[i] ||
+        (driver1.allPositionsCount[i] !== undefined &&
+          driver2.allPositionsCount[i] === undefined)
+      ) {
+        return -1;
+      } else if (
+        driver1.allPositionsCount[i] < driver2.allPositionsCount[i] ||
+        (driver1.allPositionsCount[i] === undefined &&
+          driver2.allPositionsCount[i] !== undefined)
+      ) {
+        return 1;
+      }
+    }
+  };
+
   const setRacesPoints = (races, raceFormat) => {
     let adjustedRaces = [];
 
@@ -33,7 +53,7 @@ router.get('/standings', (req, res) => {
     for (const driver of driversList) {
       driver.points = 0;
       driver.appearances = 0;
-      driver.bestPosition = Number.POSITIVE_INFINITY;
+      driver.allPositionsCount = {};
     }
 
     for (const race of races) {
@@ -48,12 +68,15 @@ router.get('/standings', (req, res) => {
             let positionInSession =
               race.adjustedResults[raceSession].indexOf(driver) + 1;
 
-            positionInSession <
-            driversList.find((dr) => dr.nick === driver.nick).bestPosition
+            driversList.find((dr) => dr.nick === driver.nick).allPositionsCount[
+              positionInSession
+            ] === undefined
               ? (driversList.find(
                   (dr) => dr.nick === driver.nick
-                ).bestPosition = positionInSession)
-              : null;
+                ).allPositionsCount[positionInSession] = 1)
+              : (driversList.find(
+                  (dr) => dr.nick === driver.nick
+                ).allPositionsCount[positionInSession] += 1);
           }
         }
       }
@@ -67,7 +90,7 @@ router.get('/standings', (req, res) => {
       return (
         (a.bestPosition === null) - (b.bestPosition === null) ||
         b.points - a.points ||
-        a.bestPosition - b.bestPosition
+        whichDriverHasBetterPositions(a, b)
       );
     });
   };
