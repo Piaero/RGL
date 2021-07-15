@@ -59,24 +59,21 @@ router.get('/standings', (req, res) => {
     for (const race of races) {
       for (const raceSession in race.adjustedResults) {
         for (const driver of race.adjustedResults[raceSession]) {
-          driversList.find((dr) => dr.nick === driver.nick).points +=
-            driver.points;
+          let selectedDriver = driversList.find(
+            (dr) => dr.nick === driver.nick
+          );
+
+          selectedDriver.points += driver.points;
 
           if (raceSession === 'race') {
-            driversList.find((dr) => dr.nick === driver.nick).appearances += 1;
+            selectedDriver.appearances += 1;
 
             let positionInSession =
               race.adjustedResults[raceSession].indexOf(driver) + 1;
 
-            driversList.find((dr) => dr.nick === driver.nick).allPositionsCount[
-              positionInSession
-            ] === undefined
-              ? (driversList.find(
-                  (dr) => dr.nick === driver.nick
-                ).allPositionsCount[positionInSession] = 1)
-              : (driversList.find(
-                  (dr) => dr.nick === driver.nick
-                ).allPositionsCount[positionInSession] += 1);
+            selectedDriver.allPositionsCount[positionInSession] === undefined
+              ? (selectedDriver.allPositionsCount[positionInSession] = 1)
+              : (selectedDriver.allPositionsCount[positionInSession] += 1);
           }
         }
       }
