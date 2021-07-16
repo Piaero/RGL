@@ -18,21 +18,27 @@ client.connect((err) => {
 
 router.get('/standings', (req, res) => {
   const whichDriverHasBetterPositions = (driver1, driver2) => {
-    let driversOnGrid = 50;
-
-    for (let i = 1; i <= driversOnGrid; i++) {
+    let maxPosition = 50;
+    for (let i = 1; i <= maxPosition; i++) {
       if (
-        driver1.allPositionsCount[i] > driver2.allPositionsCount[i] ||
         (driver1.allPositionsCount[i] !== undefined &&
-          driver2.allPositionsCount[i] === undefined)
+          driver2.allPositionsCount[i] === undefined) ||
+        driver1.allPositionsCount[i]?.length >
+          driver2.allPositionsCount[i]?.length
       ) {
         return -1;
-      } else if (
-        driver1.allPositionsCount[i] < driver2.allPositionsCount[i] ||
+      }
+      if (
         (driver1.allPositionsCount[i] === undefined &&
-          driver2.allPositionsCount[i] !== undefined)
+          driver2.allPositionsCount[i] !== undefined) ||
+        driver1.allPositionsCount[i]?.length <
+          driver2.allPositionsCount[i]?.length
       ) {
         return 1;
+      } else if (i === maxPosition) {
+        console.log(
+          `whichDriverHasBetterPositions function has NOT determined a better driver!`
+        );
       }
     }
   };
@@ -57,6 +63,7 @@ router.get('/standings', (req, res) => {
     }
 
     for (const race of races) {
+      let raceNumber = races.indexOf(race) + 1;
       for (const raceSession in race.adjustedResults) {
         for (const driver of race.adjustedResults[raceSession]) {
           let selectedDriver = driversList.find(
@@ -72,8 +79,12 @@ router.get('/standings', (req, res) => {
               race.adjustedResults[raceSession].indexOf(driver) + 1;
 
             selectedDriver.allPositionsCount[positionInSession] === undefined
-              ? (selectedDriver.allPositionsCount[positionInSession] = 1)
-              : (selectedDriver.allPositionsCount[positionInSession] += 1);
+              ? (selectedDriver.allPositionsCount[positionInSession] = [
+                  raceNumber,
+                ])
+              : selectedDriver.allPositionsCount[positionInSession].push(
+                  raceNumber
+                );
           }
         }
       }
