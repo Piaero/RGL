@@ -56,16 +56,16 @@ const RaceWinners = ({ race }) => {
     <div className='race__winners-or-map race__podium-container'>
       <div className='podium__result position-2'>
         <div className='podium__background'></div>
-        <p className='podium__name'>{race.results.race[2].name}</p>
+        <p className='podium__name'>{race.results.race[2 - 1].name}</p>
       </div>
       <div className='podium__result position-1'>
         <div className='podium__background'></div>
 
-        <p className='podium__name'>{race.results.race[1].name}</p>
+        <p className='podium__name'>{race.results.race[1 - 1].name}</p>
       </div>
       <div className='podium__result position-3'>
         <div className='podium__background'></div>
-        <p className='podium__name'>{race.results.race[3].name}</p>
+        <p className='podium__name'>{race.results.race[3 - 1].name}</p>
       </div>
     </div>
   );
